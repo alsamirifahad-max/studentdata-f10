@@ -414,3 +414,58 @@ body.no-scroll{overflow:hidden}
   .guide-zoom.zoomed img{width:260%}
 }
 @media (max-width:960px){.pf-blue .pf-links{grid-template-columns:1fr}}
+
+/* ================= الساعة الرقمية والتقويم الدراسي ================= */
+.hero-side{display:grid;gap:16px;align-content:start;min-width:0}
+.clock{--orb:.5;margin:0;position:relative;overflow:hidden;color:#fff;border-radius:var(--r-lg);padding:18px 20px 16px;
+  border:1px solid rgba(255,255,255,.35);box-shadow:0 24px 50px -24px rgba(0,30,60,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  transition:background .8s}
+.clock.is-day{background:linear-gradient(160deg,rgba(255,255,255,.26),rgba(255,214,90,.20) 60%,rgba(255,255,255,.10))}
+.clock.is-night{background:linear-gradient(160deg,rgba(24,18,86,.62),rgba(44,70,160,.48) 60%,rgba(20,40,90,.5))}
+.ck-sky{position:absolute;inset:0 0 auto 0;height:44px;pointer-events:none}
+.ck-orb{position:absolute;width:22px;height:22px;border-radius:50%;
+  inset-inline-start:calc(6% + var(--orb) * 82%);top:calc(26px - sin(var(--orb) * 180deg) * 20px);
+  transition:inset-inline-start 1s linear,top 1s linear}
+.is-day .ck-orb{background:radial-gradient(circle,#FFF6C8 0,#FFD23F 55%,rgba(255,180,0,.0) 72%);box-shadow:0 0 30px 10px rgba(255,210,63,.45)}
+.is-night .ck-orb{background:radial-gradient(circle at 35% 35%,#FFFFFF 0,#E7ECFF 45%,#C9D2FF 60%,rgba(200,210,255,0) 72%);box-shadow:0 0 22px 4px rgba(200,210,255,.35)}
+.ck-sky i{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:0;transition:opacity .8s}
+.is-night .ck-sky i{opacity:.8;animation:twinkle 3s ease-in-out infinite}
+.ck-sky i:nth-child(2){top:18px;inset-inline-start:22%}.ck-sky i:nth-child(3){top:30px;inset-inline-start:58%;animation-delay:1s}.ck-sky i:nth-child(4){top:12px;inset-inline-start:84%;animation-delay:2s}
+@keyframes twinkle{50%{opacity:.25}}
+.ck-top{position:relative;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:30px}
+.ck-time{display:flex;align-items:flex-start;gap:6px;direction:ltr;font-family:var(--head);font-variant-numeric:tabular-nums;line-height:1}
+.ck-hm{font-size:clamp(46px,6.2vw,64px);font-weight:800;letter-spacing:1px;text-shadow:0 4px 18px rgba(0,30,60,.25)}
+.ck-sec{font-size:20px;font-weight:700;opacity:.8;margin-top:6px;min-width:26px}
+.ck-ampm{display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:4px;margin-inline-start:4px}
+.ck-ampm b{font-size:22px;font-weight:800;line-height:1}
+.ck-ampm small{font-size:11px;font-weight:700;letter-spacing:1px;padding:2px 7px;border-radius:999px;background:var(--sun);color:var(--ink)}
+.is-night .ck-ampm small{background:#C9D2FF}
+.ck-period{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;font-family:var(--head);font-weight:700;font-size:15px;
+  background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35)}
+.ck-ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.is-day .ck-ic{color:#FFE27A}.is-night .ck-ic{color:#DDE3FF}
+.ck-facts{position:relative;display:grid;grid-template-columns:.8fr 1.3fr 1.1fr;gap:8px;margin:14px 0 12px}
+.ck-facts div{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:12px;padding:7px 10px;min-width:0}
+.ck-facts dt{font-size:11.5px;opacity:.85;margin:0}
+.ck-facts dd{margin:0;font-weight:700;font-size:14px;line-height:1.5}
+.ck-facts .ck-week{grid-column:span 2}
+.ck-bar{display:block;height:5px;border-radius:999px;background:rgba(255,255,255,.25);margin-top:5px;overflow:hidden}
+.ck-bar i{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--sun),#FF8F5B);transition:width .6s}
+.ck-next{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:#fff;color:var(--ink);border-radius:16px;padding:12px 14px;box-shadow:0 10px 24px -14px rgba(0,30,60,.6)}
+.ck-next-tx{min-width:0;flex:1 1 180px}
+.ck-next-tx small{display:block;font-size:12px;color:var(--ink-2)}
+.ck-next-tx b{display:block;font-family:var(--head);font-size:17px;line-height:1.4;color:var(--coral)}
+.ck-next-tx span{font-size:12.5px;color:var(--ink-2)}
+.ck-count{display:flex;gap:6px;direction:ltr}
+.ck-count div{display:flex;flex-direction:column;align-items:center;min-width:48px;padding:6px 4px;border-radius:12px;background:linear-gradient(160deg,#FFF5D6,#FFE7DF)}
+.ck-count div:first-child{background:linear-gradient(160deg,var(--coral),#FF8F5B);color:#fff}
+.ck-count div:first-child small{color:rgba(255,255,255,.9)}
+.ck-count b{font-family:var(--head);font-size:20px;line-height:1.2;font-variant-numeric:tabular-nums}
+.ck-count small{font-size:11px;color:var(--ink-2)}
+@media (max-width:600px){
+  .clock{padding:16px 14px 14px}
+  .ck-facts{grid-template-columns:1fr 1fr}
+  .ck-facts .ck-week{grid-column:1/-1}
+  .ck-facts div:nth-child(3){grid-column:span 1}
+  .ck-count div{min-width:44px}
+}

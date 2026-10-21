@@ -29,6 +29,39 @@
       </nav>
     </div>
 
+    <div class="hero-side">
+    <!-- ===== الساعة والتقويم الدراسي ===== -->
+    <section class="clock is-day" id="clock" aria-label="الوقت والتقويم الدراسي">
+      <div class="ck-sky" aria-hidden="true"><span class="ck-orb"></span><i></i><i></i><i></i></div>
+      <div class="ck-top">
+        <div class="ck-time" aria-live="off">
+          <span class="ck-hm" id="ckHM">--:--</span><span class="ck-sec" id="ckSec">--</span>
+          <span class="ck-ampm" id="ckAmPm"><b id="ckAr">--</b><small id="ckEn">--</small></span>
+        </div>
+        <span class="ck-period" id="ckPeriod"><svg class="ck-ic" id="ckIcon" viewBox="0 0 24 24" aria-hidden="true"></svg><span id="ckPeriodTx">--</span></span>
+      </div>
+      <dl class="ck-facts">
+        <div><dt>اليوم</dt><dd id="ckDay">--</dd></div>
+        <div><dt>التاريخ الهجري</dt><dd id="ckHijri">--</dd></div>
+        <div><dt>التاريخ الميلادي</dt><dd id="ckGreg">--</dd></div>
+        <div><dt>الفصل الدراسي</dt><dd id="ckTerm">--</dd></div>
+        <div class="ck-week"><dt>الأسبوع الدراسي</dt><dd id="ckWeek">--</dd><span class="ck-bar" aria-hidden="true"><i id="ckWeekBar"></i></span></div>
+      </dl>
+      <div class="ck-next" id="ckNext">
+        <div class="ck-next-tx">
+          <small id="ckNextLbl">المتبقي على الإجازة القادمة</small>
+          <b id="ckNextName">--</b>
+          <span id="ckNextDate">--</span>
+        </div>
+        <div class="ck-count" role="timer" aria-live="off">
+          <div><b id="cdD">--</b><small>يوم</small></div>
+          <div><b id="cdH">--</b><small>ساعة</small></div>
+          <div><b id="cdM">--</b><small>دقيقة</small></div>
+          <div><b id="cdS">--</b><small>ثانية</small></div>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== بياناتي ===== -->
     <section id="mydata" class="idcard" aria-labelledby="mydata-title" style="margin:0">
       <div class="idcard-band" aria-hidden="true"></div>
@@ -71,6 +104,7 @@
         </div>
       </div>
     </section>
+    </div><!-- /hero-side -->
   </div>
 </header>
 
@@ -411,6 +445,147 @@
   "use strict";
   const SECTIONS = ["1","2","3","4","5","6","7","8","11","12","13","14","15","16","17","18","21","22","23","24","26","27","28"];
   const $ = (s) => document.querySelector(s);
+
+
+  // ===================== الساعة الرقمية والتقويم الدراسي 1448هـ =====================
+  // مصدر البيانات: التقويم الدراسي 1448/1449هـ (مكة – المدينة – جدة – الطائف). التوقيت دائمًا بتوقيت مكة المكرمة.
+  (() => {
+    const TZ = "Asia/Riyadh";
+    // أيام الأسابيع الدراسية (بداية كل أسبوع يوم الأحد)
+    const TERMS = [
+      { name: "الفصل الأول", weeks: ["2026-08-30","2026-09-06","2026-09-13","2026-09-20","2026-09-27","2026-10-04","2026-10-11","2026-10-18","2026-10-25","2026-11-01","2026-11-08","2026-11-15","2026-11-29","2026-12-06","2026-12-13","2026-12-20","2026-12-27","2027-01-03"], end: "2027-01-07" },
+      { name: "الفصل الثاني", weeks: ["2027-01-17","2027-01-24","2027-01-31","2027-02-07","2027-02-14","2027-02-21","2027-03-14","2027-03-21","2027-03-28","2027-04-04","2027-04-11","2027-04-18","2027-04-25","2027-05-23","2027-05-30","2027-06-06","2027-06-13","2027-06-20","2027-06-27"], end: "2027-07-01" },
+    ];
+    // الإجازات: from = أول يوم إجازة، to = آخر يوم إجازة، back = يوم العودة
+    const BREAKS = [
+      { name: "إجازة اليوم الوطني", from: "2026-09-23", to: "2026-09-24", back: "2026-09-27" },
+      { name: "إجازة إضافية", from: "2026-10-25", to: "2026-10-25", back: "2026-10-26" },
+      { name: "إجازة الخريف", from: "2026-11-20", to: "2026-11-28", back: "2026-11-29" },
+      { name: "إجازة منتصف العام الدراسي", from: "2027-01-08", to: "2027-01-16", back: "2027-01-17" },
+      { name: "إجازة يوم التأسيس", from: "2027-02-21", to: "2027-02-22", back: "2027-02-23" },
+      { name: "إجازة عيد الفطر", from: "2027-02-26", to: "2027-03-13", back: "2027-03-14" },
+      { name: "إجازة عيد الأضحى", from: "2027-04-30", to: "2027-05-22", back: "2027-05-23" },
+      { name: "إجازة نهاية العام الدراسي", from: "2027-07-02", to: "2027-08-28", back: "2027-08-29", startNote: "بنهاية دوام الخميس" , shownFrom: "2027-07-01" },
+    ];
+    const ORD = ["الأول","الثاني","الثالث","الرابع","الخامس","السادس","السابع","الثامن","التاسع","العاشر","الحادي عشر","الثاني عشر","الثالث عشر","الرابع عشر","الخامس عشر","السادس عشر","السابع عشر","الثامن عشر","التاسع عشر"];
+
+    const DAY = 864e5;
+    // منتصف ليل يوم معيّن بتوقيت مكة (UTC+3 بلا توقيت صيفي) كطابع زمني
+    const at = (iso) => { const [y, m, d] = iso.split("-").map(Number); return Date.UTC(y, m - 1, d) - 3 * 36e5; };
+    const fmtH = new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura-nu-latn", { timeZone: TZ, day: "numeric", month: "long", year: "numeric" });
+    const fmtG = new Intl.DateTimeFormat("ar-SA-u-ca-gregory-nu-latn", { timeZone: TZ, day: "numeric", month: "long", year: "numeric" });
+    const fmtW = new Intl.DateTimeFormat("ar-SA", { timeZone: TZ, weekday: "long" });
+    const fmtShortH = new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura-nu-latn", { timeZone: TZ, day: "numeric", month: "numeric", year: "numeric" });
+    const parts = new Intl.DateTimeFormat("en-US", { timeZone: TZ, hour: "numeric", minute: "2-digit", second: "2-digit", hourCycle: "h23", year: "numeric", month: "2-digit", day: "2-digit" });
+    const hijriText = (t) => fmtH.format(t).replace(/\s*هـ$/, "") + "هـ";
+    const dateLine = (iso, note) => {
+      const t = at(iso) + 12 * 36e5;
+      const hp = Object.fromEntries(fmtShortH.formatToParts(t).map((x) => [x.type, x.value]));
+      const [y, m, d] = iso.split("-").map(Number);
+      const ltr = (x) => "\u2066" + x + "\u2069"; // عزل الأرقام حتى لا ينقلب ترتيب التاريخ داخل النص العربي
+      return fmtW.format(t) + " " + ltr(Number(hp.day) + "/" + Number(hp.month) + "/" + parseInt(hp.year, 10)) + "هـ – " + ltr(d + "/" + m + "/" + y) + "م" + (note ? " (" + note + ")" : "");
+    };
+    const pad = (n) => String(n).padStart(2, "0");
+
+    const ICONS = {
+      sun: '<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/>',
+      moon: '<path d="M20 14.6A8 8 0 0 1 9.4 4a8 8 0 1 0 10.6 10.6z"/>',
+      dawn: '<path d="M3 18h18M6.5 18a5.5 5.5 0 0 1 11 0M12 6v3M5.6 9.6l1.6 1.6M18.4 9.6l-1.6 1.6"/>',
+    };
+    // دلالات اليوم: فجرًا، صباحًا، ظهرًا، عصرًا، مساءً، ليلًا
+    function period(h) {
+      if (h < 4) return { tx: "بعد منتصف الليل", icon: "moon", night: true };
+      if (h < 6) return { tx: "فجرًا", icon: "dawn", night: true };
+      if (h < 12) return { tx: "صباحًا", icon: "sun", night: false };
+      if (h < 15) return { tx: "ظهرًا", icon: "sun", night: false };
+      if (h < 18) return { tx: "عصرًا", icon: "sun", night: false };
+      if (h < 20) return { tx: "مساءً", icon: "dawn", night: true };
+      return { tx: "ليلًا", icon: "moon", night: true };
+    }
+
+    function schoolState(now) {
+      for (const b of BREAKS) {
+        if (now >= at(b.from) && now < at(b.back)) return { inBreak: b };
+      }
+      for (const t of TERMS) {
+        const starts = t.weeks.map(at), endT = at(t.end) + DAY;
+        if (now >= starts[0] && now < endT) {
+          let idx = 0; starts.forEach((s, i) => { if (now >= s) idx = i; });
+          return { term: t, week: idx + 1, total: t.weeks.length };
+        }
+      }
+      if (now < at(TERMS[0].weeks[0])) return { before: true };
+      return { after: true };
+    }
+
+    const el = (id) => document.getElementById(id);
+    const set = (id, v) => { const e = el(id); if (e && e.textContent !== v) e.textContent = v; };
+    let lastPeriod = "";
+
+    function tick() {
+      const now = Date.now();
+      const p = Object.fromEntries(parts.formatToParts(now).map((x) => [x.type, x.value]));
+      const H = Number(p.hour) % 24, h12 = H % 12 || 12;
+      set("ckHM", h12 + ":" + p.minute);
+      set("ckSec", p.second);
+      set("ckAr", H < 12 ? "ص" : "م");
+      set("ckEn", H < 12 ? "AM" : "PM");
+      const per = period(H);
+      if (per.tx !== lastPeriod) {
+        lastPeriod = per.tx;
+        set("ckPeriodTx", per.tx);
+        el("ckIcon").innerHTML = ICONS[per.icon];
+        const c = el("clock"); c.classList.toggle("is-night", per.night); c.classList.toggle("is-day", !per.night);
+      }
+      // موضع الشمس/القمر في القوس حسب ساعة اليوم
+      const mins = H * 60 + Number(p.minute);
+      const dayFrac = per.night ? (((mins - 18 * 60) + 1440) % 1440) / 720 : (mins - 6 * 60) / 720;
+      el("clock").style.setProperty("--orb", Math.min(1, Math.max(0, dayFrac)).toFixed(3));
+
+      set("ckDay", fmtW.format(now));
+      set("ckHijri", hijriText(now));
+      set("ckGreg", fmtG.format(now) + "م");
+
+      const st = schoolState(now);
+      const wk = el("ckWeekBar");
+      if (st.term) {
+        set("ckTerm", st.term.name);
+        set("ckWeek", "الأسبوع " + ORD[st.week - 1] + " من " + st.total);
+        wk.style.width = (st.week / st.total * 100).toFixed(1) + "%";
+      } else if (st.inBreak) {
+        set("ckTerm", st.inBreak.name.includes("نهاية العام") ? "نهاية العام" : (now < at(TERMS[1].weeks[0]) ? "الفصل الأول" : "الفصل الثاني"));
+        set("ckWeek", st.inBreak.name); wk.style.width = "0%";
+      } else if (st.before) {
+        set("ckTerm", "عام 1448هـ"); set("ckWeek", "قبل بداية الدراسة"); wk.style.width = "0%";
+      } else {
+        set("ckTerm", "عام 1449هـ"); set("ckWeek", "—"); wk.style.width = "0%";
+      }
+
+      // العدّ التنازلي: أثناء الإجازة يُعدّ للعودة، وإلا للإجازة القادمة
+      let target, lbl, name, line;
+      if (st.inBreak) {
+        target = at(st.inBreak.back); lbl = "أنت الآن في " + st.inBreak.name + " · المتبقي على";
+        name = "العودة للدراسة"; line = dateLine(st.inBreak.back);
+      } else if (st.before) {
+        target = at(TERMS[0].weeks[0]); lbl = "المتبقي على"; name = "بداية الدراسة للعام 1448هـ"; line = dateLine(TERMS[0].weeks[0]);
+      } else {
+        const nb = BREAKS.find((b) => at(b.from) > now);
+        if (nb) { target = at(nb.from); lbl = "المتبقي على الإجازة القادمة"; name = nb.name; line = dateLine(nb.shownFrom || nb.from, nb.startNote); }
+      }
+      if (target) {
+        set("ckNextLbl", lbl); set("ckNextName", name); set("ckNextDate", line);
+        let d = Math.max(0, target - now);
+        const D = Math.floor(d / DAY); d -= D * DAY;
+        const Hh = Math.floor(d / 36e5); d -= Hh * 36e5;
+        const M = Math.floor(d / 6e4); d -= M * 6e4;
+        set("cdD", String(D)); set("cdH", pad(Hh)); set("cdM", pad(M)); set("cdS", pad(Math.floor(d / 1e3)));
+        el("ckNext").hidden = false;
+      } else el("ckNext").hidden = true;
+    }
+    tick();
+    // تحديث متزامن مع بداية كل ثانية
+    setTimeout(function loop() { tick(); setTimeout(loop, 1000 - (Date.now() % 1000) + 5); }, 1000 - (Date.now() % 1000) + 5);
+  })();
 
   // ===== نافذة منصة مدرستي وتيمز =====
   const dlg = $("#madrasatiDlg");
