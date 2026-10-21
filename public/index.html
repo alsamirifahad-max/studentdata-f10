@@ -14,6 +14,27 @@
 <body>
 
 <header class="hero">
+  <!-- ===== شريط الوقت والتقويم الدراسي ===== -->
+  <div class="wrap">
+    <div class="clockbar is-day" id="clock" aria-label="الوقت والتقويم الدراسي">
+      <span class="cb-item cb-time">
+        <svg class="ck-ic" id="ckIcon" viewBox="0 0 24 24" aria-hidden="true"></svg>
+        <span class="cb-clock" dir="ltr"><b id="ckHM">--:--</b><small id="ckSec">--</small></span>
+        <span class="cb-ampm"><b id="ckAr">--</b> <small id="ckEn">--</small></span>
+        <span class="cb-period" id="ckPeriodTx">--</span>
+      </span>
+      <span class="cb-item"><b id="ckDay">--</b></span>
+      <span class="cb-item" id="ckHijri">--</span>
+      <span class="cb-item" id="ckGreg">--</span>
+      <span class="cb-item"><span id="ckTerm">--</span><span class="cb-dot" aria-hidden="true">·</span><span id="ckWeek">--</span></span>
+      <span class="cb-item cb-next" id="ckNext">
+        <svg class="ck-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10M7 21h10M8 3c0 5 8 5 8 9s-8 4-8 9M16 3c0 5-8 5-8 9"/></svg>
+        <span><span id="ckNextLbl" class="sr">المتبقي على الإجازة القادمة</span><b id="ckNextName">--</b>
+          <span class="cb-count" role="timer"><span>بعد</span> <b id="cdD">--</b> <span id="cdDU">يوم</span> <span dir="ltr" class="cb-hms"><span id="cdH">--</span>:<span id="cdM">--</span>:<span id="cdS">--</span></span></span>
+          <small id="ckNextDate">--</small></span>
+      </span>
+    </div>
+  </div>
   <div class="wrap hero-grid">
     <div>
       <span class="school"><i aria-hidden="true"></i>ثانوية بلاط الشهداء الثانوية — وزارة التعليم</span>
@@ -30,38 +51,6 @@
     </div>
 
     <div class="hero-side">
-    <!-- ===== الساعة والتقويم الدراسي ===== -->
-    <section class="clock is-day" id="clock" aria-label="الوقت والتقويم الدراسي">
-      <div class="ck-sky" aria-hidden="true"><span class="ck-orb"></span><i></i><i></i><i></i></div>
-      <div class="ck-top">
-        <div class="ck-time" aria-live="off">
-          <span class="ck-hm" id="ckHM">--:--</span><span class="ck-sec" id="ckSec">--</span>
-          <span class="ck-ampm" id="ckAmPm"><b id="ckAr">--</b><small id="ckEn">--</small></span>
-        </div>
-        <span class="ck-period" id="ckPeriod"><svg class="ck-ic" id="ckIcon" viewBox="0 0 24 24" aria-hidden="true"></svg><span id="ckPeriodTx">--</span></span>
-      </div>
-      <dl class="ck-facts">
-        <div><dt>اليوم</dt><dd id="ckDay">--</dd></div>
-        <div><dt>التاريخ الهجري</dt><dd id="ckHijri">--</dd></div>
-        <div><dt>التاريخ الميلادي</dt><dd id="ckGreg">--</dd></div>
-        <div><dt>الفصل الدراسي</dt><dd id="ckTerm">--</dd></div>
-        <div class="ck-week"><dt>الأسبوع الدراسي</dt><dd id="ckWeek">--</dd><span class="ck-bar" aria-hidden="true"><i id="ckWeekBar"></i></span></div>
-      </dl>
-      <div class="ck-next" id="ckNext">
-        <div class="ck-next-tx">
-          <small id="ckNextLbl">المتبقي على الإجازة القادمة</small>
-          <b id="ckNextName">--</b>
-          <span id="ckNextDate">--</span>
-        </div>
-        <div class="ck-count" role="timer" aria-live="off">
-          <div><b id="cdD">--</b><small>يوم</small></div>
-          <div><b id="cdH">--</b><small>ساعة</small></div>
-          <div><b id="cdM">--</b><small>دقيقة</small></div>
-          <div><b id="cdS">--</b><small>ثانية</small></div>
-        </div>
-      </div>
-    </section>
-
     <!-- ===== بياناتي ===== -->
     <section id="mydata" class="idcard" aria-labelledby="mydata-title" style="margin:0">
       <div class="idcard-band" aria-hidden="true"></div>
@@ -538,19 +527,17 @@
         const c = el("clock"); c.classList.toggle("is-night", per.night); c.classList.toggle("is-day", !per.night);
       }
       // موضع الشمس/القمر في القوس حسب ساعة اليوم
-      const mins = H * 60 + Number(p.minute);
-      const dayFrac = per.night ? (((mins - 18 * 60) + 1440) % 1440) / 720 : (mins - 6 * 60) / 720;
-      el("clock").style.setProperty("--orb", Math.min(1, Math.max(0, dayFrac)).toFixed(3));
+
 
       set("ckDay", fmtW.format(now));
       set("ckHijri", hijriText(now));
       set("ckGreg", fmtG.format(now) + "م");
 
       const st = schoolState(now);
-      const wk = el("ckWeekBar");
+      const wk = el("ckWeekBar") || { style: {} };
       if (st.term) {
         set("ckTerm", st.term.name);
-        set("ckWeek", "الأسبوع " + ORD[st.week - 1] + " من " + st.total);
+        set("ckWeek", "الأسبوع " + ORD[st.week - 1]);
         wk.style.width = (st.week / st.total * 100).toFixed(1) + "%";
       } else if (st.inBreak) {
         set("ckTerm", st.inBreak.name.includes("نهاية العام") ? "نهاية العام" : (now < at(TERMS[1].weeks[0]) ? "الفصل الأول" : "الفصل الثاني"));
@@ -564,7 +551,7 @@
       // العدّ التنازلي: أثناء الإجازة يُعدّ للعودة، وإلا للإجازة القادمة
       let target, lbl, name, line;
       if (st.inBreak) {
-        target = at(st.inBreak.back); lbl = "أنت الآن في " + st.inBreak.name + " · المتبقي على";
+        target = at(st.inBreak.back); lbl = "أنت الآن في " + st.inBreak.name + "، المتبقي على العودة للدراسة";
         name = "العودة للدراسة"; line = dateLine(st.inBreak.back);
       } else if (st.before) {
         target = at(TERMS[0].weeks[0]); lbl = "المتبقي على"; name = "بداية الدراسة للعام 1448هـ"; line = dateLine(TERMS[0].weeks[0]);
@@ -578,7 +565,7 @@
         const D = Math.floor(d / DAY); d -= D * DAY;
         const Hh = Math.floor(d / 36e5); d -= Hh * 36e5;
         const M = Math.floor(d / 6e4); d -= M * 6e4;
-        set("cdD", String(D)); set("cdH", pad(Hh)); set("cdM", pad(M)); set("cdS", pad(Math.floor(d / 1e3)));
+        set("cdD", String(D)); set("cdDU", D === 1 ? "يوم" : D === 2 ? "يومين" : D >= 3 && D <= 10 ? "أيام" : "يومًا"); set("cdH", pad(Hh)); set("cdM", pad(M)); set("cdS", pad(Math.floor(d / 1e3)));
         el("ckNext").hidden = false;
       } else el("ckNext").hidden = true;
     }
