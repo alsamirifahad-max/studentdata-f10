@@ -41,9 +41,9 @@ export default async (req, context) => {
   if (rec.name.length < 3) errors.push("اكتب اسم الطالب");
   if (!GRADES.includes(rec.grade)) errors.push("اختر الصف الدراسي");
   if (!SECTIONS.includes(rec.section)) errors.push("اختر الشعبة");
-  if (!TYPES.includes(rec.type)) errors.push("اختر نوع المشكلة");
+  if (!TYPES.includes(rec.type)) errors.push("اختر نوع الاستفسار");
   if (rec.contact.length < 3) errors.push("اكتب وسيلة تواصل");
-  if (rec.description.length < 10) errors.push("اكتب وصفًا أوضح للمشكلة (10 أحرف على الأقل)");
+  if (rec.description.length < 10) errors.push("اكتب تفاصيل أوضح للاستفسار (10 أحرف على الأقل)");
   if (b.confirm !== true) errors.push("يجب تأكيد عدم كتابة كلمة مرور أو رمز تحقق");
   if (errors.length) return json({ error: errors.join("، ") }, 400);
 

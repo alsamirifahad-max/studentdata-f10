@@ -1,8 +1,8 @@
 import { json, store, clean, normalizeId, normalizeTicket, findComplaint, publicView, rateLimit, CLOSED } from "../lib/common.mjs";
 
-// متابعة الشكوى: لا تُعرض الشكوى إلا إذا تطابق رقم الطلب مع رقم هوية صاحبها.
+// متابعة الاستفسار: لا يُعرض الاستفسار إلا إذا تطابق رقم الطلب مع رقم هوية صاحبها.
 // الطالب لا يستطيع أبدًا رؤية شكاوى غيره، ولا قائمة الشكاوى.
-const NOT_FOUND = "لا توجد شكوى بهذا الرقم مرتبطة برقم الهوية المدخل. تأكد من رقم الطلب ورقم الهوية.";
+const NOT_FOUND = "لا يوجد استفسار بهذا الرقم مرتبط برقم الهوية المدخل. تأكد من رقم الطلب ورقم الهوية.";
 
 export default async (req, context) => {
   if (req.method !== "POST") return json({ error: "الطريقة غير مسموحة" }, 405);
@@ -27,11 +27,11 @@ export default async (req, context) => {
   }
 
   if (b.action === "reply") {
-    if (CLOSED.includes(item.status)) return json({ error: "هذه الشكوى مغلقة. أرسل طلبًا جديدًا إذا احتجت مساعدة أخرى." }, 400);
+    if (CLOSED.includes(item.status)) return json({ error: "هذا الاستفسار مغلق. أرسل استفسارًا جديدًا إذا احتجت مساعدة أخرى." }, 400);
     const text = clean(b.text, 1000);
     if (text.length < 2) return json({ error: "اكتب ردك أولًا." }, 400);
     const msgs = item.messages || [];
-    if (msgs.filter((m) => m.from === "student").length >= 20) return json({ error: "وصلت إلى الحد الأقصى للردود في هذه الشكوى." }, 400);
+    if (msgs.filter((m) => m.from === "student").length >= 20) return json({ error: "وصلت إلى الحد الأقصى للردود في هذا الاستفسار." }, 400);
     const now = new Date().toISOString();
     msgs.push({ from: "student", text, at: now });
     item.messages = msgs;

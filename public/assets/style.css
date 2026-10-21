@@ -343,7 +343,7 @@ footer a:hover{opacity:1}
 
 /* ================= دليل المنصات التعليمية ================= */
 .pf-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
-.pf-blue{grid-column:1/-1}.pf-blue .pf-links{grid-template-columns:repeat(3,1fr)}
+.pf-blue{grid-column:1/-1}.pf-blue .pf-links{grid-template-columns:1.25fr 1fr 1fr}
 
 .pf-cat{--c:var(--azure);--c2:#7DB9FF;--soft:#EAF3FF;position:relative;display:flex;flex-direction:column;gap:14px;padding:20px;border-radius:var(--r-lg);
   background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
@@ -368,3 +368,49 @@ footer a:hover{opacity:1}
 .pf-btn:hover::after{transform:translateX(-3px) rotate(45deg);opacity:1}
 @media (max-width:960px){.pf-purple .pf-links{grid-template-columns:1fr}}
 @media (max-width:640px){.pf-grid{grid-template-columns:1fr}.pf-blue .pf-links{grid-template-columns:1fr}.ht-spark{width:16px;height:16px}}
+
+/* ================= المنصات التعليمية: ألوان إضافية وعنصر مميز ================= */
+.pf-sun{--c:#F59E0B;--c2:#FFD23F;--soft:#FFF6DC}
+.pf-coral{--c:#FF5E62;--c2:#FF9966;--soft:#FFEDEA}
+button.pf-btn{font:inherit;text-align:start;cursor:pointer;width:100%}
+.pf-feature{color:#fff;background:linear-gradient(135deg,#00A774,#00B5A0 45%,#2D8CFF);border:0;box-shadow:0 14px 28px -14px rgba(0,120,140,.9)}
+.pf-feature .pf-tx small{color:rgba(255,255,255,.9)}
+.pf-feature .pf-ic{background:rgba(255,255,255,.95)}
+.pf-feature::after{border-color:#fff!important;opacity:1}
+.pf-feature:hover,.pf-feature:focus-visible{background:linear-gradient(135deg,#009968,#00A893 45%,#1F7BFF);color:#fff;border-color:transparent}
+section.flash{animation:flash 1.4s ease-out}
+@keyframes flash{0%{box-shadow:0 0 0 0 rgba(45,140,255,.0)}20%{box-shadow:0 0 0 10px rgba(45,140,255,.18);border-radius:24px}100%{box-shadow:0 0 0 0 rgba(45,140,255,0)}}
+
+/* ================= نافذة منصة مدرستي وتيمز ================= */
+body.no-scroll{overflow:hidden}
+.mdlg{width:min(980px,calc(100% - 24px));max-width:none;max-height:calc(100dvh - 24px);padding:0;border:0;border-radius:var(--r-lg);background:var(--bg);color:var(--ink);
+  box-shadow:0 40px 80px -20px rgba(4,30,60,.55);overflow:hidden;display:none;flex-direction:column}
+.mdlg[open]{display:flex;animation:dlgIn .3s cubic-bezier(.2,.8,.2,1)}
+.mdlg::backdrop{background:rgba(6,30,50,.62);backdrop-filter:blur(3px)}
+@keyframes dlgIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+.mdlg-head{display:flex;align-items:center;gap:14px;padding:18px 20px;color:#fff;flex:none;
+  background:radial-gradient(400px 200px at 10% 0,rgba(255,194,51,.5),transparent 60%),linear-gradient(135deg,#00A774,#00B5A0 45%,#2D8CFF)}
+.mdlg-head .pf-emoji{background:rgba(255,255,255,.2);box-shadow:none}
+.mdlg-head h3{margin:0;font-size:20px}
+.mdlg-head small{opacity:.92;font-size:14px}
+.mdlg-x{margin-inline-start:auto;width:42px;height:42px;border-radius:12px;border:0;background:rgba(255,255,255,.18);color:#fff;font-size:26px;line-height:1;cursor:pointer;flex:none}
+.mdlg-x:hover{background:rgba(255,255,255,.3)}
+.mdlg-body{padding:20px;overflow:auto;overscroll-behavior:contain}
+.mdlg-body .tile{padding:18px}
+.mdlg-guide{margin-top:24px}
+.mdlg-guide h4{font-family:var(--head);font-size:20px;margin:0 0 2px;display:flex;align-items:center;gap:10px}
+.mdlg-guide h4::before{content:"";width:12px;height:12px;border-radius:4px;transform:rotate(45deg);background:var(--sun)}
+.mdlg-guide .sub{margin-bottom:14px}
+.guide-zoom{display:block;width:100%;padding:0;border:0;background:#fff;border-radius:18px;overflow:auto;cursor:zoom-in}
+.guide-zoom img{width:100%;height:auto;transition:width .25s}
+.guide-zoom.zoomed{cursor:zoom-out;max-height:75dvh}
+.guide-zoom.zoomed img{width:200%;max-width:none}
+@media (max-width:640px){
+  .mdlg{width:100%;max-width:100%;max-height:100dvh;height:100dvh;border-radius:0;margin:0;inset:0}
+  .mdlg-head{padding:14px}.mdlg-head h3{font-size:17px}.mdlg-head small{font-size:13px}.mdlg-head .pf-emoji{width:44px;height:44px;font-size:22px}
+  .mdlg-body{padding:14px}
+  .mdlg-body .links{grid-template-columns:1fr 1fr;gap:10px}
+  .mdlg-body .tile{padding:14px}.mdlg-body .tile small{display:none}.mdlg-body .tile .ti{width:42px;height:42px}
+  .guide-zoom.zoomed img{width:260%}
+}
+@media (max-width:960px){.pf-blue .pf-links{grid-template-columns:1fr}}

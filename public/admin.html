@@ -147,11 +147,11 @@
 
   <div class="wrap" style="padding-bottom:40px">
     <div class="tabs" role="tablist">
-      <button class="tab" role="tab" aria-selected="true" data-tab="complaints" id="tab-complaints">الشكاوى وطلبات الدعم</button>
+      <button class="tab" role="tab" aria-selected="true" data-tab="complaints" id="tab-complaints">الاستفسارات وطلبات الدعم</button>
       <button class="tab" role="tab" aria-selected="false" data-tab="students" id="tab-students">بيانات الطلاب</button>
     </div>
 
-    <!-- الشكاوى -->
+    <!-- الاستفسارات -->
     <section class="panel" id="panel-complaints" role="tabpanel" aria-labelledby="tab-complaints" style="margin:0">
       <div class="stats">
         <button class="stat active" data-status=""><small>كل الطلبات</small><b id="s-all">0</b></button>
@@ -161,12 +161,12 @@
         <button class="stat done" data-status="تم الحل"><small>تم الحل</small><b id="s-done">0</b></button>
       </div>
       <div class="toolbar">
-        <input type="search" id="q" placeholder="بحث بالاسم أو الهوية أو رقم الطلب أو نص الشكوى…">
+        <input type="search" id="q" placeholder="بحث بالاسم أو الهوية أو رقم الطلب أو نص الاستفسار…">
         <select id="fStatus" aria-label="الحالة"><option value="">كل الحالات</option><option>جديد</option><option>قيد المعالجة</option><option>تم الرد</option><option>تم الحل</option><option>مغلق</option></select>
         <select id="fSection" aria-label="الشعبة"><option value="">كل الشعب</option></select>
-        <select id="fType" aria-label="نوع المشكلة"><option value="">كل الأنواع</option>
+        <select id="fType" aria-label="نوع الاستفسار"><option value="">كل الأنواع</option>
           <option>تعذر الدخول إلى منصة مدرستي</option><option>نسيان كلمة المرور</option><option>مشكلة في حساب Microsoft</option>
-          <option>تعذر الدخول إلى تيمز أو حضور الحصة</option><option>شكوى</option><option>مشكلة أخرى</option></select>
+          <option>تعذر الدخول إلى تيمز أو حضور الحصة</option><option>استفسار عام</option><option>شكوى أو ملاحظة</option><option>شكوى</option><option>مشكلة أخرى</option></select>
         <button class="btn light sm" id="refresh" type="button">تحديث</button>
         <button class="btn outline sm" id="exportCsv" type="button">تصدير Excel (CSV)</button>
         <button class="btn outline sm" id="backupBtn" type="button">نسخة احتياطية</button>
@@ -225,13 +225,13 @@
     <div class="detail" id="mBody"></div>
     <div class="m-thread" id="mThread" aria-label="المحادثة مع الطالب"></div>
     <div class="reply-box">
-      <label for="mReply">الرد على الطالب (يظهر له في «متابعة شكواي»)</label>
+      <label for="mReply">الرد على الطالب (يظهر له في «متابعة الاستفسار»)</label>
       <textarea id="mReply" maxlength="2000" style="min-height:100px" placeholder="اكتب ردك للطالب…"></textarea>
       <div class="quick" id="quick" aria-label="ردود جاهزة">
-        <button type="button">تم استلام شكواك وسيتم العمل عليها.</button>
+        <button type="button">تم استلام استفسارك وسيتم العمل عليه.</button>
         <button type="button">تمت إعادة تعيين كلمة المرور، جرّب الدخول الآن.</button>
         <button type="button">يرجى مراجعة مكتب الإدارة لاستكمال الإجراء.</button>
-        <button type="button">تم حل المشكلة، وفقك الله.</button>
+        <button type="button">تمت معالجة طلبك، وفقك الله.</button>
       </div>
     </div>
     <div class="form" style="margin-top:14px">
@@ -384,11 +384,11 @@
     const f = (label, value, full, ltr) => box.append(el("div", { class: full ? "full" : "" }, el("small", { text: label }), el("p", { text: value || "—", ...(ltr ? { style: "direction:ltr;text-align:right" } : {}) })));
     f("اسم الطالب", current.name); f("هوية الطالب", current.studentId, false, true);
     f("الصف الدراسي", current.grade); f("الشعبة", current.section);
-    f("نوع المشكلة", current.type); f("وسيلة التواصل", current.contact, false, true);
+    f("نوع الاستفسار", current.type); f("وسيلة التواصل", current.contact, false, true);
     f("تاريخ الإرسال", fmtDate(current.createdAt)); f("آخر تحديث", fmtDate(current.updatedAt));
     const th = $("#mThread"); th.textContent = "";
     const bub = (from, text, at, label) => th.append(el("div", { class: "m-bubble " + from }, el("small", { text: label + " · " + fmtDate(at) }), el("p", { text })));
-    bub("student", current.description, current.createdAt, "شكوى الطالب");
+    bub("student", current.description, current.createdAt, "استفسار الطالب");
     (current.messages || []).forEach((m) => bub(m.from, m.text, m.at, m.from === "admin" ? "ردّك" : "ردّ الطالب"));
     $("#mStatus").value = current.status; $("#mNote").value = current.adminNote || ""; $("#mReply").value = "";
     $("#mStatus").dataset.touched = "";
@@ -439,7 +439,7 @@
   // تصدير CSV متوافق مع Excel
   $("#exportCsv").addEventListener("click", () => {
     const rows = filtered(); if (!rows.length) { toast("لا توجد بيانات للتصدير."); return; }
-    const cols = [["ticket","رقم الطلب"],["createdAt","التاريخ"],["status","الحالة"],["name","اسم الطالب"],["studentId","الهوية"],["grade","الصف"],["section","الشعبة"],["type","نوع المشكلة"],["contact","وسيلة التواصل"],["description","الوصف"],["lastReply","آخر رد للمسؤول"],["adminNote","ملاحظات المسؤول"]];
+    const cols = [["ticket","رقم الطلب"],["createdAt","التاريخ"],["status","الحالة"],["name","اسم الطالب"],["studentId","الهوية"],["grade","الصف"],["section","الشعبة"],["type","نوع الاستفسار"],["contact","وسيلة التواصل"],["description","الوصف"],["lastReply","آخر رد للمسؤول"],["adminNote","ملاحظات المسؤول"]];
     const esc = (v) => { let s = String(v ?? ""); if (/^[=+\-@]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; };
     const csv = [cols.map((c) => esc(c[1])).join(","), ...rows.map((r) => cols.map(([k]) => esc(k === "createdAt" ? fmtDate(r[k]) : k === "studentId" ? "‎" + r[k] : k === "lastReply" ? ((r.messages || []).filter((m) => m.from === "admin").pop() || {}).text : r[k])).join(","))].join("\r\n");
     const a = el("a", { href: URL.createObjectURL(new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" })), download: "طلبات-الدعم-" + new Date().toISOString().slice(0, 10) + ".csv" });
