@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#00A774">
+<title>الدعم الفني | ثانوية بلاط الشهداء</title>
+<meta name="description" content="مركز الدعم الفني الطلابي – ثانوية بلاط الشهداء: بياناتي، روابط المنصات الرسمية، الدليل المصور، وصندوق الشكاوى السري.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="school"><i aria-hidden="true"></i>ثانوية بلاط الشهداء الثانوية — وزارة التعليم</span>
+      <h1>مركز الدعم الفني الطلابي</h1>
+      <p class="lead">مساعدتك في الدخول إلى منصة مدرستي وحضور الدروس الإلكترونية.</p>
+      <nav class="pills" aria-label="روابط سريعة">
+        <a class="pill solid" href="#mydata">بياناتي</a>
+        <a class="pill ghost" href="#track" data-open="track">متابعة شكواي</a>
+        <a class="pill ghost" href="#links">روابط الدخول</a>
+      </nav>
+    </div>
+
+    <!-- ===== بياناتي ===== -->
+    <section id="mydata" class="idcard" aria-labelledby="mydata-title" style="margin:0">
+      <div class="idcard-band" aria-hidden="true"></div>
+      <div class="idcard-body">
+        <div class="idcard-head">
+          <div class="chip" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="11" r="2.2"/><path d="M5.8 16c.6-1.6 1.8-2.4 3.2-2.4s2.6.8 3.2 2.4M14.5 10h4M14.5 13.5h3"/></svg>
+          </div>
+          <div>
+            <h2 id="mydata-title">بياناتي</h2>
+            <p>بيانات الطالب المدرسية</p>
+          </div>
+        </div>
+
+        <form class="lookup" id="lookupForm" novalidate>
+          <label for="lookupId" class="sr">رقم الهوية</label>
+          <input type="text" id="lookupId" inputmode="numeric" autocomplete="off" maxlength="10" placeholder="اكتب رقم هويتك (10 أرقام)" aria-describedby="lookupErr">
+          <button class="btn" type="submit" id="lookupBtn">عرض بياناتي</button>
+        </form>
+        <div class="err" id="lookupErr" role="alert" style="margin-top:8px"></div>
+
+        <div class="result" id="lookupResult" hidden aria-live="polite">
+          <div class="who">
+            <div class="avatar" id="avatar" aria-hidden="true"></div>
+            <div><b id="whoName"></b><small id="whoMeta"></small></div>
+          </div>
+          <div class="email-box">
+            <div class="email-ic" aria-hidden="true">@</div>
+            <div class="email-txt">
+              <small>البريد الإلكتروني للمنصة (مدرستي / تيمز)</small>
+              <b id="emailVal" dir="ltr"></b>
+            </div>
+            <button class="btn sm" type="button" id="copyEmail">نسخ</button>
+          </div>
+          <dl class="kv" id="kv"></dl>
+          <div class="result-foot">
+            <span class="hint">وجدت خطأ في بياناتك؟ أرسل طلبًا من صندوق الشكاوى.</span>
+            <button class="btn outline sm" type="button" id="hideData">إخفاء بياناتي</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section>
+    <div class="privacy-strip">
+      <div class="ic" aria-hidden="true">🔒</div>
+      <div>
+        <b>قبل إرسال أي طلب</b>
+        <p>لا تكتب كلمة المرور أو رمز التحقق في وصف المشكلة. طلبك سري، ولا يطّلع عليه إلا مسؤول الدعم المخوّل.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== الروابط ===== -->
+  <section id="links" aria-labelledby="links-title">
+    <div class="sec-head">
+      <h2 id="links-title"><span class="dot" style="background:var(--emerald)" aria-hidden="true"></span>روابط المنصات الرسمية</h2>
+      <p class="sub">كل رابط يفتح الموقع الرسمي في نافذة جديدة.</p>
+    </div>
+    <div class="links">
+      <a class="tile c-emerald" href="https://schools.madrasati.sa/" target="_blank" rel="noopener noreferrer">
+        <span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 5l9 4.5-9 4.5z"/><path d="M7 11.5V16c0 1.4 2.2 2.6 5 2.6s5-1.2 5-2.6v-4.5M21 9.5v5"/></svg></span>
+        <b>منصة مدرستي</b><small>الجدول الدراسي والحصص والواجبات</small><span class="go">فتح المنصة</span>
+      </a>
+      <a class="tile c-sun" href="https://schools.madrasati.sa/ChangePassword?Language=1" target="_blank" rel="noopener noreferrer">
+        <span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="m11 12 8-8M16 7l2 2M14 9l2 2"/></svg></span>
+        <b>استعادة كلمة المرور</b><small>إعادة تعيين كلمة المرور عبر الخدمة الرسمية</small><span class="go">استعادة كلمة المرور</span>
+      </a>
+      <a class="tile c-azure" href="https://www.moe.gov.sa/ar/knowledgecenter/eservices/pages/technicalsupport.aspx" target="_blank" rel="noopener noreferrer">
+        <span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.3 2.4c-.5.2-.8.6-.8 1.1v.5M12 16.8v.1"/></svg></span>
+        <b>دعم منصة مدرستي</b><small>إرشادات وزارة التعليم وقنوات الدعم</small><span class="go">زيارة صفحة الدعم</span>
+      </a>
+      <a class="tile c-violet" href="https://teams.microsoft.com/" target="_blank" rel="noopener noreferrer">
+        <span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="12" height="12" rx="2"/><path d="M6.5 9.5h5M9 9.5V15M15 10h3.5a2 2 0 0 1 2 2v3a3 3 0 0 1-3 3H15"/><circle cx="18" cy="6.5" r="1.8"/></svg></span>
+        <b>Microsoft Teams</b><small>الدخول إلى الفصول والاجتماعات التعليمية</small><span class="go">فتح تيمز</span>
+      </a>
+      <a class="tile c-teal" href="https://ta.sdaia.gov.sa/home" target="_blank" rel="noopener noreferrer">
+        <span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="2.5"/><path d="m9.3 12.2 1.9 1.9 3.6-3.8M11 18h2"/></svg></span>
+        <b>توكلنا</b><small>الموقع الرسمي لخدمات توكلنا</small><span class="go">فتح الموقع</span>
+      </a>
+      <a class="tile c-coral" href="https://schools.madrasati.sa/contact-us?Language=1" target="_blank" rel="noopener noreferrer">
+        <span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5A1.5 1.5 0 0 1 5.5 6h13A1.5 1.5 0 0 1 20 7.5V10a2 2 0 0 0 0 4v2.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 16.5V14a2 2 0 0 0 0-4z"/><path d="M14 6v12" stroke-dasharray="2 2"/></svg></span>
+        <b>تذاكر الدعم الفني</b><small>رفع تذكرة دعم فني لدى وزارة التعليم</small><span class="go">رفع تذكرة</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== الدليل المصور ===== -->
+  <section id="guide" aria-labelledby="guide-title">
+    <div class="sec-head">
+      <h2 id="guide-title"><span class="dot" style="background:var(--sun)" aria-hidden="true"></span>الدليل المصور للطلاب</h2>
+      <p class="sub">خطوات الدخول إلى مدرستي واستعادة كلمة المرور وحضور الدروس عبر تيمز.</p>
+    </div>
+    <div class="guide-frame">
+      <a href="assets/student-guide.jpg" target="_blank" rel="noopener" id="guideLink">
+        <img id="guideImg" src="assets/student-guide.jpg" loading="lazy"
+             alt="دليل مصور للدخول إلى منصة مدرستي واستعادة كلمة المرور وحضور الدروس عبر مايكروسوفت تيمز">
+      </a>
+    </div>
+    <p class="caption">اضغط على الصورة لعرضها بالحجم الكامل.</p>
+  </section>
+
+  <!-- ===== تيمز ===== -->
+  <section id="teams" aria-labelledby="teams-title">
+    <div class="sec-head">
+      <h2 id="teams-title"><span class="dot" style="background:var(--violet)" aria-hidden="true"></span>طريقة الدخول إلى Microsoft Teams</h2>
+      <p class="sub">أربع خطوات من الجدول الدراسي إلى الحصة.</p>
+    </div>
+    <ol class="steps">
+      <li><b>من خلال منصة مدرستي</b><p>سجّل الدخول إلى مدرستي، ثم اختر «الجدول الدراسي» من القائمة الجانبية.</p></li>
+      <li><b>اختر الحصة</b><p>ابحث عن اليوم الحالي، ثم اضغط على اسم المادة أو وقت الحصة.</p></li>
+      <li><b>افتح رابط الدرس الافتراضي</b><p>اضغط على «رابط الدرس الافتراضي» للانتقال إلى Microsoft Teams.</p></li>
+      <li><b>انضم إلى الدرس</b><p>راجع إعدادات الصوت والكاميرا حسب تعليمات المعلم، ثم اضغط «الانضمام الآن».</p></li>
+    </ol>
+    <div class="direct">
+      <div><b>الدخول المباشر إلى تيمز</b><p>افتح تيمز وسجّل الدخول بحساب المدرسة، ثم افتح رابط الاجتماع الذي يرسله المعلم.</p></div>
+      <a class="btn violet" href="https://teams.microsoft.com/" target="_blank" rel="noopener noreferrer">فتح Microsoft Teams</a>
+    </div>
+    <div class="notice ok" style="margin-top:16px">
+      <div class="ic" aria-hidden="true">✓</div>
+      <div><b>إذا تعذر الانضمام</b><p>تأكد من استخدام الحساب المدرسي الصحيح، ثم جرّب فتح رابط الدرس من الجدول الدراسي في مدرستي.</p></div>
+    </div>
+  </section>
+
+  <!-- ===== صندوق الشكاوى ===== -->
+  <section id="ticket" aria-labelledby="ticket-title">
+    <div class="sec-head">
+      <h2 id="ticket-title"><span class="dot" style="background:var(--coral)" aria-hidden="true"></span>صندوق الشكاوى وطلبات الدعم</h2>
+      <p class="sub">أرسل شكواك، ثم تابع ردّ المسؤول وحالة الطلب من «متابعة شكواي».</p>
+    </div>
+
+    <div class="seg" role="tablist" aria-label="صندوق الشكاوى">
+      <button class="seg-btn" role="tab" id="tab-new" aria-controls="panel-new" aria-selected="true" data-open="new">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>شكوى جديدة</button>
+      <button class="seg-btn" role="tab" id="tab-track" aria-controls="panel-track" aria-selected="false" data-open="track">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>متابعة شكواي</button>
+    </div>
+
+    <div id="panel-new" role="tabpanel" aria-labelledby="tab-new">
+    <div class="card ticket-card" id="ticketCard">
+      <aside class="ticket-side">
+        <h3>كيف يعمل الطلب؟</h3>
+        <p>طلبك سري ولا يطّلع عليه أي طالب.</p>
+        <ol>
+          <li>تحقق من رقم هويتك.</li>
+          <li>اختر نوع المشكلة واشرحها.</li>
+          <li>احتفظ برقم الطلب، وتابع ردّ المسؤول من «متابعة شكواي».</li>
+        </ol>
+      </aside>
+
+      <div class="ticket-main">
+        <form class="form" id="ticketForm" novalidate>
+          <div class="field full" id="verifyStep">
+            <label for="f-id">هوية الطالب <span class="req">*</span></label>
+            <div class="verify">
+              <input type="text" id="f-id" inputmode="numeric" maxlength="10" autocomplete="off" placeholder="رقم الهوية – 10 أرقام" aria-describedby="idErr">
+              <button class="btn" type="button" id="verifyBtn">تحقق من الهوية</button>
+            </div>
+            <span class="hint">يجب أن يكون رقم الهوية مسجّلًا في بيانات المدرسة.</span>
+            <span class="err" id="idErr" role="alert"></span>
+          </div>
+
+          <div class="field full" id="verifiedBox" hidden>
+            <div class="verified">
+              <div class="tick" aria-hidden="true">✓</div>
+              <div><b id="vName"></b><small id="vMeta"></small></div>
+              <button class="btn outline sm" type="button" id="changeId">تغيير الهوية</button>
+            </div>
+          </div>
+
+          <div class="form full locked" id="restFields" style="grid-column:1/-1" aria-disabled="true">
+            <div class="field full" id="nameField" hidden>
+              <label for="f-name">اسم الطالب <span class="req">*</span></label>
+              <input type="text" id="f-name" maxlength="80" autocomplete="name">
+              <span class="err" data-for="f-name"></span>
+            </div>
+            <div class="field" id="gradeField">
+              <label for="f-grade">الصف الدراسي <span class="req">*</span></label>
+              <select id="f-grade">
+                <option value="">اختر الصف</option>
+                <option>الأول الثانوي</option>
+                <option>الثاني الثانوي</option>
+                <option>الثالث الثانوي</option>
+              </select>
+              <span class="err" data-for="f-grade"></span>
+            </div>
+            <div class="field" id="sectionField">
+              <label for="f-section">الشعبة <span class="req">*</span></label>
+              <select id="f-section"><option value="">اختر الشعبة</option></select>
+              <span class="err" data-for="f-section"></span>
+            </div>
+            <div class="field">
+              <label for="f-type">نوع المشكلة <span class="req">*</span></label>
+              <select id="f-type">
+                <option value="">اختر نوع المشكلة</option>
+                <option>تعذر الدخول إلى منصة مدرستي</option>
+                <option>نسيان كلمة المرور</option>
+                <option>مشكلة في حساب Microsoft</option>
+                <option>تعذر الدخول إلى تيمز أو حضور الحصة</option>
+                <option>شكوى</option>
+                <option>مشكلة أخرى</option>
+              </select>
+              <span class="err" data-for="f-type"></span>
+            </div>
+            <div class="field">
+              <label for="f-contact">وسيلة تواصل مناسبة <span class="req">*</span></label>
+              <input type="text" id="f-contact" maxlength="100" placeholder="جوال ولي الأمر أو بريد إلكتروني">
+              <span class="err" data-for="f-contact"></span>
+            </div>
+            <div class="field full">
+              <label for="f-desc">وصف المشكلة <span class="req">*</span></label>
+              <textarea id="f-desc" maxlength="2000" placeholder="ماذا حاولت؟ وما الرسالة التي ظهرت لك؟"></textarea>
+              <span class="hint"><span id="descCount">0</span> / 2000 حرف</span>
+              <span class="err" data-for="f-desc"></span>
+            </div>
+            <div class="sr" aria-hidden="true"><label>اترك هذا الحقل فارغًا <input type="text" id="f-website" tabindex="-1" autocomplete="off"></label></div>
+            <div class="field full">
+              <label class="check"><input type="checkbox" id="f-confirm">
+                <span>أؤكد أنني لم أكتب كلمة مرور أو رمز تحقق أو معلومات سرية في وصف المشكلة.</span></label>
+              <span class="err" data-for="f-confirm"></span>
+            </div>
+            <div class="field full">
+              <span class="err" id="formErr" role="alert"></span>
+              <button class="btn wide" type="submit" id="submitBtn">إرسال طلب الدعم</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    </div><!-- /panel-new -->
+
+    <!-- ===== متابعة شكواي ===== -->
+    <div id="panel-track" role="tabpanel" aria-labelledby="tab-track" hidden>
+      <div class="card track-card">
+        <aside class="track-side">
+          <h3>متابعة شكواي</h3>
+          <p>اكتب رقم الطلب ورقم هويتك. تظهر لك شكواك وحدها مع ردّ المسؤول وحالتها.</p>
+          <ul class="legend">
+            <li><i style="background:var(--azure)"></i>جديد: وصلت شكواك ولم تُفتح بعد</li>
+            <li><i style="background:var(--sun)"></i>قيد المعالجة: المسؤول يعمل عليها</li>
+            <li><i style="background:var(--violet)"></i>تم الرد: اقرأ ردّ المسؤول</li>
+            <li><i style="background:var(--emerald)"></i>تم الحل: أُغلقت بعد حلّ المشكلة</li>
+          </ul>
+        </aside>
+
+        <div class="track-main">
+          <form class="form" id="trackForm" novalidate>
+            <div class="field">
+              <label for="t-ticket">رقم الطلب <span class="req">*</span></label>
+              <input type="text" id="t-ticket" maxlength="12" autocomplete="off" placeholder="BSH-XXXXXX" dir="ltr" style="text-align:right;letter-spacing:2px;font-weight:600;text-transform:uppercase">
+            </div>
+            <div class="field">
+              <label for="t-id">رقم الهوية <span class="req">*</span></label>
+              <input type="text" id="t-id" inputmode="numeric" maxlength="10" autocomplete="off" placeholder="10 أرقام" dir="ltr" style="text-align:right;letter-spacing:2px;font-weight:600">
+            </div>
+            <div class="field full" id="savedWrap" hidden>
+              <span class="hint">طلبات أرسلتها من هذا الجهاز:</span>
+              <div class="saved" id="saved"></div>
+            </div>
+            <div class="field full">
+              <span class="err" id="trackErr" role="alert"></span>
+              <button class="btn wide" type="submit" id="trackBtn">عرض شكواي</button>
+            </div>
+          </form>
+
+          <div id="trackResult" hidden aria-live="polite">
+            <div class="tr-head">
+              <div>
+                <span class="hint">رقم الطلب</span>
+                <b class="tr-ticket" id="trTicket" dir="ltr"></b>
+              </div>
+              <span class="status-badge" id="trBadge"></span>
+            </div>
+
+            <ol class="stepper" id="stepper" aria-label="مراحل الطلب">
+              <li data-s="جديد"><span></span>استلام</li>
+              <li data-s="قيد المعالجة"><span></span>قيد المعالجة</li>
+              <li data-s="تم الرد"><span></span>تم الرد</li>
+              <li data-s="تم الحل"><span></span>تم الحل</li>
+            </ol>
+
+            <dl class="tr-meta" id="trMeta"></dl>
+
+            <h4 class="thread-title">المحادثة</h4>
+            <div class="thread" id="thread"></div>
+
+            <form id="replyForm" class="reply" novalidate>
+              <label for="replyText" class="sr">ردّك على المسؤول</label>
+              <textarea id="replyText" maxlength="1000" placeholder="اكتب ردًا أو معلومة إضافية للمسؤول… (بدون كلمات مرور)"></textarea>
+              <span class="err" id="replyErr" role="alert"></span>
+              <div class="reply-actions">
+                <button class="btn outline sm" type="button" id="trRefresh">تحديث</button>
+                <button class="btn violet" type="submit" id="replyBtn">إرسال الرد</button>
+              </div>
+            </form>
+            <p class="closed-note" id="closedNote" hidden>هذه الشكوى مغلقة. إذا احتجت مساعدة أخرى أرسل شكوى جديدة.</p>
+
+            <button class="btn light sm" type="button" id="trOther" style="margin-top:14px">متابعة طلب آخر</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="privacy">🔐 لا تُعرض الطلبات على الطلاب، ولا يطّلع عليها إلا المسؤول المخوّل عبر لوحة تحكم محمية.</p>
+  </section>
+
+  <!-- ===== التواصل ===== -->
+  <section class="contacts" aria-label="قنوات التواصل">
+    <a class="contact a" href="tel:19996"><div class="ic" aria-hidden="true">☎</div><div><small>الدعم الفني لوزارة التعليم</small><b>19996</b></div></a>
+    <a class="contact b" href="mailto:support@moe.gov.sa"><div class="ic" aria-hidden="true">✉</div><div><small>البريد الرسمي للدعم</small><b dir="ltr">support@moe.gov.sa</b></div></a>
+    <div class="contact c"><div class="ic" aria-hidden="true">⌂</div><div><small>ثانوية بلاط الشهداء الثانوية</small><b>الدعم الفني الطلابي</b></div></div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>ثانوية بلاط الشهداء الثانوية — مركز الدعم الفني الطلابي</span>
+    <a href="admin.html" rel="nofollow">دخول المسؤول</a>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(() => {
+  "use strict";
+  const SECTIONS = ["1","2","3","4","5","6","7","8","11","12","13","14","15","16","17","18","21","22","23","24","26","27","28"];
+  const $ = (s) => document.querySelector(s);
+
+  // صورة الدليل: إن لم توجد محليًا تُعرض من الموقع الحالي
+  const FALLBACK_IMG = "https://inspiring-tiramisu-a1de3f.netlify.app/assets/student-guide.jpg";
+  $("#guideImg").addEventListener("error", function onErr() {
+    this.removeEventListener("error", onErr);
+    this.src = FALLBACK_IMG; $("#guideLink").href = FALLBACK_IMG;
+  });
+
+  SECTIONS.forEach((s) => { const o = document.createElement("option"); o.value = s; o.textContent = "الشعبة " + s; $("#f-section").appendChild(o); });
+
+  const toDigits = (v) => String(v || "")
+    .replace(/[٠-٩]/g, (d) => d.charCodeAt(0) - 0x0660)
+    .replace(/[۰-۹]/g, (d) => d.charCodeAt(0) - 0x06f0)
+    .replace(/\D/g, "");
+  ["#lookupId", "#f-id"].forEach((id) => {
+    const el = $(id);
+    el.addEventListener("input", () => { const v = toDigits(el.value).slice(0, 10); if (v !== el.value) el.value = v; });
+  });
+
+  function toast(msg) {
+    const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+    clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("show"), 3200);
+  }
+  function busy(btn, on, label) {
+    if (on) { btn.dataset.label = btn.textContent; btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>' + (label || "جارٍ التنفيذ…"); }
+    else { btn.disabled = false; btn.textContent = btn.dataset.label || btn.textContent; }
+  }
+  async function api(path, body) {
+    let res;
+    try {
+      res = await fetch(path, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+    } catch { throw new Error("تعذر الاتصال بالخادم. تحقق من الإنترنت وحاول مجددًا."); }
+    let data = {};
+    try { data = await res.json(); } catch {}
+    if (!res.ok) { const e = new Error(data.error || "حدث خطأ غير متوقع. حاول لاحقًا."); e.data = data; throw e; }
+    return data;
+  }
+  const metaLine = (o) => [o.grade, o.section ? "الشعبة " + o.section : ""].filter(Boolean).join(" – ");
+
+  // ===== بياناتي =====
+  $("#lookupForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const err = $("#lookupErr"), input = $("#lookupId"), btn = $("#lookupBtn");
+    const id = toDigits(input.value);
+    err.textContent = ""; input.classList.remove("invalid");
+    if (id.length !== 10) { err.textContent = "رقم الهوية يجب أن يكون 10 أرقام."; input.classList.add("invalid"); input.focus(); return; }
+    busy(btn, true, "جارٍ البحث…");
+    try {
+      const d = await api("/api/lookup", { id });
+      const off = d.official || {};
+      const nameField = d.fields.find((f) => /اسم/.test(f.label));
+      const name = off.name || (nameField && nameField.value) || "طالب المدرسة";
+      $("#whoName").textContent = name;
+      $("#whoMeta").textContent = metaLine(off) || "رقم الهوية " + d.id;
+      $("#avatar").textContent = name.trim().charAt(0);
+
+      const ev = $("#emailVal"), cb = $("#copyEmail");
+      if (d.email) { ev.textContent = d.email; ev.dir = "ltr"; ev.classList.remove("na"); cb.hidden = false; }
+      else { ev.textContent = "غير متوفر – راجع إدارة المدرسة"; ev.dir = "rtl"; ev.classList.add("na"); cb.hidden = true; }
+
+      const kv = $("#kv"); kv.textContent = "";
+      const addRow = (label, value) => {
+        const box = document.createElement("div");
+        const dt = document.createElement("dt"); dt.textContent = label;
+        const dd = document.createElement("dd"); dd.textContent = value;
+        box.append(dt, dd); kv.appendChild(box);
+      };
+      addRow("رقم الهوية", d.id);
+      d.fields.filter((f) => String(f.value).trim() !== name).forEach((f) => addRow(f.label, f.value));
+
+      const r = $("#lookupResult"); r.hidden = false; r.classList.remove("show"); void r.offsetWidth; r.classList.add("show");
+    } catch (ex) {
+      $("#lookupResult").hidden = true;
+      err.textContent = ex.message;
+    } finally { busy(btn, false); }
+  });
+  $("#copyEmail").addEventListener("click", async () => {
+    const v = $("#emailVal").textContent;
+    try { await navigator.clipboard.writeText(v); toast("تم نسخ البريد الإلكتروني."); }
+    catch {
+      const r = document.createRange(); r.selectNodeContents($("#emailVal"));
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      toast("حدّد البريد وانسخه يدويًا.");
+    }
+  });
+  $("#hideData").addEventListener("click", () => {
+    $("#lookupResult").hidden = true; $("#kv").textContent = ""; $("#lookupId").value = ""; $("#lookupId").focus();
+  });
+
+  // ===== نموذج الشكاوى: التحقق من الهوية أولًا =====
+  let verified = null; // {id, name, grade, section}
+  const rest = $("#restFields");
+  function lockRest(lock) {
+    rest.classList.toggle("locked", lock);
+    rest.setAttribute("aria-disabled", lock ? "true" : "false");
+    rest.querySelectorAll("input,select,textarea,button").forEach((el) => { el.disabled = lock; });
+  }
+  lockRest(true);
+
+  function resetVerify() {
+    verified = null;
+    $("#verifiedBox").hidden = true; $("#verifyStep").hidden = false;
+    $("#nameField").hidden = true;
+    ["#f-grade", "#f-section"].forEach((s) => { $(s).value = ""; $(s).dataset.locked = ""; });
+    $("#gradeField").hidden = false; $("#sectionField").hidden = false;
+    lockRest(true);
+  }
+
+  $("#verifyBtn").addEventListener("click", verify);
+  $("#f-id").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); verify(); } });
+  $("#changeId").addEventListener("click", () => { resetVerify(); $("#f-id").value = ""; $("#f-id").focus(); });
+
+  async function verify() {
+    const input = $("#f-id"), err = $("#idErr"), btn = $("#verifyBtn");
+    const id = toDigits(input.value);
+    err.textContent = ""; input.classList.remove("invalid");
+    if (id.length !== 10) { err.textContent = "رقم الهوية يجب أن يكون 10 أرقام."; input.classList.add("invalid"); input.focus(); return; }
+    busy(btn, true, "جارٍ التحقق…");
+    try {
+      const d = await api("/api/lookup", { id });
+      const off = d.official || {};
+      verified = { id: d.id, name: off.name || "", grade: off.grade || "", section: off.section || "" };
+      $("#vName").textContent = verified.name || "تم التحقق من رقم الهوية";
+      $("#vMeta").textContent = [verified.name ? "" : "", metaLine(verified), "هوية " + d.id].filter(Boolean).join(" – ");
+      $("#verifyStep").hidden = true; $("#verifiedBox").hidden = false;
+      lockRest(false);
+      // الاسم والصف والشعبة من ملف المدرسة ولا تُعدّل
+      $("#nameField").hidden = !!verified.name;
+      if (verified.grade) { $("#f-grade").value = verified.grade; $("#gradeField").hidden = true; }
+      if (verified.section) { $("#f-section").value = verified.section; $("#sectionField").hidden = true; }
+      $("#f-type").focus();
+    } catch (ex) {
+      err.textContent = ex.data && /لم يتم العثور/.test(ex.message)
+        ? "رقم الهوية غير مسجّل في بيانات المدرسة. لا يمكن إرسال طلب إلا لطلاب المدرسة."
+        : ex.message;
+      input.classList.add("invalid");
+    } finally { busy(btn, false); }
+  }
+
+  const form = $("#ticketForm");
+  $("#f-desc").addEventListener("input", (e) => { $("#descCount").textContent = e.target.value.length; });
+
+  const rules = [
+    ["f-name", (v) => !$("#nameField").hidden ? (v.trim().length >= 3 || "اكتب اسم الطالب.") : true],
+    ["f-grade", (v) => !!v || "اختر الصف الدراسي."],
+    ["f-section", (v) => !!v || "اختر الشعبة."],
+    ["f-type", (v) => !!v || "اختر نوع المشكلة."],
+    ["f-contact", (v) => v.trim().length >= 3 || "اكتب وسيلة تواصل مناسبة."],
+    ["f-desc", (v) => v.trim().length >= 10 || "اكتب وصفًا أوضح للمشكلة (10 أحرف على الأقل)."],
+  ];
+  function setErr(id, msg) {
+    const el = document.getElementById(id), box = form.querySelector(`.err[data-for="${id}"]`);
+    if (box) box.textContent = msg || "";
+    el.classList.toggle("invalid", !!msg);
+  }
+  rules.forEach(([id]) => document.getElementById(id).addEventListener("input", () => setErr(id, "")));
+  $("#f-confirm").addEventListener("change", () => setErr("f-confirm", ""));
+
+  const PW_HINT = /(كلمة\s*(المرور|السر)|الباسورد|باسوورد|password|رمز\s*التحقق|otp)\s*[:=]?\s*\S{4,}/i;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    $("#formErr").textContent = "";
+    if (!verified) { $("#idErr").textContent = "تحقق من رقم الهوية أولًا."; $("#f-id").focus(); return; }
+    let first = null;
+    for (const [id, fn] of rules) {
+      const r = fn(document.getElementById(id).value);
+      if (r !== true) { setErr(id, r); first = first || id; } else setErr(id, "");
+    }
+    if (!$("#f-confirm").checked) { setErr("f-confirm", "يجب التأكيد قبل الإرسال."); first = first || "f-confirm"; }
+    if (!first && PW_HINT.test($("#f-desc").value)) {
+      setErr("f-desc", "يبدو أن الوصف يحتوي على كلمة مرور أو رمز تحقق. احذفها ثم أرسل الطلب.");
+      first = "f-desc";
+    }
+    if (first) {
+      const el = document.getElementById(first);
+      if (el.closest("[hidden]")) { $("#formErr").textContent = "بيانات الصف أو الشعبة غير مكتملة في ملف المدرسة. راجع الإدارة."; }
+      else el.focus();
+      return;
+    }
+
+    const body = {
+      studentId: verified.id,
+      name: verified.name || $("#f-name").value,
+      grade: $("#f-grade").value, section: $("#f-section").value,
+      type: $("#f-type").value, contact: $("#f-contact").value,
+      description: $("#f-desc").value, confirm: $("#f-confirm").checked, website: $("#f-website").value || "",
+    };
+    const btn = $("#submitBtn");
+    busy(btn, true, "جارٍ الإرسال…");
+    try {
+      const d = await api("/api/submit", body);
+      const main = document.querySelector(".ticket-main");
+      main.textContent = "";
+      const wrap = document.createElement("div"); wrap.className = "success";
+      wrap.innerHTML = '<div class="big">✓</div><h3>وصلت شكواك إلى مسؤول الدعم</h3><p class="sub" style="margin:6px 0 0">احتفظ برقم الطلب، فستحتاجه مع رقم هويتك لمتابعة الرد:</p><div class="ticket-row"><div class="ticket"></div><button class="btn outline sm" type="button" data-copy>نسخ</button></div><p class="hint">تظهر لك الردود وحالة الطلب في «متابعة شكواي».</p><div class="success-actions"></div>';
+      wrap.querySelector(".ticket").textContent = d.ticket;
+      wrap.querySelector("[data-copy]").addEventListener("click", () => copyText(d.ticket, "تم نسخ رقم الطلب."));
+      saveTicket(d.ticket);
+      const follow = document.createElement("button"); follow.className = "btn violet"; follow.type = "button"; follow.textContent = "متابعة هذا الطلب";
+      follow.addEventListener("click", () => { openTab("track"); $("#t-ticket").value = d.ticket; $("#t-id").value = verified.id; $("#trackForm").requestSubmit(); });
+      const again = document.createElement("button"); again.className = "btn light"; again.type = "button"; again.textContent = "إرسال شكوى أخرى";
+      again.addEventListener("click", () => { location.hash = "ticket"; location.reload(); });
+      wrap.querySelector(".success-actions").append(follow, again); main.appendChild(wrap);
+      $("#ticketCard").scrollIntoView({ behavior: "smooth", block: "center" });
+    } catch (ex) {
+      if (ex.data && ex.data.notRegistered) { resetVerify(); $("#idErr").textContent = ex.message; }
+      else $("#formErr").textContent = ex.message;
+      busy(btn, false);
+    }
+  });
+
+  // ===== التبويبات: شكوى جديدة / متابعة شكواي =====
+  function openTab(name) {
+    ["new", "track"].forEach((n) => {
+      $("#panel-" + n).hidden = n !== name;
+      $("#tab-" + n).setAttribute("aria-selected", n === name ? "true" : "false");
+    });
+    if (name === "track") renderSaved();
+  }
+  document.querySelectorAll("[data-open]").forEach((b) => b.addEventListener("click", (e) => {
+    const n = b.dataset.open;
+    if (b.tagName === "A") { e.preventDefault(); document.getElementById("ticket").scrollIntoView({ behavior: "smooth" }); }
+    openTab(n);
+    if (n === "track") setTimeout(() => $("#t-ticket").focus({ preventScroll: true }), 350);
+  }));
+
+  async function copyText(v, msg) {
+    try { await navigator.clipboard.writeText(v); toast(msg); } catch { toast("انسخ الرقم يدويًا: " + v); }
+  }
+
+  // أرقام الطلبات المرسلة من هذا الجهاز (أرقام الطلبات فقط، بدون الهوية)
+  const LS = "bsh_tickets";
+  function getSaved() { try { return JSON.parse(localStorage.getItem(LS) || "[]").filter((t) => /^BSH-[A-Z0-9]{6}$/.test(t)); } catch { return []; } }
+  function saveTicket(t) { try { const a = getSaved().filter((x) => x !== t); a.unshift(t); localStorage.setItem(LS, JSON.stringify(a.slice(0, 5))); } catch {} }
+  function renderSaved() {
+    const a = getSaved(), box = $("#saved"); box.textContent = "";
+    $("#savedWrap").hidden = !a.length;
+    a.forEach((t) => {
+      const b = document.createElement("button"); b.type = "button"; b.className = "chip-btn"; b.textContent = t; b.dir = "ltr";
+      b.addEventListener("click", () => { $("#t-ticket").value = t; $("#t-id").focus(); });
+      box.appendChild(b);
+    });
+  }
+
+  $("#t-id").addEventListener("input", () => { const el = $("#t-id"); const v = toDigits(el.value).slice(0, 10); if (v !== el.value) el.value = v; });
+  $("#t-ticket").addEventListener("input", () => { const el = $("#t-ticket"); const v = el.value.toUpperCase().replace(/[^A-Z0-9-]/g, ""); if (v !== el.value) el.value = v; });
+
+  const STATUS_COLOR = { "جديد": "var(--azure)", "قيد المعالجة": "var(--sun)", "تم الرد": "var(--violet)", "تم الحل": "var(--emerald)", "مغلق": "#7A8899" };
+  const ORDER = ["جديد", "قيد المعالجة", "تم الرد", "تم الحل"];
+  const fmt = (iso) => { try { return new Date(iso).toLocaleString("ar-SA-u-ca-gregory-nu-latn", { dateStyle: "medium", timeStyle: "short" }); } catch { return iso; } };
+  let tracking = null; // {ticket, studentId}
+
+  function renderComplaint(c) {
+    $("#trTicket").textContent = c.ticket;
+    const badge = $("#trBadge"); badge.textContent = c.status; badge.style.setProperty("--c", STATUS_COLOR[c.status] || "var(--azure)");
+    const idx = c.status === "مغلق" ? 3 : ORDER.indexOf(c.status);
+    document.querySelectorAll("#stepper li").forEach((li, i) => {
+      li.classList.toggle("done", i < idx); li.classList.toggle("current", i === idx);
+    });
+    const meta = $("#trMeta"); meta.textContent = "";
+    [["الطالب", c.name], ["الصف والشعبة", [c.grade, c.section ? "الشعبة " + c.section : ""].filter(Boolean).join(" – ")], ["نوع المشكلة", c.type], ["آخر تحديث", fmt(c.updatedAt)]]
+      .forEach(([k, v]) => { const d = document.createElement("div"); const dt = document.createElement("dt"); dt.textContent = k; const dd = document.createElement("dd"); dd.textContent = v || "—"; d.append(dt, dd); meta.appendChild(d); });
+
+    const th = $("#thread"); th.textContent = "";
+    const bubble = (from, text, at, label) => {
+      const b = document.createElement("div"); b.className = "bubble " + from;
+      const h = document.createElement("div"); h.className = "b-head"; h.textContent = label + " · " + fmt(at);
+      const p = document.createElement("p"); p.textContent = text;
+      b.append(h, p); th.appendChild(b);
+    };
+    bubble("student", c.description, c.createdAt, "شكواك");
+    c.messages.forEach((m) => bubble(m.from, m.text, m.at, m.from === "admin" ? "مسؤول الدعم" : "ردّك"));
+    if (!c.messages.some((m) => m.from === "admin")) {
+      const w = document.createElement("div"); w.className = "waiting"; w.textContent = "لم يصل ردّ المسؤول بعد. سيظهر هنا فور كتابته.";
+      th.appendChild(w);
+    }
+    $("#replyForm").hidden = !c.canReply; $("#closedNote").hidden = c.canReply;
+    $("#trackForm").hidden = true; $("#trackResult").hidden = false;
+  }
+
+  async function track(extra) {
+    const res = await api("/api/track", { ticket: tracking.ticket, studentId: tracking.studentId, ...(extra || {}) });
+    renderComplaint(res.complaint);
+    return res;
+  }
+
+  $("#trackForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const err = $("#trackErr"), btn = $("#trackBtn");
+    const ticket = $("#t-ticket").value.trim(), id = toDigits($("#t-id").value);
+    err.textContent = "";
+    if (!/^(BSH-?)?[A-Z0-9]{6}$/i.test(ticket)) { err.textContent = "اكتب رقم الطلب كما ظهر لك، مثل BSH-7Q2K9A."; $("#t-ticket").focus(); return; }
+    if (id.length !== 10) { err.textContent = "رقم الهوية يجب أن يكون 10 أرقام."; $("#t-id").focus(); return; }
+    tracking = { ticket, studentId: id };
+    busy(btn, true, "جارٍ البحث…");
+    try { await track(); saveTicket($("#trTicket").textContent); $("#trackResult").scrollIntoView({ behavior: "smooth", block: "start" }); }
+    catch (ex) { err.textContent = ex.message; tracking = null; }
+    finally { busy(btn, false); }
+  });
+
+  $("#trRefresh").addEventListener("click", async () => {
+    const btn = $("#trRefresh"); busy(btn, true, "تحديث…");
+    try { await track(); toast("تم تحديث حالة الطلب."); } catch (ex) { toast(ex.message); } finally { busy(btn, false); }
+  });
+
+  $("#replyForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const t = $("#replyText").value.trim(), err = $("#replyErr"); err.textContent = "";
+    if (t.length < 2) { err.textContent = "اكتب ردك أولًا."; return; }
+    if (PW_HINT.test(t)) { err.textContent = "يبدو أن الرد يحتوي على كلمة مرور أو رمز تحقق. احذفها ثم أرسل."; return; }
+    const btn = $("#replyBtn"); busy(btn, true, "جارٍ الإرسال…");
+    try { await track({ action: "reply", text: t }); $("#replyText").value = ""; toast("وصل ردّك إلى المسؤول."); }
+    catch (ex) { err.textContent = ex.message; } finally { busy(btn, false); }
+  });
+
+  $("#trOther").addEventListener("click", () => {
+    tracking = null; $("#trackResult").hidden = true; $("#trackForm").hidden = false;
+    $("#t-ticket").value = ""; $("#t-id").value = ""; renderSaved(); $("#t-ticket").focus();
+  });
+
+  // فتح «متابعة شكواي» مباشرة عند الدخول برابط ينتهي بـ ‎#track
+  if (location.hash === "#track") openTab("track");
+})();
+</script>
+</body>
+</html>

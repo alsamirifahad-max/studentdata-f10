@@ -1,1 +1,9 @@
-{"name":"balat-student-support-secure","version":"1.0.0","private":true,"type":"module","dependencies":{"@supabase/supabase-js":"^2.57.0"}}
+{
+  "name": "bsh-support-center",
+  "version": "1.0.0",
+  "description": "مركز الدعم الفني الطلابي - ثانوية بلاط الشهداء",
+  "dependencies": {
+    "@netlify/blobs": "^11.1.5"
+  },
+  "private": true
+}
