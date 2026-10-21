@@ -323,3 +323,48 @@ footer a:hover{opacity:1}
   .stepper li{font-size:11px}
   .bubble{max-width:92%}
 }
+
+/* ================= عنوان الرأس: دليل الطالب الرقمي ================= */
+.hero-title{margin:18px 0 12px;font-weight:800;line-height:1.15;text-shadow:none}
+.hero-title span{display:block}
+.ht-top{font-size:clamp(34px,5.6vw,56px);color:#fff;text-shadow:0 2px 18px rgba(0,60,60,.2)}
+.ht-bottom{position:relative;width:max-content;font-size:clamp(46px,8vw,84px);letter-spacing:0;
+  background:linear-gradient(100deg,#FFF3B0 0%,#FFD23F 30%,#FFFFFF 48%,#FFD23F 62%,#FFB347 100%);background-size:220% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 3px 0 rgba(0,90,80,.35)) drop-shadow(0 10px 22px rgba(0,40,60,.25));animation:ht-shine 6s ease-in-out 1s 2 both}
+.ht-bottom::after{content:"";position:absolute;inset-inline:6px;bottom:-4px;height:7px;border-radius:999px;z-index:-1;
+  background:linear-gradient(90deg,rgba(255,107,91,.0),#FF8F5B,#FFD23F);transform-origin:right;animation:ht-bar .9s cubic-bezier(.2,.8,.2,1) .2s both}
+.ht-spark{position:absolute;inset-inline-start:calc(100% + 8px);top:10%;width:22px;height:22px;
+  background:#FFE27A;clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);animation:ht-twinkle 2.6s ease-in-out infinite}
+@keyframes ht-shine{0%{background-position:100% 0}100%{background-position:0 0}}
+@keyframes ht-bar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes ht-twinkle{0%,100%{transform:scale(.7) rotate(0);opacity:.7}50%{transform:scale(1.1) rotate(45deg);opacity:1}}
+.hero .lead{max-width:34ch;font-weight:500}
+
+/* ================= دليل المنصات التعليمية ================= */
+.pf-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
+.pf-blue{grid-column:1/-1}.pf-blue .pf-links{grid-template-columns:repeat(3,1fr)}
+
+.pf-cat{--c:var(--azure);--c2:#7DB9FF;--soft:#EAF3FF;position:relative;display:flex;flex-direction:column;gap:14px;padding:20px;border-radius:var(--r-lg);
+  background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
+.pf-cat::before{content:"";position:absolute;inset:0 0 auto 0;height:6px;background:linear-gradient(90deg,var(--c),var(--c2))}
+.pf-blue{--c:#1F7BFF;--c2:#38C6F4;--soft:#E8F3FF}
+.pf-purple{--c:#7C5CFF;--c2:#E05CFF;--soft:#F3EDFF}
+.pf-green{--c:#00A86B;--c2:#9BE15D;--soft:#E6F9EF}
+.pf-head{display:flex;align-items:center;gap:12px}
+.pf-emoji{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:26px;flex:none;
+  background:linear-gradient(135deg,var(--c),var(--c2));box-shadow:0 10px 20px -10px var(--c)}
+.pf-head h3{margin:0;font-size:18px}
+.pf-head small{color:var(--ink-2);font-size:13px}
+.pf-links{display:grid;gap:10px}
+.pf-btn{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--r-sm);text-decoration:none;color:var(--ink);
+  background:var(--soft);border:1.5px solid transparent;transition:transform .15s,background .2s,border-color .2s,box-shadow .2s}
+.pf-btn:hover,.pf-btn:focus-visible{background:#fff;border-color:var(--c);box-shadow:0 12px 24px -14px var(--c);transform:translateY(-2px)}
+.pf-ic{width:40px;height:40px;border-radius:12px;background:#fff;display:grid;place-items:center;font-size:20px;flex:none;box-shadow:0 2px 6px rgba(11,37,69,.08)}
+.pf-tx{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.45}
+.pf-tx b{font-family:var(--head);font-size:15px}
+.pf-tx small{color:var(--ink-2);font-size:13px}
+.pf-btn::after{content:"";width:9px;height:9px;flex:none;border-left:2.5px solid var(--c);border-bottom:2.5px solid var(--c);transform:rotate(45deg);margin-inline-end:4px;opacity:.7;transition:transform .2s}
+.pf-btn:hover::after{transform:translateX(-3px) rotate(45deg);opacity:1}
+@media (max-width:960px){.pf-purple .pf-links{grid-template-columns:1fr}}
+@media (max-width:640px){.pf-grid{grid-template-columns:1fr}.pf-blue .pf-links{grid-template-columns:1fr}.ht-spark{width:16px;height:16px}}
