@@ -464,15 +464,25 @@
     const fmtH = new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura-nu-latn", { timeZone: TZ, day: "numeric", month: "long", year: "numeric" });
     const fmtG = new Intl.DateTimeFormat("ar-SA-u-ca-gregory-nu-latn", { timeZone: TZ, day: "numeric", month: "long", year: "numeric" });
     const fmtW = new Intl.DateTimeFormat("ar-SA", { timeZone: TZ, weekday: "long" });
-    const fmtShortH = new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura-nu-latn", { timeZone: TZ, day: "numeric", month: "numeric", year: "numeric" });
+    // صيغة رقمية للهجري بلغة إنجليزية لضمان أرقام لاتينية خالية من رموز الاتجاه في كل المتصفحات (خاصة Safari على الآيفون)
+    const fmtShortH = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura-nu-latn", { timeZone: TZ, day: "numeric", month: "numeric", year: "numeric" });
+    // يحوّل أي نص رقمي (أرقام عربية/فارسية أو مع رموز اتجاه أو لاحقة AH) إلى رقم صحيح
+    const toNum = (v) => parseInt(String(v ?? "").replace(/[٠-٩]/g, (c) => c.charCodeAt(0) - 0x0660).replace(/[۰-۹]/g, (c) => c.charCodeAt(0) - 0x06f0).replace(/[^0-9]/g, ""), 10);
+    // تاريخ هجري رقمي موثوق (يوم/شهر/سنة)، مع بديل يقرأ الصيغة النصية إن تعذّرت الأجزاء
+    function hijriNums(t) {
+      const hp = Object.fromEntries(fmtShortH.formatToParts(t).map((x) => [x.type, x.value]));
+      let d = toNum(hp.day), m = toNum(hp.month), y = toNum(hp.year);
+      if (!(d && m && y)) { const n = (fmtShortH.format(t).match(/\d+/g) || []).map(Number); [m, d, y] = n; }
+      return d && m && y ? d + "/" + m + "/" + y : "";
+    }
     const parts = new Intl.DateTimeFormat("en-US", { timeZone: TZ, hour: "numeric", minute: "2-digit", second: "2-digit", hourCycle: "h23", year: "numeric", month: "2-digit", day: "2-digit" });
     const hijriText = (t) => fmtH.format(t).replace(/\s*هـ$/, "") + "هـ";
     const dateLine = (iso, note) => {
       const t = at(iso) + 12 * 36e5;
-      const hp = Object.fromEntries(fmtShortH.formatToParts(t).map((x) => [x.type, x.value]));
       const [y, m, d] = iso.split("-").map(Number);
       const ltr = (x) => "\u2066" + x + "\u2069"; // عزل الأرقام حتى لا ينقلب ترتيب التاريخ داخل النص العربي
-      return fmtW.format(t) + " " + ltr(Number(hp.day) + "/" + Number(hp.month) + "/" + parseInt(hp.year, 10)) + "هـ – " + ltr(d + "/" + m + "/" + y) + "م" + (note ? " (" + note + ")" : "");
+      const h = hijriNums(t);
+      return fmtW.format(t) + " " + (h ? ltr(h) + "هـ – " : "") + ltr(d + "/" + m + "/" + y) + "م" + (note ? " (" + note + ")" : "");
     };
     const pad = (n) => String(n).padStart(2, "0");
 
