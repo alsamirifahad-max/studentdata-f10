@@ -194,12 +194,30 @@ export async function findStudent(id) {
   return { data, row: data.records[id] || null };
 }
 
+/** الشعبة بالترقيم المعتمد في الموقع (الأول 1–8، الثاني 11–18، الثالث 21–28)
+ *  تقبل «14» أو «الشعبة 14» أو «٤» أو «2/4»، وإذا كُتبت الشعبة داخل الصف (1–8) للثاني أو الثالث تُحوَّل (4 ← 14) */
+export function smartSection(v, grade) {
+  const nums = String(v ?? "").replace(/[٠-٩]/g, (d) => d.charCodeAt(0) - 0x0660).replace(/[۰-۹]/g, (d) => d.charCodeAt(0) - 0x06f0).match(/\d+/g);
+  if (!nums) return "";
+  const n = +nums[nums.length - 1];
+  const gi = GRADES.indexOf(grade);
+  if (gi > 0 && n >= 1 && n <= 8) return String(gi * 10 + n);
+  return SECTIONS.includes(String(n)) ? String(n) : "";
+}
+
 /** بيانات الطالب الرسمية من الملف: الاسم والصف والشعبة */
 export function officialInfo(data, row) {
   const r = data.roles || {};
+  const cols = data.columns || [];
+  const col = (re) => cols.find((c) => re.test(c));
+  const gCol = r.grade || col(/صف|مرحل|المستوى/), sCol = r.section || col(/شعب|فصل/);
+  const grade = gCol ? matchGrade(row[gCol]) : "";
+  let section = sCol ? smartSection(row[sCol], grade) : "";
+  // الشعبة مكتوبة مع الصف في عمود واحد (مثل «الثاني الثانوي / 4»)
+  if (!section && gCol && gCol !== sCol) { const m = String(row[gCol] ?? "").match(/(?:\/|-|–|شعب[هة]?|فصل)\s*([0-9٠-٩]{1,2})\s*$/); if (m) section = smartSection(m[1], grade); }
   return {
-    name: r.name ? String(row[r.name] ?? "").trim() : "",
-    grade: r.grade ? matchGrade(row[r.grade]) : "",
-    section: r.section ? matchSection(row[r.section]) : "",
+    name: r.name ? String(row[r.name] ?? "").trim() : (col(/اسم/) ? String(row[col(/اسم/)] ?? "").trim() : ""),
+    grade,
+    section,
   };
 }

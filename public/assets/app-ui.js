@@ -215,6 +215,15 @@
   const toData = () => { $("#mydata").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" }); setTimeout(() => $("#lookupId") && $("#lookupId").focus({ preventScroll: true }), 450); };
   $("#msToData") && $("#msToData").addEventListener("click", toData);
   BSH.on("my", syncMs);
+  // أُدخلت الهوية لكن الشعبة غير مسجلة في ملف الطلاب: نوضح السبب بدل تكرار طلب الهوية
+  BSH.on("lookup", (d) => {
+    if (BSH.getMy && BSH.getMy()) return;
+    if (d && d.id && (!d.grade || !d.section)) {
+      msIdForm.querySelector(".ms-id-tx b").textContent = "لم نجد " + (d.grade ? "شعبتك" : "صفك وشعبتك") + " في ملف الطلاب";
+      msIdForm.querySelector(".ms-id-tx small").textContent = "بياناتك ظهرت، لكن " + (d.grade ? "رقم الشعبة" : "الصف والشعبة") + " غير مسجل في ملف المدرسة. أرسل طلبًا من «صوتك يصل» لتصحيحه.";
+      $("#msToData").hidden = true;
+    }
+  });
   // الجدول محفوظ دائمًا بعد إدخال الهوية
   try { localStorage.setItem("bsh_my_remember", "true"); } catch {}
   if ($("#msRemember")) $("#msRemember").checked = true;
