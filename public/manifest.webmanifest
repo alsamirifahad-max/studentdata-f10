@@ -1,0 +1,17 @@
+{
+  "name": "دليل الطالب الرقمي – ثانوية بلاط الشهداء",
+  "short_name": "دليل الطالب",
+  "description": "بياناتي، جدولي واختباراتي، المنصات التعليمية، والدعم الطلابي «صوتك يصل».",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F4F9FF",
+  "theme_color": "#00A774",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "assets/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

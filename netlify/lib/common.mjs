@@ -43,7 +43,8 @@ export async function findComplaint(ticket) {
   return { key: k.key, item: await s.get(k.key, { type: "json" }) };
 }
 
-/** ما يراه الطالب من شكواه فقط (بدون الملاحظات الداخلية للمسؤول) */
+/** ما يراه الطالب من استفساره فقط (بدون الملاحظات الداخلية، وبدون أسماء المسؤولين: يظهر الدور فقط) */
+export const RATING_TAGS = ["رد سريع", "حل المشكلة", "واضح", "يحتاج تحسين"];
 export function publicView(c) {
   return {
     ticket: c.ticket,
@@ -55,10 +56,31 @@ export function publicView(c) {
     status: c.status,
     createdAt: c.createdAt,
     updatedAt: c.updatedAt,
-    messages: (c.messages || []).map((m) => ({ from: m.from, text: m.text, at: m.at })),
+    resolvedAt: c.resolvedAt || null,
+    assignedRole: c.assignedRole || "",
+    messages: (c.messages || []).map((m) => ({ from: m.from, text: m.text, at: m.at, ...(m.from === "admin" ? { role: m.role && m.role !== "مدير النظام" ? m.role : "إدارة المدرسة" } : {}) })),
     canReply: !CLOSED.includes(c.status),
+    rating: c.rating ? { stars: c.rating.stars, tags: c.rating.tags || [], at: c.rating.at } : null,
+    canRate: CLOSED.includes(c.status) && !c.rating && (c.messages || []).some((m) => m.from === "admin"),
   };
 }
+
+/** وقت آخر رد من المسؤول (لتنبيه الطالب بوجود رد جديد) */
+export const lastAdminAt = (c) => ((c.messages || []).filter((m) => m.from === "admin").pop() || {}).at || null;
+
+// ===== المحتوى العام (أسئلة شائعة، جداول، اختبارات، تقويم، إعدادات) =====
+export const content = () => store("content");
+export async function getContent(key, def = null) {
+  const v = await content().get(key, { type: "json" });
+  return v ?? def;
+}
+/** تاريخ اليوم بتوقيت مكة YYYY-MM-DD */
+export const todayRiyadh = (d = new Date()) => new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Riyadh" }).format(d);
+export const addDays = (iso, n) => { const t = new Date(iso + "T12:00:00Z"); t.setUTCDate(t.getUTCDate() + n); return t.toISOString().slice(0, 10); };
+export const ISO_DAY = /^\d{4}-\d{2}-\d{2}$/;
+export const DEFAULT_SETTINGS = { archiveDays: 30, maskPhones: true };
+
+export { DEFAULT_FAQ, DEFAULT_FILES, FAQ_CATS } from "./faq-data.mjs";
 
 // الرقم السري لا يُكتب في الكود أبدًا (المستودع قد يكون عامًا)؛ يُضبط من إعدادات Netlify فقط
 const ADMIN_PASSWORD = () => String(process.env.ADMIN_PASSWORD || "");
@@ -103,23 +125,36 @@ export function checkPassword(p) {
   return safeEqual(p, ADMIN_PASSWORD());
 }
 
-export function issueToken() {
+/** رمز الجلسة: معرّف المستخدم + وقت الانتهاء + توقيع. owner = مدير النظام */
+export function issueToken(uid = "owner") {
   const exp = Date.now() + TOKEN_TTL_MS;
-  const payload = `admin.${exp}`;
+  const payload = `${uid}.${exp}`;
   const sig = crypto.createHmac("sha256", TOKEN_SECRET()).update(payload).digest("base64url");
   return { token: `${payload}.${sig}`, exp };
 }
 
+/** يتحقق من الرمز ويعيد { uid } أو false */
 export function verifyToken(req) {
   const h = req.headers.get("authorization") || "";
   const t = h.startsWith("Bearer ") ? h.slice(7) : "";
   const parts = t.split(".");
-  if (parts.length !== 3 || parts[0] !== "admin") return false;
+  if (parts.length !== 3 || !/^[a-z0-9]{1,40}$/i.test(parts[0])) return false;
   const exp = Number(parts[1]);
   if (!Number.isFinite(exp) || exp < Date.now()) return false;
-  const sig = crypto.createHmac("sha256", TOKEN_SECRET()).update(`admin.${exp}`).digest("base64url");
-  return safeEqual(sig, parts[2]);
+  const sig = crypto.createHmac("sha256", TOKEN_SECRET()).update(`${parts[0]}.${exp}`).digest("base64url");
+  return safeEqual(sig, parts[2]) ? { uid: parts[0] } : false;
 }
+
+/** بصمة لا يمكن عكسها لرقم الهوية (لمنع التصويت المكرر دون حفظ الهوية نفسها) */
+export const idHash = (scope, id) => crypto.createHmac("sha256", TOKEN_SECRET()).update(scope + ":" + id).digest("base64url").slice(0, 22);
+/** تنظيف قائمة شعب */
+export const cleanSections = (v) => [...new Set((Array.isArray(v) ? v : []).map(String).filter((x) => SECTIONS.includes(x)))];
+/** هل يستهدف العنصر هذا الطالب؟ (عام، أو لصفه، أو لشعبته) */
+export const forStudent = (x, grade, section) => {
+  const secs = Array.isArray(x.sections) && x.sections.length ? x.sections : x.section ? [x.section] : [];
+  if (secs.length) return secs.includes(section);
+  return !x.grade || x.grade === grade;
+};
 
 /** حدّ بسيط لعدد الطلبات لكل عنوان IP خلال نافذة زمنية */
 export async function rateLimit(context, bucket, limit, windowMs) {
@@ -141,8 +176,8 @@ export function matchGrade(v) {
   const s = String(v ?? "");
   const n = normalizeId(s);
   if (/أول|اول/.test(s) || n === "1" || n === "10") return GRADES[0];
-  if (/ثالث/.test(s) || n === "3" || n === "12") return GRADES[2];
-  if (/ثاني/.test(s) || n === "2" || n === "11") return GRADES[1];
+  if (/ثالث|تالث/.test(s) || n === "3" || n === "12") return GRADES[2];
+  if (/ثاني|تاني/.test(s) || n === "2" || n === "11") return GRADES[1];
   return "";
 }
 

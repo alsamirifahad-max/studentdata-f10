@@ -1,4 +1,4 @@
-import { json, store, clean, normalizeId, normalizeTicket, findComplaint, publicView, rateLimit, CLOSED } from "../lib/common.mjs";
+import { json, store, clean, normalizeId, normalizeTicket, findComplaint, publicView, rateLimit, CLOSED, RATING_TAGS } from "../lib/common.mjs";
 
 // متابعة الاستفسار: لا يُعرض الاستفسار إلا إذا تطابق رقم الطلب مع رقم هوية صاحبها.
 // الطالب لا يستطيع أبدًا رؤية شكاوى غيره، ولا قائمة الشكاوى.
@@ -38,6 +38,17 @@ export default async (req, context) => {
     item.unreadByAdmin = true;
     if (item.status === "تم الرد") item.status = "قيد المعالجة";
     item.updatedAt = now;
+    await store("complaints").setJSON(key, item);
+  }
+
+  if (b.action === "rate") {
+    const v = publicView(item);
+    if (!v.canRate) return json({ error: item.rating ? "سبق أن قيّمت هذا الاستفسار، شكرًا لك." : "يمكنك التقييم بعد حل الاستفسار." }, 400);
+    const stars = Number(b.stars);
+    if (!Number.isInteger(stars) || stars < 1 || stars > 5) return json({ error: "اختر عدد النجوم." }, 400);
+    const tags = (Array.isArray(b.tags) ? b.tags : []).filter((t) => RATING_TAGS.includes(t)).slice(0, 4);
+    item.rating = { stars, tags, note: clean(b.note, 300), at: new Date().toISOString() };
+    item.log = item.log || []; item.log.push({ at: item.rating.at, by: "الطالب", text: `قيّم الخدمة ${stars} من 5` });
     await store("complaints").setJSON(key, item);
   }
 

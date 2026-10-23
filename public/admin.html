@@ -113,6 +113,275 @@
   .switch input{width:18px;height:18px;accent-color:var(--brand)}
   .row-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;align-items:center}
   @media (max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}.stats .stat:first-child{grid-column:1/-1}.detail{grid-template-columns:1fr}.toolbar select{flex:1 1 45%}}
+  /* ===== الحساب والصلاحيات ===== */
+  .adm-who{display:flex;align-items:center;gap:10px;color:#fff;line-height:1.3}
+  .adm-who .av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:800 14px var(--head);background:rgba(255,255,255,.22)}
+  .adm-who b{display:block;font-size:14px}.adm-who small{font-size:12px;opacity:.85}
+  .adm-main{margin-top:0;min-width:0}
+  input[type=date],input[type=time],input[type=month],input[type=number],input[type=datetime-local]{width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:var(--r-sm);background:#fff;outline:none;font:inherit}
+  .ph-act input[type=month]{width:auto;padding:8px 10px}
+  .login-hint{font-size:12.5px;color:var(--ink-2);margin:-6px 0 2px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .pcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+  .pcard h2{font-size:18px;margin:0 0 4px}
+  .pcard .sub{margin:0 0 14px}
+  .ann-types{display:flex;gap:8px;flex-wrap:wrap}
+  .ann-types label{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);border-radius:999px;padding:5px 12px;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ann-types input{accent-color:var(--brand)}
+  .ann-types label:has(input:checked){border-color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff);color:var(--c)}
+  .t-urgent{--c:#D93A2B}.t-warn{--c:#A86A00}.t-info{--c:#1F6FD6}.t-congrats{--c:#00875F}
+  .row-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .row-item:last-child{border:0}
+  .row-item .bar{width:5px;align-self:stretch;border-radius:4px;background:var(--c,#94A3B8)}
+  .row-item{flex-wrap:wrap}
+  .row-item .tx{flex:1 1 200px;min-width:0}.row-item .tx b{display:block}.row-item .tx small{color:var(--ink-2);font-size:12.5px}
+  .row-actions{display:flex;gap:6px;flex-wrap:wrap}
+  .st-chip{font-size:12px;font-weight:700;border-radius:999px;padding:2px 10px;white-space:nowrap}
+  .st-active{background:var(--ok-soft);color:var(--ok)}.st-sched{background:var(--warn-soft);color:var(--warn)}.st-ended,.st-hidden{background:#EEF1F4;color:#5E6B7A}
+  .perm-box{border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:8px}
+  .perm-box label{display:flex;align-items:center;gap:8px;font-size:14px}
+  .perm-box input{width:18px;height:18px;accent-color:var(--brand)}
+  .perm-types{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;padding-inline-start:26px}
+  .perm-types label{font-size:13px}
+  .secret{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 14px;border-radius:12px;background:var(--warn-soft);border:1.5px dashed var(--sun);margin-top:12px}
+  .secret code{font:800 20px var(--head);letter-spacing:2px;direction:ltr;background:#fff;padding:4px 12px;border-radius:8px}
+  .badge-off{background:#FFECEA;color:#B42318}
+  .m-bubble small .by{font-weight:800}
+  .log{margin-top:12px;border-top:1px solid var(--line);padding-top:10px;font-size:12.5px;color:var(--ink-2)}
+  .log div{display:flex;gap:10px;padding:3px 0}.log span:first-child{flex:none;width:110px}
+  @media (max-width:760px){.grid2,.perm-types{grid-template-columns:1fr}}
+  /* ===== التخطيط: قائمة جانبية ===== */
+  .adm-grid{display:grid;grid-template-columns:232px minmax(0,1fr);gap:24px;align-items:start;padding-top:22px}
+  .tabs{flex-direction:column;position:sticky;top:16px;width:auto;margin:0;padding:8px;gap:2px;border-radius:18px}
+  .tab{display:flex;align-items:center;gap:10px;text-align:right;padding:11px 12px;font-size:14.5px}
+  .tab svg{width:19px;height:19px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .tab span{flex:1}
+  .tab:hover{background:var(--bg);color:var(--ink)}
+  .tab[aria-selected=true]{background:var(--brand);color:#fff}
+  .tab-badge{font-style:normal;min-width:22px;height:22px;border-radius:11px;background:var(--coral);color:#fff;font-size:12px;display:grid;place-items:center;padding:0 6px}
+  .ph{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+  .ph h1{font-size:24px;margin:0 0 2px}.ph .sub{margin:0}
+  .ph-act{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .ph-act input,.ph-act select{width:auto}
+  @media (max-width:980px){
+    .adm-grid{grid-template-columns:1fr;gap:14px;padding-top:14px}
+    .tabs{flex-direction:row;position:static;overflow-x:auto;scrollbar-width:none}
+    .tab{padding:9px 12px;white-space:nowrap}
+  }
+  /* ===== المؤشرات ===== */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+  .kpi{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow)}
+  .kpi small{display:block;color:var(--ink-2);font-size:13px}
+  .kpi b{display:block;font:800 30px/1.25 var(--head);margin:4px 0}
+  .kpi em{font-style:normal;font-size:12.5px;font-weight:700;color:var(--ink-2)}
+  .kpi em.up{color:var(--ok)}.kpi em.down{color:var(--danger)}.kpi b.warn{color:var(--danger)}
+  .dash-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:14px}
+  .hbars{display:grid;gap:9px}
+  .hbar{display:grid;grid-template-columns:minmax(120px,190px) 1fr 34px;gap:10px;align-items:center;font-size:13.5px}
+  .hbar .tr{height:12px;border-radius:6px;background:#EEF3F9;overflow:hidden}
+  .hbar .tr i{display:block;height:100%;border-radius:6px;background:var(--azure)}
+  .hbars.green .hbar .tr i{background:var(--emerald)}
+  .hbar b{text-align:left;font-variant-numeric:tabular-nums}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chips span{background:var(--info-soft);color:var(--info);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:700}
+  .att{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer;width:100%;background:none;border-inline:0;border-top:0;text-align:right}
+  .att:last-child{border-bottom:0}
+  .att .tx{flex:1;min-width:0}.att .tx b{display:block;font-size:14px}.att .tx small{color:var(--ink-2);font-size:12.5px}
+  .att .age{font-size:12px;font-weight:700;border-radius:999px;padding:2px 10px;background:var(--warn-soft);color:var(--warn);white-space:nowrap}
+  .att .why{font-size:12px;font-weight:700;color:#5B3FE0}
+  #trend svg{width:100%;height:auto;display:block}
+  @media (max-width:980px){.kpis{grid-template-columns:repeat(2,1fr)}.dash-grid{grid-template-columns:1fr}}
+  @media (max-width:600px){.hbar{grid-template-columns:1fr 80px 26px;font-size:13px}}
+  /* ===== الأسئلة الشائعة ===== */
+  .faq-edit{display:grid;gap:10px}
+  .fq{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:8px 12px}
+  .fq.off{opacity:.6}
+  .fq .fq-main{display:grid;grid-template-columns:150px 1fr;gap:8px}
+  .fq textarea{min-height:64px;grid-column:1/-1}
+  .fq .fq-link{grid-column:1/-1}
+  .fq .fq-tools{display:flex;flex-direction:column;gap:4px}
+  .ib{border:1px solid var(--line);background:#fff;border-radius:8px;width:34px;height:30px;cursor:pointer;font-size:14px;color:var(--ink-2)}
+  .ib:hover{border-color:var(--brand-3);color:var(--ink)}
+  .ib.del{color:var(--danger)}
+  .ib.txt{width:auto;padding:0 6px;font-size:12px;font-weight:700}
+  .fq.off::before{content:"مخفي عن الطلاب";grid-column:1/-1;font-size:12px;font-weight:700;color:var(--warn)}
+  @media (max-width:720px){.fq .fq-main{grid-template-columns:1fr}.fq{grid-template-columns:1fr}.fq .fq-tools{flex-direction:row}}
+  /* ===== الجداول ===== */
+  .periods-ed{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px}
+  .periods-ed input{font-size:13.5px;margin-bottom:4px}
+  .periods-ed div{background:var(--bg);border-radius:10px;padding:8px}
+  .periods-ed small{display:block;font-weight:700;font-size:12px;color:var(--ink-2);margin-bottom:4px}
+  .periods-ed input{padding:6px 8px!important}
+  .tt-wrap{overflow-x:auto}
+  .tt-ed{border-collapse:separate;border-spacing:5px;min-width:640px}
+  .tt-ed th,.tt-ed td{border:0;padding:0;background:none;position:static;text-align:center;font-size:13px}
+  .tt-ed th{color:var(--ink-2);font-weight:700}
+  .tt-ed th small{display:block;font-weight:500;font-size:11.5px}
+  .tt-ed td.day{font-weight:800;text-align:right;padding-inline-end:6px;white-space:nowrap}
+  .tt-ed input{padding:8px 6px!important;text-align:center;font-weight:700;font-size:13.5px;border-radius:10px!important;min-width:84px}
+  .tt-ed input:not(:placeholder-shown){background:var(--brand-soft);border-color:#BDEBD9}
+  .imp{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+  .imp summary{cursor:pointer;font-weight:700;color:var(--brand)}
+  /* ===== التقويم ===== */
+  .cal-terms{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+  .cal-terms .ct{background:var(--bg);border-radius:12px;padding:10px;display:grid;gap:6px}
+  .cal-terms .ct b{font-size:14px}
+  .cal-terms label{font-size:12px;color:var(--ink-2)}
+  .cal-terms .wk{font-size:12px;color:var(--ok);font-weight:700}
+  .cal-tb{width:100%;font-size:13px}
+  .cal-tb th{background:none;position:static;color:var(--ink-2);font-weight:700;padding:4px}
+  .cal-tb td{padding:3px;white-space:normal}
+  .cal-tb input{padding:6px 8px!important;font-size:13px}
+  .cal-tb td:first-child{width:38%}
+  @media (max-width:1200px){.grid2[style*="1.25fr"]{grid-template-columns:1fr!important}}
+  @media (max-width:640px){.cal-terms{grid-template-columns:1fr}.cal-tb,.cal-tb tbody,.cal-tb tr,.cal-tb td{display:block;width:auto!important}.cal-tb thead{display:none}.cal-tb tr{border:1px solid var(--line);border-radius:12px;padding:8px;margin-bottom:8px;display:grid;grid-template-columns:1fr 1fr;gap:6px}.cal-tb tr td:first-child{grid-column:1/-1}}
+  .cal-imp{display:grid;gap:6px;margin:12px 0 0;padding:10px 12px;border:1.5px dashed var(--line);border-radius:12px}
+  .imp-tbl td,.imp-tbl th{white-space:nowrap}
+  .cal-tb td.bk{color:var(--ink-2);white-space:nowrap}
+  .rec{border:1.5px dashed var(--line);border-radius:14px;padding:10px 12px;margin-bottom:12px;display:grid;gap:8px}
+  .rec-h b{display:block;font-size:14px}.rec-h small,.rec-tip{color:var(--ink-2);font-size:12.5px}
+  .rec-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .rec-btn i{width:10px;height:10px;border-radius:50%;background:var(--danger);display:inline-block;margin-inline-end:6px}
+  .rec-btn.on{background:var(--danger-soft);border-color:var(--danger);color:var(--danger)}
+  .rec-btn.on i{border-radius:2px;animation:recBlink 1s steps(2) infinite}
+  @keyframes recBlink{50%{opacity:.25}}
+  .rec-t{font-variant-numeric:tabular-nums;font-weight:800;color:var(--danger)}
+  .rec audio{width:100%;height:36px}
+  /* ===== الاختبارات النهائية ===== */
+  .fx-h1{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+  .fx-vis{background:var(--brand-soft);padding:8px 14px;border-radius:999px;font-weight:700}
+  .fx-steps{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 14px}
+  .fx-steps span{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;padding:5px 12px;border-radius:999px;background:var(--bg);color:var(--ink-2)}
+  .fx-steps span.ok{background:#E3F7EE;color:#0B7A4B}
+  .fx-steps span.ok::before{content:"✓"}
+  .fx-n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;font-size:14px;margin-inline-end:6px;vertical-align:2px}
+  .fx-tb{border-collapse:separate;border-spacing:4px;min-width:840px;width:100%}
+  .fx-tb select{min-width:92px}
+  .fx-tb td:nth-child(n+5) input{min-width:104px}
+  .fx-tb th,.fx-tb td{border:0;padding:0;background:none;position:static;font-size:13px;white-space:nowrap}
+  .fx-tb th{color:var(--ink-2);font-weight:700;padding:0 4px}
+  .fx-tb input,.fx-tb select{padding:7px 8px!important;font-size:13.5px;border-radius:10px!important}
+  .fx-tb input[type=date]{min-width:140px}
+  .fx-tb input[type=time]{min-width:96px}
+  .fx-tb td small{display:block;font-size:11.5px;color:var(--ink-2);padding:2px 4px 0}
+  .fx-tb .x{border:0;background:none;color:var(--danger);font-size:20px;cursor:pointer;padding:4px 8px}
+  .fx-file{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px;padding:12px 14px;border-radius:14px;background:var(--bg)}
+  .fx-file small{display:block;color:var(--ink-2);font-size:12.5px}
+  .fx-com{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px;max-height:420px;overflow:auto;padding:2px}
+  .fx-com .c{display:grid;grid-template-columns:48px minmax(0,1.25fr) minmax(0,1fr) 24px;gap:6px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:6px}
+  .fx-com .c input{padding:6px 8px!important;font-size:13px;border-radius:8px!important;min-width:0}
+  .fx-com .c input.num{text-align:center;font-weight:800}
+  .fx-com .x{border:0;background:none;color:var(--danger);font-size:18px;cursor:pointer}
+  .fx-com .hd{border:0;padding:0 6px;font-size:12px;color:var(--ink-2);font-weight:700}
+  .fx-prog{display:flex;align-items:center;gap:10px;margin-top:12px}
+  .fx-bar{flex:1;height:10px;border-radius:99px;background:var(--bg);overflow:hidden}
+  .fx-bar i{display:block;height:100%;width:0;background:var(--brand);transition:width .3s}
+  .fx-prog span{font-size:13px;color:var(--ink-2);min-width:150px}
+  .fx-sum{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:14px 0}
+  .fx-sum div{border-radius:12px;padding:10px 12px;background:var(--bg)}
+  .fx-sum b{display:block;font-size:22px}
+  .fx-sum small{color:var(--ink-2);font-size:12.5px}
+  .fx-sum .ok{background:#E3F7EE}.fx-sum .warn{background:#FFF4E0}
+  .fx-pages{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 12px}
+  .fx-pages label{display:inline-flex;align-items:center;gap:4px;font-size:12px;border:1px solid var(--line);border-radius:10px;padding:4px 6px}
+  .fx-pages label.miss{border-color:var(--danger);background:var(--danger-soft)}
+  .fx-pages label.inf input{font-style:italic;color:var(--ink-2)}
+  .fx-pages input{width:46px;padding:3px 4px!important;font-size:12px;text-align:center}
+  .fx-un{display:grid;gap:8px;max-height:520px;overflow:auto}
+  .fx-un .u{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1.6fr) auto;gap:8px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+  .fx-un .u.done{border-color:#9ADBBE;background:#F2FBF7}
+  .fx-un .u b{font-size:14px}
+  .fx-un .u small{display:block;color:var(--ink-2);font-size:12px}
+  .fx-un select,.fx-un input{padding:6px 8px!important;font-size:13px}
+  @media (max-width:640px){.fx-un .u{grid-template-columns:1fr}.fx-file{flex-direction:column;align-items:stretch}}
+  .fx-res{display:grid;gap:6px;margin-top:8px}
+  .fx-res .r{display:grid;grid-template-columns:minmax(0,1fr) 130px 70px auto;gap:6px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:6px 10px}
+  .fx-res .r input{padding:6px 8px!important;font-size:13px}
+  @media (max-width:640px){.fx-res .r{grid-template-columns:1fr 1fr}.fx-res .r>div:first-child{grid-column:1/-1}}
+  /* ===== التحويل والتقييم ===== */
+  .assign-box{margin-top:14px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--bg)}
+  .assign-box label{font-weight:700;display:block;margin-bottom:6px}
+  .assign-row{display:grid;grid-template-columns:200px 1fr auto;gap:8px}
+  @media (max-width:640px){.assign-row{grid-template-columns:1fr}}
+  .tag-assigned{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;color:#5B3FE0;background:#EFEBFF;border-radius:999px;padding:2px 10px;margin-inline-start:8px}
+  .stars{color:#F5A700;letter-spacing:1px}
+  .item.is-archived{opacity:.7}
+  .who-av{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff;font:800 14px var(--head);flex:none}
+  /* ===== التقرير ===== */
+  .report{background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px 30px;box-shadow:var(--shadow)}
+  .report header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:2px solid var(--brand);padding-bottom:14px;margin-bottom:18px}
+  .report h2{font-size:20px;margin:0}
+  .report h3{font-size:16px;margin:22px 0 8px}
+  .report table{width:100%;font-size:14px}
+  .report th{position:static}
+  .report .rk{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .report .rk div{border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+  .report .rk small{display:block;color:var(--ink-2);font-size:12px}.report .rk b{font:800 22px var(--head)}
+  .report .summary{background:var(--brand-soft);border-radius:12px;padding:12px 14px;line-height:1.9}
+  .report .rf{margin-top:26px;display:flex;justify-content:space-between;color:var(--ink-2);font-size:13px}
+  .report .sign{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:30px;text-align:center}
+  .report .sign div{border-top:1px dashed var(--ink-2);padding-top:6px;font-size:13px}
+  @media print{
+    @page{size:A4;margin:14mm}
+    body{background:#fff}
+    .adm-top,.tabs,.no-print,.toast{display:none!important}
+    .adm-grid{display:block;padding:0}
+    .wrap{max-width:none;padding:0}
+    .report{border:0;box-shadow:none;padding:0}
+    .report .rk div,.report table{break-inside:avoid}
+  }
+
+  /* ===== مجموعات القائمة الجانبية ===== */
+  .tgroup{display:flex;flex-direction:column;gap:2px}
+  .tgroup + .tgroup{margin-top:6px;padding-top:6px;border-top:1px solid var(--line)}
+  .tg-l{font-size:11.5px;font-weight:700;color:var(--ink-2);padding:2px 12px;letter-spacing:.3px}
+  @media (max-width:980px){.tgroup{display:contents}.tg-l{display:none}}
+  .inline{display:flex;gap:8px}.inline input{flex:1;min-width:0}
+  .sub-h{font-size:15px;margin:16px 0 8px}
+  .sec-pick{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  .sec-pick label{display:inline-flex;align-items:center;gap:4px;border:1.5px solid var(--line);border-radius:10px;padding:4px 10px;font-size:13px;font-weight:700;cursor:pointer;background:#fff}
+  .sec-pick label:has(input:checked){border-color:var(--brand);background:var(--brand-soft);color:var(--brand)}
+  .sec-pick input{accent-color:var(--brand)}
+  .sec-pick .g{width:100%;font-size:12px;color:var(--ink-2);font-weight:700;margin-top:4px}
+  .seg-a{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px}
+  .seg-a button{border:0;background:none;padding:7px 14px;border-radius:9px;font-weight:700;cursor:pointer;color:var(--ink-2);font:inherit;font-size:14px}
+  .seg-a button.on{background:var(--brand);color:#fff}
+  .seg-a em{font-style:normal;font-size:12px;background:var(--coral);color:#fff;border-radius:9px;padding:0 6px;margin-inline-start:4px}
+  .seg-a em:empty{display:none}
+  .slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+  .slot{border:1.5px solid var(--line);border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:2px;background:#fff;text-align:right;cursor:pointer;font:inherit;color:inherit}
+  .slot small{font-size:11.5px;color:var(--ink-2);font-weight:700}
+  .slot b{font-size:14px}
+  .slot.empty{border-style:dashed;color:var(--ink-2)}
+  .slot.empty b{color:var(--brand);font-weight:700}
+  .slot:hover{border-color:var(--brand-3)}
+  .opts{display:grid;gap:6px;margin-bottom:6px}
+  .opts .inline input{padding:9px 12px}
+  .link-btn{border:0;background:none;color:var(--info);font-weight:700;cursor:pointer;padding:4px 0;font:inherit;font-size:14px;align-self:flex-start}
+  .pbar{display:grid;grid-template-columns:minmax(80px,140px) 1fr 70px;gap:8px;align-items:center;font-size:13.5px;margin:4px 0}
+  .pbar .tr{height:10px;border-radius:5px;background:#EEF3F9;overflow:hidden}.pbar .tr i{display:block;height:100%;background:var(--emerald)}
+  .pbar b{text-align:left;font-variant-numeric:tabular-nums}
+  .poll-card{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px}
+  .poll-card h4{margin:0 0 4px;font-size:15px}
+  .st-rows{display:grid;gap:8px}
+  .st-row{display:grid;grid-template-columns:150px 130px 1fr 160px;gap:8px;align-items:center;padding:8px 10px;border-radius:12px;background:var(--bg)}
+  .st-row b{font-size:14px}.st-row small{display:block;font-size:12px;color:var(--ink-2)}
+  .st-row input,.st-row select{padding:8px 10px}
+  .dot-s{display:inline-block;width:9px;height:9px;border-radius:50%;margin-inline-end:6px;background:#94A3B8}
+  .dot-s.up{background:#16B364}.dot-s.down{background:#E5533F}.dot-s.slow{background:#F5A700}
+  @media (max-width:900px){.st-row{grid-template-columns:1fr 1fr}}
+  .seen-yes{color:var(--ok);font-weight:700}.seen-no{color:var(--warn);font-weight:700}
+  .thumb{width:96px;aspect-ratio:16/9;border-radius:8px;object-fit:cover;background:#EEF3F9;flex:none}
+  .fic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:11px;font-weight:800;flex:none;background:#FFECEA;color:#C2412F}
+  .fic.img{background:var(--info-soft);color:var(--info)}
+  .qr-sheet{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:0 0 16px}
+  .qr-card{border:2px solid var(--brand);border-radius:16px;padding:16px;text-align:center;background:#fff;break-inside:avoid}
+  .qr-card h3{margin:0;font-size:28px;font-family:var(--head)}
+  .qr-card p{margin:4px 0 10px;font-size:13px;color:var(--ink-2)}
+  .qr-card .qr{display:grid;place-items:center;margin:0 auto}
+  .qr-card .qr svg{width:170px;height:170px;display:block}
+  .qr-card small{display:block;margin-top:8px;font-size:12px;color:var(--ink-2)}
+  @media print{body.printing-qr .adm-main > *:not(#panel-sched),body.printing-qr #panel-sched > *:not(.qr-sheet){display:none!important}body.printing-qr .qr-sheet{display:grid!important;grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -124,6 +393,8 @@
     <h1>لوحة تحكم الدعم الفني</h1>
     <p class="sub" style="margin:0">ثانوية بلاط الشهداء — للمسؤول المخوّل فقط</p>
     <form id="loginForm" novalidate>
+      <label for="un" style="font-weight:700">اسم الدخول</label>
+      <input type="text" id="un" autocomplete="username" autocapitalize="none" spellcheck="false" dir="ltr" style="text-align:right" placeholder="اتركه فارغًا إذا كنت مدير النظام">
       <label for="pw" style="font-weight:700">الرقم السري</label>
       <div class="pw">
         <input type="password" id="pw" autocomplete="current-password" required>
@@ -141,18 +412,27 @@
   <div class="adm-top">
     <div class="wrap">
       <div class="brand"><div class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5.5c0 4.3 2.9 8 7 9.5 4.1-1.5 7-5.2 7-9.5V6z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg></div><div><b>لوحة تحكم الدعم الفني</b><span>ثانوية بلاط الشهداء الثانوية</span></div></div>
-      <div style="display:flex;gap:8px"><a class="btn sm" href="./" target="_blank" rel="noopener">صفحة الطلاب ↗</a><button class="btn sm" id="logout" type="button">تسجيل الخروج</button></div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <div class="adm-who"><span class="av" id="meAv">م</span><div><b id="meName">—</b><small id="meRole">—</small></div></div>
+        <button class="btn sm" id="chPwBtn" type="button" hidden>تغيير الرقم السري</button>
+        <a class="btn sm" href="./" target="_blank" rel="noopener">صفحة الطلاب ↗</a><button class="btn sm" id="logout" type="button">تسجيل الخروج</button></div>
     </div>
   </div>
 
-  <div class="wrap" style="padding-bottom:40px">
-    <div class="tabs" role="tablist">
-      <button class="tab" role="tab" aria-selected="true" data-tab="complaints" id="tab-complaints">الاستفسارات وطلبات الدعم</button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="students" id="tab-students">بيانات الطلاب</button>
-    </div>
+  <div class="wrap adm-grid" style="padding-bottom:40px">
+    <nav class="tabs" role="tablist" aria-label="أقسام اللوحة">
+      <div class="tgroup"><button class="tab" role="tab" aria-selected="false" data-tab="dash" id="tab-dash" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>لوحة المؤشرات</span></button></div>
+      <div class="tgroup"><span class="tg-l">الدعم</span><button class="tab" role="tab" aria-selected="false" data-tab="complaints" id="tab-complaints" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><span>الاستفسارات</span><em class="tab-badge" id="inqBadge" hidden></em></button><button class="tab" role="tab" aria-selected="false" data-tab="calls" id="tab-calls" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><span>الاستدعاءات</span></button></div>
+      <div class="tgroup"><span class="tg-l">المحتوى</span><button class="tab" role="tab" aria-selected="false" data-tab="ann" id="tab-ann" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8M13.7 20a2 2 0 0 1-3.4 0"/></svg><span>الإعلانات</span></button><button class="tab" role="tab" aria-selected="false" data-tab="events" id="tab-events" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4M8 13h3v3H8z"/></svg><span>الفعاليات والمواعيد</span></button><button class="tab" role="tab" aria-selected="false" data-tab="honor" id="tab-honor" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="m8.2 13.8-1.7 7.7L12 19l5.5 2.5-1.7-7.7"/></svg><span>لوحة الشرف</span></button><button class="tab" role="tab" aria-selected="false" data-tab="faq" id="tab-faq" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.2a2.6 2.6 0 0 1 5 .9c0 1.7-2.5 2.4-2.5 2.4M12 17h.01"/></svg><span>الأسئلة الشائعة</span></button><button class="tab" role="tab" aria-selected="false" data-tab="library" id="tab-library" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg><span>المكتبة: ملفات وفيديوهات</span></button></div>
+      <div class="tgroup"><span class="tg-l">المشاركة</span><button class="tab" role="tab" aria-selected="false" data-tab="polls" id="tab-polls" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="6" rx="1"/><rect x="12" y="7" width="3" height="10" rx="1"/><rect x="17" y="13" width="3" height="4" rx="1"/></svg><span>الاستطلاعات والمبادرات</span><em class="tab-badge" id="ideasBadge" hidden></em></button></div>
+      <div class="tgroup"><span class="tg-l">الدراسة</span><button class="tab" role="tab" aria-selected="false" data-tab="sched" id="tab-sched" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>الجداول والاختبارات</span></button><button class="tab" role="tab" aria-selected="false" data-tab="finals" id="tab-finals" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l1 2h3a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h3z"/><path d="m9 13 2 2 4-4"/></svg><span>الاختبارات النهائية</span></button><button class="tab" role="tab" aria-selected="false" data-tab="students" id="tab-students" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6.5 16c.5-1.5 1.5-2 2.5-2s2 .5 2.5 2M14 10h4M14 13h3"/></svg><span>بيانات الطلاب</span></button></div>
+      <div class="tgroup"><span class="tg-l">الإدارة</span><button class="tab" role="tab" aria-selected="false" data-tab="report" id="tab-report" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg><span>التقرير الشهري</span></button><button class="tab" role="tab" aria-selected="false" data-tab="users" id="tab-users" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>الإعدادات</span></button></div>
+    </nav>
+    <main class="adm-main">
 
     <!-- الاستفسارات -->
-    <section class="panel" id="panel-complaints" role="tabpanel" aria-labelledby="tab-complaints" style="margin:0">
+    <section class="panel" id="panel-complaints" role="tabpanel" aria-labelledby="tab-complaints" hidden style="margin:0">
+      <div class="ph"><div><h1>الاستفسارات وطلبات الدعم</h1><p class="sub">افتح الطلب للرد عليه أو تغيير حالته أو تحويله لمسؤول آخر.</p></div></div>
       <div class="stats">
         <button class="stat active" data-status=""><small>كل الطلبات</small><b id="s-all">0</b></button>
         <button class="stat new" data-status="جديد"><small>جديد</small><b id="s-new">0</b></button>
@@ -167,6 +447,8 @@
         <select id="fType" aria-label="نوع الاستفسار"><option value="">كل الأنواع</option>
           <option>تعذر الدخول إلى منصة مدرستي</option><option>نسيان كلمة المرور</option><option>مشكلة في حساب Microsoft</option>
           <option>تعذر الدخول إلى تيمز أو حضور الحصة</option><option>استفسار عام</option><option>شكوى أو ملاحظة</option><option>شكوى</option><option>مشكلة أخرى</option></select>
+        <select id="fAssign" aria-label="التحويل"><option value="">كل الطلبات</option><option value="me">المحوّلة إليّ</option><option value="none">غير المحوّلة</option></select>
+        <label class="switch" style="font-size:14px"><input type="checkbox" id="fArchive"> عرض الأرشيف</label>
         <button class="btn light sm" id="refresh" type="button">تحديث</button>
         <button class="btn outline sm" id="exportCsv" type="button">تصدير Excel (CSV)</button>
         <button class="btn outline sm" id="backupBtn" type="button">نسخة احتياطية</button>
@@ -175,8 +457,425 @@
       <div class="list" id="list"></div>
     </section>
 
+
+    <!-- لوحة المؤشرات -->
+    <section class="panel" id="panel-dash" role="tabpanel" aria-labelledby="tab-dash" hidden style="margin:0">
+      <div class="ph"><div><h1>لوحة المؤشرات</h1><p class="sub" id="dashSub">نظرة عامة على الدعم الطلابي</p></div>
+        <div class="ph-act"><input type="month" id="dashMonth" aria-label="الشهر"><button class="btn sm" type="button" id="dashReport">تقرير الشهر</button></div></div>
+      <div class="kpis" id="kpis"></div>
+      <div class="dash-grid">
+        <div class="pcard"><h2>الاستفسارات حسب النوع</h2><p class="sub" id="byTypeSub"></p><div id="byType" class="hbars"></div></div>
+        <div class="pcard"><h2>متوسط زمن أول رد</h2><p class="sub">آخر 8 أسابيع · بالساعات</p><div id="trend"></div></div>
+        <div class="pcard"><h2>حسب الصف</h2><p class="sub" id="byGradeSub"></p><div id="byGrade" class="hbars green"></div><p class="sub" style="margin:14px 0 8px">الشعب الأكثر استفسارًا</p><div id="bySection" class="chips"></div></div>
+        <div class="pcard"><h2>تحتاج انتباهك</h2><p class="sub">الأقدم أولًا</p><div id="attention"></div></div>
+      </div>
+    </section>
+
+    <!-- الأسئلة الشائعة -->
+    <section class="panel" id="panel-faq" role="tabpanel" aria-labelledby="tab-faq" hidden style="margin:0">
+      <div class="ph"><div><h1>الأسئلة الشائعة</h1><p class="sub">تظهر للطلاب في الصفحة الرئيسية، وتُقترح عليهم قبل إرسال الاستفسار.</p></div>
+        <div class="ph-act"><button class="btn outline sm" type="button" id="faqAdd">+ سؤال جديد</button><button class="btn sm" type="button" id="faqSave">حفظ ونشر</button></div></div>
+      <div class="notice info" id="faqDefaultNote" hidden style="margin-bottom:14px"><div class="ic">i</div><div><b>هذه أسئلة مقترحة جاهزة.</b><p>عدّلها كما تريد ثم اضغط «حفظ ونشر».</p></div></div>
+      <div class="toolbar" style="margin-bottom:10px"><input type="search" id="faqAdmQ" placeholder="بحث في الأسئلة…"><select id="faqAdmCat"><option value="">كل التصنيفات</option></select><span class="hint" id="faqCount"></span></div>
+      <div id="faqList" class="faq-edit"></div>
+      <div class="err" id="faqErr" role="alert"></div>
+    </section>
+
+    <!-- الجداول والاختبارات -->
+    <section class="panel" id="panel-sched" role="tabpanel" aria-labelledby="tab-sched" hidden style="margin:0">
+      <div class="ph"><div><h1>الجداول والاختبارات</h1><p class="sub">يرى الطالب جدول شعبته واختباراته القادمة في الصفحة الرئيسية.</p></div></div>
+      <div class="pcard" style="margin-bottom:16px">
+        <div class="ph" style="margin:0 0 12px"><div><h2>أوقات الحصص</h2><p class="sub" style="margin:0">واحدة لكل الشعب</p></div>
+          <div class="ph-act"><label class="field" style="flex-direction:row;align-items:center;gap:8px">عدد الحصص <select id="pCount" style="width:auto"><option>5</option><option>6</option><option selected>7</option><option>8</option></select></label></div></div>
+        <div id="periodsEd" class="periods-ed"></div>
+      </div>
+      <div class="pcard" style="margin-bottom:16px">
+        <div class="ph" style="margin:0 0 12px"><div><h2>جدول الشعبة</h2><p class="sub" style="margin:0" id="ttInfo"></p></div>
+          <div class="ph-act">
+            <select id="ttSection" aria-label="الشعبة"></select>
+            <select id="ttCopy" aria-label="نسخ من شعبة"><option value="">نسخ من شعبة…</option></select>
+            <button class="btn outline sm" type="button" id="ttClear">مسح</button>
+            <button class="btn sm" type="button" id="ttSave">حفظ الجدول</button></div></div>
+        <div class="tt-wrap"><table class="tt-ed" id="ttGrid"></table></div>
+        <datalist id="subjects"></datalist>
+        <details class="imp"><summary>استيراد الجداول من ملف Excel أو CSV أو PDF</summary>
+          <p class="sub">يقبل صيغتين: <b>(1)</b> جدول واحد أعمدته «الشعبة، اليوم، 1، 2، 3…» (مثل النموذج الفارغ)، أو <b>(2)</b> جدول مستقل لكل شعبة فوقه عنوان مثل «الشعبة 14»، صفوفه الأيام وأعمدته الحصص (ورقة Excel أو صفحة PDF لكل شعبة). تُقرأ أوقات الحصص من العناوين إن وُجدت.</p>
+          <div class="row-actions" style="justify-content:flex-start"><button class="btn outline sm" type="button" id="ttTemplate">تنزيل نموذج فارغ</button>
+            <label class="btn sm" style="cursor:pointer">اختر الملف<input type="file" id="ttFile" accept=".xlsx,.xls,.csv,.pdf" class="sr"></label></div>
+          <div class="err" id="ttErr" role="alert"></div><div id="ttImpPreview"></div>
+        </details>
+      </div>
+
+      <div class="grid2" style="grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:start;margin-bottom:16px">
+        <div class="pcard">
+          <h2>التوقيت الذكي</h2><p class="sub">أوقات بديلة تُطبَّق تلقائيًا في فترات تحددها، فيبقى «جدول اليوم» صحيحًا.</p>
+          <div class="seg-a" role="tablist" style="margin-bottom:10px"><button type="button" class="on" data-mode="ramadan">توقيت رمضان</button><button type="button" data-mode="exams">توقيت الاختبارات</button></div>
+          <div id="modeEd" class="periods-ed"></div>
+          <h3 class="sub-h">فترات التطبيق</h3>
+          <div id="rangeList"></div>
+          <div class="row-actions" style="justify-content:space-between;margin-top:8px"><button class="btn outline sm" type="button" id="rangeAdd">+ فترة</button><button class="btn sm" type="button" id="timingSave">حفظ التوقيت</button></div>
+          <div class="err" id="timingErr" role="alert"></div>
+        </div>
+        <div class="pcard">
+          <h2>رمز QR لكل فصل</h2><p class="sub">اطبع ملصقًا لباب كل فصل؛ يمسحه الطالب فيفتح جدول شعبته مباشرة.</p>
+          <div class="field" style="margin-bottom:10px"><label for="qrBase">رابط الموقع</label><input type="text" id="qrBase" dir="ltr" style="text-align:right"></div>
+          <div class="sec-pick" id="qrSecs"></div>
+          <div class="row-actions" style="justify-content:space-between;margin-top:10px"><button class="btn outline sm" type="button" id="qrAll">تحديد الكل</button><button class="btn sm" type="button" id="qrMake">إنشاء الملصقات</button></div>
+          <div class="err" id="qrErr" role="alert"></div>
+        </div>
+      </div>
+      <div class="qr-sheet" id="qrSheet" hidden></div>
+      <div class="grid2" style="grid-template-columns:1fr 1.2fr;align-items:start">
+        <form class="pcard" id="exForm" novalidate>
+          <h2 id="exFormTitle">اختبار أو تسليم جديد</h2><p class="sub">يظهر للطلاب المستهدفين حتى موعده.</p>
+          <input type="hidden" id="exId">
+          <div class="grid2" style="margin-bottom:10px">
+            <div class="field"><label for="exSubject">المادة <span class="req">*</span></label><input type="text" id="exSubject" maxlength="60" list="subjects"></div>
+            <div class="field"><label for="exKind">النوع</label><select id="exKind"></select></div>
+            <div class="field"><label for="exDate">التاريخ <span class="req">*</span></label><input type="date" id="exDate"></div>
+            <div class="field"><label for="exPeriod">الحصة</label><select id="exPeriod"><option value="">—</option></select></div>
+            <div class="field"><label for="exGrade">الصف</label><select id="exGrade"><option value="">—</option><option>الأول الثانوي</option><option>الثاني الثانوي</option><option>الثالث الثانوي</option></select></div>
+            <div class="field"><label for="exSection">الشعبة</label><select id="exSection"><option value="">كل شعب الصف</option></select></div>
+          </div>
+          <div class="field" style="margin-bottom:10px"><label for="exNote">ملاحظة</label><input type="text" id="exNote" maxlength="200" placeholder="مثال: الوحدة الثالثة"></div>
+          <div class="err" id="exErr" role="alert"></div>
+          <div class="row-actions" style="justify-content:space-between"><button class="btn outline" type="button" id="exReset">جديد</button><button class="btn" type="submit" id="exSave">حفظ</button></div>
+        </form>
+        <div class="pcard"><h2>الاختبارات القادمة</h2><p class="sub">تُحذف تلقائيًا بعد 60 يومًا من موعدها.</p><div id="exList"></div></div>
+      </div>
+    </section>
+
+    <!-- التقرير الشهري -->
+    <section class="panel" id="panel-finals" role="tabpanel" aria-labelledby="tab-finals" hidden style="margin:0">
+      <div class="fx-head pcard">
+        <div class="fx-h1">
+          <div><h2>الاختبارات النهائية</h2><p class="sub">يجد الطالب في «بياناتي»: المادة والفترة والوقت، ومقر لجنته (الدور)، ورقم اللجنة، ومقرها (الشعبة)، ورقم جلوسه.</p></div>
+          <label class="switch fx-vis"><input type="checkbox" id="fxVisible"> ظاهر للطلاب</label>
+        </div>
+        <div class="fx-steps" id="fxSteps"></div>
+        <div class="grid2" style="grid-template-columns:1fr 1fr;gap:12px">
+          <div class="field"><label for="fxTitle">العنوان</label><input type="text" id="fxTitle" maxlength="120" placeholder="اختبارات نهاية الفصل الدراسي الثاني 1447هـ"></div>
+          <div class="field"><label for="fxInstr">تعليمات للطلاب (سطر لكل تعليمة)</label><textarea id="fxInstr" rows="3" maxlength="2000" placeholder="الحضور قبل الاختبار بنصف ساعة…"></textarea></div>
+        </div>
+        <div class="row-actions" style="justify-content:space-between"><span class="sub" id="fxState"></span><button class="btn" type="button" id="fxSave">حفظ الجدول والمقرات</button></div>
+        <div class="err" id="fxErr" role="alert"></div>
+      </div>
+
+      <div class="pcard">
+        <h2><span class="fx-n">1</span> جدول الاختبارات</h2><p class="sub">يومًا بيوم: التاريخ، والفترة، والوقت، ومادة كل صف. يرى كل طالب مواد صفه فقط.</p>
+        <div class="tt-wrap"><table class="fx-tb"><thead><tr><th>التاريخ</th><th>الفترة</th><th>من</th><th>إلى</th><th>الأول الثانوي</th><th>الثاني الثانوي</th><th>الثالث الثانوي</th><th></th></tr></thead><tbody id="fxSched"></tbody></table></div>
+        <div class="row-actions" style="justify-content:flex-start;margin-top:8px"><button class="btn outline sm" type="button" id="fxAddDay">+ يوم</button></div>
+        <details class="imp"><summary>استيراد الجدول من Excel أو CSV أو PDF</summary>
+          <p class="sub">أعمدة: التاريخ (ميلادي أو هجري)، الفترة، الوقت (مثل 7:00 - 9:30)، ثم عمود لكل صف. إذا كان الجدول الرسمي صورة، اكتبه هنا مرة واحدة وأرفق الصورة أدناه ليطّلع عليها الطلاب.</p>
+          <div class="row-actions" style="justify-content:flex-start"><button class="btn outline sm" type="button" id="fxSchedTpl">تنزيل نموذج فارغ</button>
+            <label class="btn sm" style="cursor:pointer">اختر الملف<input type="file" id="fxSchedFile" accept=".xlsx,.xls,.csv,.pdf" class="sr"></label></div>
+          <div class="err" id="fxSchedErr" role="alert"></div>
+        </details>
+        <div class="fx-file" id="fxFileBox">
+          <div><b>الجدول الرسمي (صورة أو PDF)</b><small id="fxFileInfo">اختياري: يظهر للطلاب زرًا «الجدول الرسمي».</small></div>
+          <label class="btn outline sm" style="cursor:pointer">رفع الملف<input type="file" id="fxOfficial" accept=".pdf,.png,.jpg,.jpeg,.webp" class="sr"></label>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <h2><span class="fx-n">2</span> مقرات اللجان</h2><p class="sub">لكل لجنة: الدور (مقر اللجنة) والقاعة أو الشعبة التي تُعقد فيها.</p>
+        <div class="fx-com" id="fxCom"></div>
+        <div class="row-actions" style="justify-content:space-between;margin-top:8px"><button class="btn outline sm" type="button" id="fxAddCom">+ لجنة</button><button class="btn outline sm" type="button" id="fxClearCom">مسح الكل</button></div>
+        <details class="imp" open><summary>استيراد المقرات من PDF أو Excel أو CSV</summary>
+          <p class="sub">مثل كشف «مقرات لجان الاختبارات»: أعمدة رقم اللجنة، ومقر اللجنة (الدور)، والمقر (الشعبة). الخلايا المدمجة تُفهم تلقائيًا.</p>
+          <div class="row-actions" style="justify-content:flex-start"><button class="btn outline sm" type="button" id="fxComTpl">تنزيل نموذج فارغ</button>
+            <label class="btn sm" style="cursor:pointer">اختر الملف<input type="file" id="fxComFile" accept=".xlsx,.xls,.csv,.pdf" class="sr"></label></div>
+          <div class="err" id="fxComErr" role="alert"></div>
+        </details>
+      </div>
+
+      <div class="pcard">
+        <h2><span class="fx-n">3</span> أرقام الجلوس</h2><p class="sub">ارفع كشوف اللجان (كشف الحضور) أو ملف أرقام الجلوس. تُطابق الأسماء تلقائيًا مع ملف الطلاب، وتراجع أنت ما لم يتطابق.</p>
+        <label class="drop" id="fxSeatDrop"><input type="file" id="fxSeatFile" accept=".pdf,.xlsx,.xls,.csv,.png,.jpg,.jpeg" class="sr">
+          <b>اختر ملف الكشوف</b><span class="sub">PDF (نصي أو ممسوح ضوئيًا) أو Excel أو CSV أو صور. الأعمدة المفيدة: رقم الجلوس، الاسم، الصف، الشعبة، رقم اللجنة، ورقم الهوية إن وُجد.</span></label>
+        <div class="fx-prog" id="fxProg" hidden><div class="fx-bar"><i id="fxBar"></i></div><span id="fxProgT"></span><button class="btn outline sm" type="button" id="fxCancel">إلغاء</button></div>
+        <div class="err" id="fxSeatErr" role="alert"></div>
+        <div id="fxReview"></div>
+        <div class="fx-find">
+          <h3 class="sub-h">بحث وتعديل يدوي</h3>
+          <div class="assign-row" style="grid-template-columns:1fr auto"><input type="search" id="fxFindQ" placeholder="اسم الطالب أو رقم هويته أو رقم جلوسه"><button class="btn outline sm" type="button" id="fxFind">بحث</button></div>
+          <div id="fxFindRes"></div>
+          <div class="row-actions" style="justify-content:space-between;margin-top:10px"><span class="sub" id="fxSeatState"></span><button class="btn outline sm" style="color:var(--danger)" type="button" id="fxSeatClear" hidden>مسح كل أرقام الجلوس</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-report" role="tabpanel" aria-labelledby="tab-report" hidden style="margin:0">
+      <div class="ph no-print"><div><h1>التقرير الشهري</h1><p class="sub">جاهز للطباعة أو الحفظ PDF لعرضه على الإدارة.</p></div>
+        <div class="ph-act"><input type="month" id="repMonth" aria-label="الشهر"><button class="btn sm" type="button" id="repPrint">طباعة / حفظ PDF</button></div></div>
+      <article class="report" id="report"></article>
+    </section>
+
+    <!-- الاستدعاءات -->
+    <section class="panel" id="panel-calls" role="tabpanel" aria-labelledby="tab-calls" hidden style="margin:0">
+      <div class="ph"><div><h1>استدعاء طالب</h1><p class="sub">ملاحظة خاصة تظهر للطالب وحده عندما يكتب رقم هويته في «بياناتي»، ويظهر لك متى اطّلع عليها.</p></div></div>
+      <div class="grid2" style="grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);align-items:start">
+        <form class="pcard" id="callForm" novalidate>
+          <h2 id="callFormTitle">استدعاء جديد</h2>
+          <input type="hidden" id="cId">
+          <div class="field" style="margin-bottom:10px"><label for="cStudent">رقم هوية الطالب <span class="req">*</span></label>
+            <div class="inline"><input type="text" id="cStudent" inputmode="numeric" maxlength="10" dir="ltr" style="text-align:right" placeholder="10 أرقام"><button class="btn outline sm" type="button" id="cCheck">تحقق</button></div>
+            <span class="hint" id="cWho"></span></div>
+          <div class="field" style="margin-bottom:10px"><label for="cText">المطلوب من الطالب <span class="req">*</span></label><textarea id="cText" maxlength="300" style="min-height:80px" placeholder="مثال: مطلوب حضورك إلى مكتب الموجه الطلابي"></textarea>
+            <div class="quick" id="cQuick"><button type="button">مطلوب حضورك إلى مكتب الموجه الطلابي</button><button type="button">مطلوب حضورك إلى مكتب الوكيل</button><button type="button">يرجى مراجعة العيادة المدرسية</button><button type="button">مطلوب حضور ولي أمرك إلى المدرسة</button></div></div>
+          <div class="grid2" style="margin-bottom:10px">
+            <div class="field"><label for="cPlace">المكان</label><input type="text" id="cPlace" maxlength="80" placeholder="مكتب الموجه الطلابي"></div>
+            <div class="field"><label for="cWhen">الموعد</label><input type="text" id="cWhen" maxlength="80" placeholder="غدًا – الحصة الثانية"></div>
+            <div class="field"><label for="cExp">يختفي بعد</label><input type="date" id="cExp"></div>
+          </div>
+          <p class="hint" style="margin:0 0 10px">تظهر للطالب صفتك (مثل «الموجه الطلابي») دون اسمك. لا تكتب تفاصيل حساسة؛ يكفي طلب الحضور.</p>
+          <div class="err" id="callErr" role="alert"></div>
+          <div class="row-actions" style="justify-content:space-between"><button class="btn outline" type="button" id="callReset">جديد</button><button class="btn" type="submit" id="callSave">إرسال الاستدعاء</button></div>
+        </form>
+        <div class="pcard"><div class="ph" style="margin:0 0 6px"><div><h2>الاستدعاءات</h2><p class="sub" style="margin:0" id="callStats"></p></div>
+          <input type="search" id="callQ" placeholder="بحث بالاسم أو الهوية" style="width:auto;padding:8px 12px"></div><div id="callList"></div></div>
+      </div>
+    </section>
+
+    <!-- الفعاليات -->
+    <section class="panel" id="panel-events" role="tabpanel" aria-labelledby="tab-events" hidden style="margin:0">
+      <div class="ph"><div><h1>الفعاليات والمواعيد</h1><p class="sub">أنشطة المدرسة ومسابقاتها ومواعيد التسجيل. تظهر في صفحة الطلاب مع عدّ تنازلي، وتظهر مواعيد «الخريجين» و«اختبار وطني» في بوابة الخريج.</p></div></div>
+      <div class="grid2" style="grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);align-items:start">
+        <form class="pcard" id="evForm" novalidate>
+          <h2 id="evFormTitle">فعالية أو موعد جديد</h2>
+          <input type="hidden" id="eId">
+          <div class="field" style="margin-bottom:10px"><label for="eTitle">العنوان <span class="req">*</span></label><input type="text" id="eTitle" maxlength="120" placeholder="مثال: التسجيل في أولمبياد إبداع"></div>
+          <div class="grid2" style="margin-bottom:10px">
+            <div class="field"><label for="eKind">النوع</label><select id="eKind"></select></div>
+            <div class="field"><label for="eGrade">لطلاب</label><select id="eGrade"><option value="">كل الصفوف</option><option>الأول الثانوي</option><option>الثاني الثانوي</option><option>الثالث الثانوي</option></select></div>
+            <div class="field"><label for="eDate">التاريخ <span class="req">*</span></label><input type="date" id="eDate"></div>
+            <div class="field"><label for="eEnd">إلى (اختياري)</label><input type="date" id="eEnd"></div>
+            <div class="field"><label for="eDeadline">آخر موعد للتسجيل</label><input type="date" id="eDeadline"></div>
+            <div class="field"><label for="eLink">رابط التسجيل</label><input type="text" id="eLink" dir="ltr" style="text-align:right" placeholder="https://"></div>
+          </div>
+          <div class="field" style="margin-bottom:10px"><label for="eNote">ملاحظة</label><input type="text" id="eNote" maxlength="300"></div>
+          <div class="err" id="evErr" role="alert"></div>
+          <div class="row-actions" style="justify-content:space-between"><button class="btn outline" type="button" id="evReset">جديد</button><button class="btn" type="submit" id="evSave">حفظ</button></div>
+        </form>
+        <div class="pcard"><h2>القادمة</h2><p class="sub">المنتهية تختفي من صفحة الطلاب تلقائيًا.</p><div id="evList"></div></div>
+      </div>
+    </section>
+
+    <!-- لوحة الشرف -->
+    <section class="panel" id="panel-honor" role="tabpanel" aria-labelledby="tab-honor" hidden style="margin:0">
+      <div class="ph"><div><h1>لوحة الشرف والتميّز</h1><p class="sub">المتفوقون والمشاركون في المسابقات والمواظبون. لا يُنشر اسم طالب إلا بموافقة المدرسة.</p></div></div>
+      <div class="grid2" style="grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);align-items:start">
+        <form class="pcard" id="hoForm" novalidate>
+          <h2 id="hoFormTitle">إضافة متميز</h2>
+          <input type="hidden" id="hId">
+          <div class="field" style="margin-bottom:10px"><label for="hFromId">من رقم الهوية (اختياري)</label><div class="inline"><input type="text" id="hFromId" inputmode="numeric" maxlength="10" dir="ltr" style="text-align:right" placeholder="يملأ الاسم والصف تلقائيًا"><button class="btn outline sm" type="button" id="hFill">تعبئة</button></div></div>
+          <div class="grid2" style="margin-bottom:10px">
+            <div class="field"><label for="hName">اسم الطالب <span class="req">*</span></label><input type="text" id="hName" maxlength="60"></div>
+            <div class="field"><label for="hCat">الفئة</label><select id="hCat"></select></div>
+            <div class="field"><label for="hGrade">الصف</label><select id="hGrade"><option value="">—</option><option>الأول الثانوي</option><option>الثاني الثانوي</option><option>الثالث الثانوي</option></select></div>
+            <div class="field"><label for="hSection">الشعبة</label><select id="hSection"><option value="">—</option></select></div>
+          </div>
+          <div class="field" style="margin-bottom:10px"><label for="hTitle">الإنجاز <span class="req">*</span></label><input type="text" id="hTitle" maxlength="120" placeholder="مثال: المركز الأول في أولمبياد الرياضيات"></div>
+          <div class="field" style="margin-bottom:10px"><label for="hPeriod">الفترة</label><input type="text" id="hPeriod" maxlength="40" placeholder="مثال: الفصل الأول 1448هـ"></div>
+          <label class="switch" style="margin-bottom:12px"><input type="checkbox" id="hConsent"> وافقت المدرسة على نشر اسم الطالب</label>
+          <div class="err" id="hoErr" role="alert"></div>
+          <div class="row-actions" style="justify-content:space-between"><button class="btn outline" type="button" id="hoReset">جديد</button><button class="btn" type="submit" id="hoSave">نشر</button></div>
+        </form>
+        <div class="pcard"><h2>المنشورون</h2><p class="sub" id="hoStats"></p><div id="hoList"></div></div>
+      </div>
+    </section>
+
+    <!-- الاستطلاعات والمبادرات -->
+    <section class="panel" id="panel-polls" role="tabpanel" aria-labelledby="tab-polls" hidden style="margin:0">
+      <div class="ph"><div><h1>الاستطلاعات والمبادرات</h1><p class="sub">اسأل الطلاب سؤالًا سريعًا، وراجع مبادراتهم قبل نشرها للتصويت.</p></div>
+        <div class="seg-a" role="tablist"><button type="button" class="on" data-pv="polls">الاستطلاعات</button><button type="button" data-pv="ideas">صندوق المبادرات <em id="ideasCount"></em></button></div></div>
+      <div id="pv-polls" class="grid2" style="grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);align-items:start">
+        <form class="pcard" id="plForm" novalidate>
+          <h2 id="plFormTitle">استطلاع جديد</h2>
+          <input type="hidden" id="pId">
+          <div class="field" style="margin-bottom:10px"><label for="pQ">السؤال <span class="req">*</span></label><input type="text" id="pQ" maxlength="200" placeholder="مثال: أي يوم يناسبكم لحصة التقوية؟"></div>
+          <div class="field" style="margin-bottom:10px"><label>الخيارات (2 إلى 6)</label><div id="pOpts" class="opts"></div><button type="button" class="link-btn" id="pAddOpt">+ خيار</button></div>
+          <div class="grid2" style="margin-bottom:10px">
+            <div class="field"><label for="pGrade">لطلاب</label><select id="pGrade"><option value="">كل الصفوف</option><option>الأول الثانوي</option><option>الثاني الثانوي</option><option>الثالث الثانوي</option></select></div>
+            <div class="field"><label for="pUntil">ينتهي التصويت</label><input type="date" id="pUntil"></div>
+          </div>
+          <label class="switch" style="margin-bottom:6px"><input type="checkbox" id="pShow" checked> اعرض النتائج للطلاب بعد تصويتهم</label>
+          <label class="switch" style="margin-bottom:12px"><input type="checkbox" id="pClosed"> إيقاف التصويت الآن</label>
+          <div class="err" id="plErr" role="alert"></div>
+          <div class="row-actions" style="justify-content:space-between"><button class="btn outline" type="button" id="plReset">جديد</button><button class="btn" type="submit" id="plSave">نشر الاستطلاع</button></div>
+        </form>
+        <div class="pcard"><h2>النتائج</h2><p class="sub">صوت واحد لكل طالب مسجّل في ملف المدرسة، ولا تُحفظ هويات المصوّتين.</p><div id="plList"></div></div>
+      </div>
+      <div id="pv-ideas" hidden>
+        <div class="pcard"><div class="ph" style="margin:0 0 8px"><div><h2>المبادرات الواردة</h2><p class="sub" style="margin:0">اسم الطالب يظهر لك فقط. عند النشر يرى الطلاب الفكرة وصف صاحبها دون اسمه.</p></div>
+          <select id="idF" style="width:auto"><option value="">كل الحالات</option></select></div><div id="idList"></div></div>
+      </div>
+    </section>
+
+    <!-- المكتبة -->
+    <section class="panel" id="panel-library" role="tabpanel" aria-labelledby="tab-library" hidden style="margin:0">
+      <div class="ph"><div><h1>المكتبة</h1><p class="sub">ملفات PDF وصور تظهر في أقسام صفحة الطلاب، ومقاطع يوتيوب قصيرة.</p></div></div>
+      <div class="grid2" style="grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);align-items:start;margin-bottom:16px">
+        <form class="pcard" id="fiForm" novalidate>
+          <h2 id="fiFormTitle">رفع ملف</h2>
+          <input type="hidden" id="fId">
+          <div class="field" style="margin-bottom:10px"><label for="fSection">القسم الذي يظهر فيه</label><select id="fSection"></select></div>
+          <div class="field" id="fCatF" style="margin-bottom:10px"><label for="fCat">تصنيف الأسئلة الشائعة</label><input type="text" id="fCat" list="faqCatsList" maxlength="30"></div>
+          <div class="field" id="fTitleF" style="margin-bottom:10px"><label for="fTitle">عنوان الملف <span class="req">*</span></label><input type="text" id="fTitle" maxlength="120" placeholder="مثال: دليل منصة قبول"></div>
+          <label class="drop" id="fDrop" style="padding:18px 12px;margin-bottom:8px"><input type="file" id="fFile" accept=".pdf,.png,.jpg,.jpeg,.webp" class="sr"><b>اختر الملف أو اسحبه هنا</b><span class="hint" id="fInfo">PDF أو صورة · حتى 4 ميجابايت</span></label>
+          <div class="err" id="fiErr" role="alert"></div>
+          <div class="row-actions" style="justify-content:space-between"><button class="btn outline" type="button" id="fiReset">جديد</button><button class="btn" type="submit" id="fiSave">رفع</button></div>
+        </form>
+        <div class="pcard"><h2>الملفات</h2><p class="sub">رتّبها بالأسهم. «استبدال/تعديل» يرفع نسخة جديدة مكان القديمة.</p><div id="fiList"></div></div>
+      </div>
+      <div class="grid2" style="grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);align-items:start">
+        <form class="pcard" id="viForm" novalidate>
+          <h2 id="viFormTitle">مقطع جديد</h2>
+          <input type="hidden" id="vId">
+          <div class="field" style="margin-bottom:10px"><label for="vTitle">العنوان <span class="req">*</span></label><input type="text" id="vTitle" maxlength="100" placeholder="مثال: كيف أدخل الحصة من الجوال"></div>
+          <div class="field" style="margin-bottom:10px"><label for="vUrl">رابط يوتيوب <span class="req">*</span></label><input type="text" id="vUrl" dir="ltr" style="text-align:right" placeholder="https://youtu.be/..."></div>
+          <div class="field" style="margin-bottom:10px"><label for="vCat">التصنيف</label><input type="text" id="vCat" list="faqCatsList" maxlength="30" placeholder="عام"></div>
+          <div class="err" id="viErr" role="alert"></div>
+          <div class="row-actions" style="justify-content:space-between"><button class="btn outline" type="button" id="viReset">جديد</button><button class="btn" type="submit" id="viSave">إضافة</button></div>
+        </form>
+        <div class="pcard"><h2>المقاطع</h2><p class="sub">تُفتح في يوتيوب، فلا تستهلك مساحة الموقع.</p><div id="viList"></div></div>
+      </div>
+      <datalist id="faqCatsList"></datalist>
+    </section>
+
+    <!-- الإعلانات -->
+    <section class="panel" id="panel-ann" role="tabpanel" aria-labelledby="tab-ann" hidden style="margin:0">
+      <div class="grid2" style="grid-template-columns:1.1fr 1fr;align-items:start">
+        <form class="pcard" id="annForm" novalidate>
+          <h2 id="annFormTitle">إعلان جديد</h2>
+          <p class="sub">يظهر للطلاب فور النشر في أعلى الصفحة، ويختفي وحده بعد تاريخ الانتهاء.</p>
+          <input type="hidden" id="aId">
+          <div class="field" style="margin-bottom:10px"><label for="aTitle">العنوان <span class="req">*</span></label><input type="text" id="aTitle" maxlength="120" placeholder="مثال: تأجيل اختبار الرياضيات للصف الثاني"></div>
+          <div class="field" style="margin-bottom:10px"><label for="aBody">النص</label><textarea id="aBody" maxlength="600" style="min-height:80px" placeholder="سطر أو سطران بالتفاصيل"></textarea></div>
+          <div class="field" style="margin-bottom:10px"><label>نوع الإعلان</label>
+            <div class="ann-types">
+              <label class="t-urgent"><input type="radio" name="aType" value="urgent">عاجل</label>
+              <label class="t-warn"><input type="radio" name="aType" value="warn">تنبيه</label>
+              <label class="t-info"><input type="radio" name="aType" value="info" checked>معلومة</label>
+              <label class="t-congrats"><input type="radio" name="aType" value="congrats">تهنئة</label>
+            </div></div>
+          <div class="field" style="margin-bottom:10px"><label for="aLink">رابط (اختياري)</label><input type="text" id="aLink" dir="ltr" style="text-align:right" placeholder="https://"></div>
+          <div class="grid2" style="margin-bottom:10px">
+            <div class="field"><label for="aGrade">يظهر لـ</label><select id="aGrade"><option value="">كل الطلاب</option><option>الأول الثانوي</option><option>الثاني الثانوي</option><option>الثالث الثانوي</option></select></div>
+            <div class="field"><label>أو شعب محددة</label><button type="button" class="btn outline sm" id="aSecBtn" style="justify-content:space-between">كل شعب الصف <span aria-hidden="true">▾</span></button></div>
+            <div class="field"><label for="aFrom">يبدأ من</label><input type="date" id="aFrom"></div>
+            <div class="field"><label for="aTo">ينتهي في</label><input type="date" id="aTo"></div>
+          </div>
+          <div class="sec-pick" id="aSecs" hidden></div>
+          <label class="switch" style="margin-bottom:6px"><input type="checkbox" id="aPinned"> تثبيت في أعلى الإعلانات</label>
+          <label class="switch" style="margin-bottom:12px"><input type="checkbox" id="aNotify" checked> إشعار الطلاب المستهدفين على جوالاتهم</label>
+          <div class="rec" id="aRec">
+            <div class="rec-h"><b>بصوتك (اختياري)</b><small>سجّل الإعلان بصوتك ليسمعه الطلاب كما قلته تمامًا — حتى دقيقتين.</small></div>
+            <div class="rec-row">
+              <button class="btn outline sm rec-btn" type="button" id="recBtn"><i aria-hidden="true"></i><span>تسجيل</span></button>
+              <span class="rec-t" id="recTime" hidden>0:00</span>
+              <label class="btn light sm" style="cursor:pointer">رفع ملف صوتي<input type="file" id="recFile" accept="audio/*,.m4a,.mp3,.wav,.ogg,.webm" class="sr"></label>
+              <button class="btn light sm" type="button" id="recDel" hidden style="color:var(--danger)">حذف التسجيل</button>
+            </div>
+            <audio id="recPrev" controls preload="none" hidden></audio>
+            <small class="rec-tip">للحصول على صوت واضح: مكان هادئ، والجوال على بُعد شبر، وتحدّث بهدوء وبطء.</small>
+          </div>
+          <div class="err" id="annErr" role="alert"></div>
+          <div class="row-actions" style="justify-content:space-between">
+            <button class="btn outline" type="button" id="annReset">إعلان جديد</button>
+            <button class="btn" type="submit" id="annSave">نشر الإعلان</button>
+          </div>
+        </form>
+        <div class="pcard"><h2>الإعلانات</h2><p class="sub">نشط · مجدول · منتهٍ · مخفي</p><div id="annList"></div></div>
+      </div>
+    </section>
+
+    <!-- المسؤولون (لمدير النظام فقط) -->
+    <section class="panel" id="panel-users" role="tabpanel" aria-labelledby="tab-users" hidden style="margin:0">
+      <div class="ph"><div><h1>الإعدادات</h1><p class="sub">المسؤولون، وحفظ البيانات، والتقويم الدراسي</p></div></div>
+      <div class="grid2" style="grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:start">
+        <form class="pcard" id="userForm" novalidate>
+          <h2 id="userFormTitle">إضافة مسؤول</h2>
+          <p class="sub">يحصل على رقم سري مؤقت يغيّره بنفسه عند أول دخول.</p>
+          <input type="hidden" id="uId">
+          <div class="grid2" style="margin-bottom:10px">
+            <div class="field"><label for="uName">الاسم <span class="req">*</span></label><input type="text" id="uName" maxlength="60" placeholder="مثال: أ. خالد الحربي"></div>
+            <div class="field"><label for="uUser">اسم الدخول (بالإنجليزية) <span class="req">*</span></label><input type="text" id="uUser" maxlength="30" dir="ltr" style="text-align:right" autocapitalize="none" placeholder="khaled"></div>
+          </div>
+          <div class="grid2" style="margin-bottom:10px">
+            <div class="field"><label for="uRole">الدور</label><select id="uRole"></select><span class="hint">اختيار الدور يضبط صلاحيات مقترحة، ويمكنك تعديلها.</span></div>
+            <div class="field" id="uTitleF" hidden><label for="uTitle">المسمى الوظيفي</label><input type="text" id="uTitle" maxlength="40" placeholder="مثال: منسق الإرشاد المهني"></div>
+          </div>
+          <div class="field" style="margin-bottom:12px"><label>الصلاحيات</label>
+            <div class="perm-box">
+              <label><input type="checkbox" id="pInq"> الاستفسارات وطلبات الدعم</label>
+              <div class="perm-types" id="pTypes"></div>
+              <label><input type="checkbox" id="pAnn"> الإعلانات (إضافة وتعديل وحذف)</label>
+              <label><input type="checkbox" id="pStu"> بيانات الطلاب (رفع الملف وعرضه)</label>
+              <label><input type="checkbox" id="pFaq"> الأسئلة الشائعة والمكتبة (ملفات وفيديوهات)</label>
+              <label><input type="checkbox" id="pSched"> الجداول والاختبارات</label>
+              <label><input type="checkbox" id="pCalls"> استدعاء الطلاب</label>
+              <label><input type="checkbox" id="pEvents"> الفعاليات والمواعيد</label>
+              <label><input type="checkbox" id="pHonor"> لوحة الشرف</label>
+              <label><input type="checkbox" id="pPolls"> الاستطلاعات والمبادرات</label>
+            </div>
+            <span class="hint">إدارة المسؤولين، والحذف النهائي، والنسخة الاحتياطية: لمدير النظام فقط.</span>
+          </div>
+          <div class="err" id="userErr" role="alert"></div>
+          <div class="row-actions" style="justify-content:space-between">
+            <button class="btn outline" type="button" id="userReset">مسؤول جديد</button>
+            <button class="btn" type="submit" id="userSave">إضافة المسؤول</button>
+          </div>
+          <div class="secret" id="secretBox" hidden>
+            <div style="flex:1;min-width:200px"><b id="secretFor"></b><br><small>اسم الدخول: <span id="secretUser" dir="ltr"></span> · سلّمه الرقم بنفسك. لن يظهر مرة أخرى.</small></div>
+            <code id="secretPw"></code><button class="btn sm outline" type="button" id="secretCopy">نسخ</button>
+          </div>
+        </form>
+        <div class="pcard"><h2>الهيكل الإداري</h2><p class="sub">اضغط على أي مقعد فارغ لإضافة صاحبه. أنت «مدير النظام» وتدخل برقمك الحالي دون اسم دخول.</p><div id="slots" class="slots"></div><h3 class="sub-h">جميع المسؤولين</h3><div id="userList"></div></div>
+      </div>
+      <div style="display:grid;gap:16px;margin-top:16px">
+        <div class="pcard" id="stCard">
+          <h2>حالة المنصات والإشعارات</h2>
+          <p class="sub">يفحص الموقع منصتي مدرستي وتيمز كل 10 دقائق. إذا أعلنت الوزارة عطلًا، أو كان الفحص غير دقيق، فاختر الحالة يدويًا.</p>
+          <div id="stRows" class="st-rows"></div>
+          <div class="row-actions" style="justify-content:space-between;margin-top:10px"><span class="hint" id="pushStats"></span><button class="btn sm" type="button" id="stSave">حفظ الحالة</button></div>
+          <div class="err" id="stErr" role="alert"></div>
+        </div>
+        <form class="pcard" id="retForm" novalidate>
+          <h2>حفظ البيانات والخصوصية</h2><p class="sub">ما يحدث للاستفسارات المغلقة</p>
+          <div class="field" style="margin-bottom:10px"><label for="retDays">أرشفة الاستفسارات المحلولة والمغلقة</label>
+            <select id="retDays"><option value="30">بعد 30 يومًا من إغلاقها</option><option value="60">بعد 60 يومًا</option><option value="90">بعد 90 يومًا</option><option value="0">بدون أرشفة</option></select>
+            <span class="hint">المؤرشف يختفي من القائمة الرئيسية ويبقى في «عرض الأرشيف».</span></div>
+          <label class="switch" style="margin-bottom:12px"><input type="checkbox" id="retMask"> إخفاء أرقام الجوال في ملف Excel المُصدَّر (تظهر آخر 3 أرقام فقط)</label>
+          <div class="row-actions" style="justify-content:space-between">
+            <button class="btn danger sm" type="button" id="purgeBtn">حذف الأرشيف نهائيًا…</button>
+            <button class="btn sm" type="submit" id="retSave">حفظ</button></div>
+          <p class="notice warn" style="margin:12px 0 0;padding:10px 12px;font-size:13.5px">الحذف النهائي لا يتم إلا بعد تأكيدك، وتُنزَّل قبله نسخة احتياطية تلقائيًا.</p>
+        </form>
+        <div class="pcard">
+          <h2>التقويم الدراسي</h2><p class="sub">منه تُحسب الساعة والعدّ التنازلي والأسبوع الدراسي في صفحة الطلاب.</p>
+          <div id="calState" class="hint" style="margin-bottom:10px"></div>
+          <div id="calTerms" class="cal-terms"></div>
+          <table class="cal-tb"><thead><tr><th>الإجازة</th><th>من</th><th>إلى</th><th>العودة</th><th></th></tr></thead><tbody id="calBreaks"></tbody></table>
+          <div class="cal-imp">
+            <b>استيراد التقويم من ملف</b>
+            <span class="hint">Excel أو CSV أو PDF: اسم الإجازة أو الفصل وتاريخ البداية والنهاية (ميلادي أو هجري)</span>
+            <div class="row-actions" style="justify-content:flex-start;gap:6px"><label class="btn outline sm" style="cursor:pointer">اختر الملف<input type="file" id="calFile" accept=".xlsx,.xls,.csv,.pdf" class="sr"></label><button class="btn light sm" type="button" id="calTemplate">تنزيل نموذج</button></div>
+            <p class="hint" id="calImpInfo" style="margin:0"></p>
+          </div>
+          <div class="err" id="calErr" role="alert"></div>
+          <div class="row-actions" style="justify-content:space-between;margin-top:10px">
+            <div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn outline sm" type="button" id="calAdd">+ إجازة</button><button class="btn light sm" type="button" id="calReset">الرجوع للتقويم المعتمد 1448هـ</button></div>
+            <button class="btn sm" type="button" id="calSave">حفظ التقويم</button></div>
+          <p class="hint" style="margin:10px 0 0">✓ يوم العودة يُحسب تلقائيًا (أول يوم دراسي بعد الإجازة)، والأسابيع تُعدّ من الأحد.</p>
+        </div>
+      </div>
+
+    </section>
+
     <!-- بيانات الطلاب -->
     <section class="panel" id="panel-students" role="tabpanel" aria-labelledby="tab-students" hidden style="margin:0">
+      <div class="ph"><div><h1>بيانات الطلاب</h1><p class="sub">ملف الطلاب الذي تعتمد عليه «بياناتي» و«صوتك يصل».</p></div></div>
       <div class="card pad" style="margin-bottom:16px">
         <h2 style="margin-top:0">الملف الحالي</h2>
         <div id="stInfo" class="info-grid"><div><small>الحالة</small><b>جارٍ التحميل…</b></div></div>
@@ -215,6 +914,7 @@
         </div>
       </div>
     </section>
+    </main>
   </div>
 </div>
 
@@ -234,6 +934,15 @@
         <button type="button">تمت معالجة طلبك، وفقك الله.</button>
       </div>
     </div>
+    <div class="assign-box">
+      <label for="mAssign">تحويل الطلب إلى مسؤول آخر</label>
+      <div class="assign-row">
+        <select id="mAssign"><option value="">بدون تحويل</option></select>
+        <input type="text" id="mAssignNote" maxlength="300" placeholder="ملاحظة للمسؤول (اختياري)">
+        <button class="btn outline sm" type="button" id="mAssignBtn">تحويل</button>
+      </div>
+      <span class="hint" id="mAssignInfo"></span>
+    </div>
     <div class="form" style="margin-top:14px">
       <div class="field"><label for="mStatus">حالة الطلب</label>
         <select id="mStatus"><option>جديد</option><option>قيد المعالجة</option><option>تم الرد</option><option>تم الحل</option><option>مغلق</option></select></div>
@@ -243,6 +952,25 @@
       <button class="btn danger sm" id="mDelete" type="button">حذف الطلب</button>
       <button class="btn" id="mSave" type="button">حفظ وإرسال الرد</button>
     </div>
+  </div>
+</div>
+
+<div class="modal" id="pwModal" role="dialog" aria-modal="true" aria-labelledby="pwmTitle">
+  <form class="card" id="pwForm" novalidate style="max-width:420px">
+    <div class="modal-head"><h3 id="pwmTitle">تغيير الرقم السري</h3><button class="x" id="pwmClose" type="button" aria-label="إغلاق">×</button></div>
+    <p class="sub" id="pwmNote" style="margin:0 0 12px">اختر رقمًا سريًا خاصًا بك، 8 خانات على الأقل.</p>
+    <div class="field" style="margin-bottom:10px"><label for="pwCur">الرقم الحالي (أو المؤقت)</label><input type="password" id="pwCur" autocomplete="current-password"></div>
+    <div class="field" style="margin-bottom:10px"><label for="pwNew">الرقم الجديد</label><input type="password" id="pwNew" autocomplete="new-password"></div>
+    <div class="field" style="margin-bottom:10px"><label for="pwNew2">تأكيد الرقم الجديد</label><input type="password" id="pwNew2" autocomplete="new-password"></div>
+    <div class="err" id="pwErr" role="alert"></div>
+    <button class="btn wide" type="submit" id="pwSave">حفظ الرقم الجديد</button>
+  </form>
+</div>
+
+<div class="modal" id="askModal" role="alertdialog" aria-modal="true" aria-labelledby="askMsg">
+  <div class="card" style="max-width:420px">
+    <p id="askMsg" style="margin:0 0 16px;font-weight:600;line-height:1.8"></p>
+    <div class="row-actions" style="justify-content:flex-end;gap:8px"><button class="btn outline sm" type="button" id="askNo">إلغاء</button><button class="btn danger sm" type="button" id="askYes">تأكيد</button></div>
   </div>
 </div>
 
@@ -258,14 +986,23 @@
     set(k, v) { try { sessionStorage.setItem(k, v); } catch {} },
     del(k) { try { sessionStorage.removeItem(k); } catch {} },
   };
-  let token = null, tokenExp = 0;
-  { const t = ss.get("bsh_admin"); if (t) { try { const o = JSON.parse(t); if (o.exp > Date.now()) { token = o.token; tokenExp = o.exp; } } catch {} } }
+  let token = null, tokenExp = 0, ME = null, staff = [], settings = { archiveDays: 30, maskPhones: true };
+  const ADM = window.ADM = { loaders: [], onTab: {} };
+  { const t = ss.get("bsh_admin"); if (t) { try { const o = JSON.parse(t); if (o.exp > Date.now()) { token = o.token; tokenExp = o.exp; ME = o.me || null; } } catch {} } }
 
   const toDigits = (v) => String(v ?? "")
     .replace(/[٠-٩]/g, (d) => d.charCodeAt(0) - 0x0660)
     .replace(/[۰-۹]/g, (d) => d.charCodeAt(0) - 0x06f0)
     .replace(/\D/g, "");
   const fmtDate = (iso) => { try { return new Date(iso).toLocaleString("ar-SA-u-ca-gregory-nu-latn", { dateStyle: "medium", timeStyle: "short" }); } catch { return iso; } };
+  // نافذة تأكيد داخل الصفحة (بدلًا من confirm الذي تمنعه بعض المتصفحات والمعاينات)
+  function ask(msg) {
+    return new Promise((res) => {
+      const m = $("#askModal"); $("#askMsg").textContent = msg; m.classList.add("show");
+      const done = (v) => { m.classList.remove("show"); $("#askYes").onclick = $("#askNo").onclick = null; res(v); };
+      $("#askYes").onclick = () => done(true); $("#askNo").onclick = () => done(false); setTimeout(() => $("#askNo").focus(), 30);
+    });
+  }
   function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("show"), 3200); }
   function busy(btn, on, label) {
     if (on) { btn.dataset.label = btn.textContent; btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>' + (label || "جارٍ التنفيذ…"); }
@@ -285,6 +1022,7 @@
     } catch { throw new Error("تعذر الاتصال بالخادم."); }
     let d = {}; try { d = await res.json(); } catch {}
     if (res.status === 401 && d.auth === false) { logout(true); throw new Error(d.error); }
+    if (res.status === 403 && d.mustChange) { openPw(true); throw new Error(d.error); }
     if (!res.ok) throw new Error(d.error || "حدث خطأ غير متوقع.");
     return d;
   }
@@ -296,36 +1034,91 @@
   });
   $("#loginForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const pw = $("#pw").value, err = $("#loginErr"), btn = $("#loginBtn");
+    const pw = $("#pw").value, un = $("#un").value.trim(), err = $("#loginErr"), btn = $("#loginBtn");
     err.textContent = "";
     if (!pw) { err.textContent = "أدخل الرقم السري."; return; }
     busy(btn, true, "جارٍ التحقق…");
     try {
-      const d = await api({ action: "login", password: pw });
-      token = d.token; tokenExp = d.exp; ss.set("bsh_admin", JSON.stringify({ token, exp: tokenExp }));
+      const d = await api({ action: "login", username: un, password: pw });
+      token = d.token; tokenExp = d.exp; ME = d.me; saveSession();
       $("#pw").value = ""; showApp();
     } catch (ex) { err.textContent = ex.message; }
     finally { busy(btn, false); }
   });
   function logout(expired) {
-    token = null; ss.del("bsh_admin"); clearInterval(pollT);
+    token = null; ME = null; ss.del("bsh_admin"); clearInterval(pollT);
     $("#appView").hidden = true; $("#loginView").hidden = false;
     if (expired) $("#loginErr").textContent = "انتهت الجلسة. سجّل الدخول من جديد.";
   }
   $("#logout").addEventListener("click", () => logout(false));
 
   let pollT = null;
-  function showApp() {
+  function saveSession() { ss.set("bsh_admin", JSON.stringify({ token, exp: tokenExp, me: ME })); }
+  const P = { inq: () => ME && (ME.perms.inquiries === "all" || (ME.perms.inquiries || []).length > 0), ann: () => ME && ME.perms.announcements, stu: () => ME && ME.perms.students,
+    faq: () => ME && ME.perms.faq, sched: () => ME && ME.perms.schedule, owner: () => ME && ME.owner,
+    calls: () => ME && ME.perms.calls, events: () => ME && ME.perms.events, honor: () => ME && ME.perms.honor, polls: () => ME && ME.perms.polls };
+  function applyPerms() {
+    $("#meName").textContent = ME.name; $("#meRole").textContent = ME.role; $("#meAv").textContent = (ME.name.replace(/^أ\.\s*/, "").trim()[0]) || "م";
+    $("#chPwBtn").hidden = ME.owner;
+    const vis = { dash: P.inq(), complaints: P.inq() || items.length > 0, calls: P.calls(), ann: P.ann(), events: P.events(), honor: P.honor(), faq: P.faq(), library: P.faq(),
+      polls: P.polls(), sched: P.sched(), finals: P.sched(), students: P.stu(), report: P.inq(), users: P.owner() };
+    let first = null;
+    for (const [k, v] of Object.entries(vis)) $("#tab-" + k).hidden = !v;
+    document.querySelectorAll(".tabs .tab").forEach((t) => { if (!t.hidden && !first) first = t.dataset.tab; });
+    document.querySelectorAll(".tgroup").forEach((g) => { g.hidden = ![...g.querySelectorAll(".tab")].some((t) => !t.hidden); });
+    $("#backupBtn").hidden = !P.owner(); $("#mDelete").hidden = !P.owner(); $("#stClear").hidden = !P.owner();
+    const cur = document.querySelector('.tab[aria-selected="true"]');
+    if (!cur || cur.hidden) selectTab(first || "complaints");
+  }
+  function selectTab(name) {
+    document.querySelectorAll(".tab").forEach((x) => x.setAttribute("aria-selected", x.dataset.tab === name ? "true" : "false"));
+    document.querySelectorAll(".panel").forEach((p) => p.hidden = p.id !== "panel-" + name);
+    (ADM.onTab[name] || []).forEach((f) => f());
+  }
+  async function showApp() {
     $("#loginView").hidden = true; $("#appView").hidden = false;
-    loadComplaints(); loadStudentsInfo();
-    clearInterval(pollT); pollT = setInterval(() => { if (!document.hidden && !$("#modal").classList.contains("show")) loadComplaints(true); }, 60000);
+    try { const d = await api({ action: "me" }); ME = d.me; saveSession(); } catch { if (!token) return; }
+    if (!ME) return;
+    applyPerms();
+    if (ME.mustChange) { openPw(true); return; }
+    loadAll();
+  }
+  function loadAll() {
+    loadComplaints(true);
+    api({ action: "staff" }).then((d) => { staff = d.items || []; }).catch(() => {});
+    ADM.loaders.forEach((f) => { try { f(); } catch (e) { console.error(e); } });
+    if (P.stu()) loadStudentsInfo();
+    clearInterval(pollT); pollT = setInterval(() => { if (P.inq() && !document.hidden && !$("#modal").classList.contains("show")) loadComplaints(true); }, 60000);
   }
 
+  // ===== تغيير الرقم السري =====
+  let pwForced = false;
+  function openPw(forced) {
+    pwForced = !!forced;
+    $("#pwmNote").textContent = forced ? "هذا رقم مؤقت. اختر رقمًا سريًا خاصًا بك (8 خانات على الأقل) لتكمل." : "اختر رقمًا سريًا خاصًا بك، 8 خانات على الأقل.";
+    $("#pwmClose").hidden = forced; $("#pwErr").textContent = "";
+    $("#pwModal").classList.add("show"); setTimeout(() => $("#pwCur").focus(), 50);
+  }
+  $("#chPwBtn").addEventListener("click", () => openPw(false));
+  $("#pwmClose").addEventListener("click", () => $("#pwModal").classList.remove("show"));
+  $("#pwForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const err = $("#pwErr"); err.textContent = "";
+    const cur = $("#pwCur").value, n1 = $("#pwNew").value, n2 = $("#pwNew2").value;
+    if (n1.length < 8) { err.textContent = "الرقم الجديد 8 خانات على الأقل."; return; }
+    if (n1 !== n2) { err.textContent = "الرقمان غير متطابقين."; return; }
+    const btn = $("#pwSave"); busy(btn, true, "جارٍ الحفظ…");
+    try {
+      const d = await api({ action: "change-password", currentPassword: cur, newPassword: n1 });
+      ME = d.me; saveSession(); $("#pwForm").reset(); $("#pwModal").classList.remove("show");
+      toast("تم تغيير الرقم السري."); if (pwForced) { pwForced = false; loadAll(); }
+    } catch (ex) { err.textContent = ex.message; } finally { busy(btn, false); }
+  });
+
+  Object.assign(ADM, { ask, api: (b) => api(b), el, toast, busy, fmtDate, $, SECTIONS, me: () => ME, P, items: () => items, openItem: (k) => openItem(k), selectTab: (n) => selectTab(n),
+    settings: () => settings, setSettings: (s) => { settings = s; render(); }, reloadInquiries: () => loadComplaints(true), downloadBackup: () => doBackup() });
   // ===== التبويبات =====
-  document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () => {
-    document.querySelectorAll(".tab").forEach((x) => x.setAttribute("aria-selected", x === t ? "true" : "false"));
-    document.querySelectorAll(".panel").forEach((p) => p.hidden = p.id !== "panel-" + t.dataset.tab);
-  }));
+  document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () => selectTab(t.dataset.tab)));
 
   // ===== الشكاوى =====
   let items = [];
@@ -335,34 +1128,41 @@
     if (!silent) busy(btn, true, "تحديث…");
     try {
       const d = await api({ action: "list" });
-      items = d.items || []; render();
+      items = d.items || []; settings = d.settings || settings; render();
+      if (!P.inq() && items.length && $("#tab-complaints").hidden) $("#tab-complaints").hidden = false;
       $("#lastSync").textContent = "آخر تحديث: " + fmtDate(new Date().toISOString());
     } catch (ex) { if (!silent) toast(ex.message); }
     finally { if (!silent) busy(btn, false); }
   }
   $("#refresh").addEventListener("click", () => loadComplaints());
-  ["#q", "#fStatus", "#fSection", "#fType"].forEach((s) => $(s).addEventListener("input", render));
+  ["#q", "#fStatus", "#fSection", "#fType", "#fAssign", "#fArchive"].forEach((s) => $(s).addEventListener("input", render));
   document.querySelectorAll(".stat").forEach((b) => b.addEventListener("click", () => { $("#fStatus").value = b.dataset.status; render(); }));
 
   function filtered() {
-    const q = $("#q").value.trim().toLowerCase(), st = $("#fStatus").value, sec = $("#fSection").value, ty = $("#fType").value;
-    return items.filter((i) => (!st || i.status === st) && (!sec || i.section === sec) && (!ty || i.type === ty) &&
+    const q = $("#q").value.trim().toLowerCase(), st = $("#fStatus").value, sec = $("#fSection").value, ty = $("#fType").value, as = $("#fAssign").value, arch = $("#fArchive").checked;
+    return items.filter((i) => (arch ? i.archived : !i.archived) && (!as || (as === "me" ? i.assignedTo === ME.id : !i.assignedTo)) &&
+      (!st || i.status === st) && (!sec || i.section === sec) && (!ty || i.type === ty) &&
       (!q || [i.name, i.studentId, i.ticket, i.description, i.contact].join(" ").toLowerCase().includes(q)));
   }
   const ST_CLASS = { "جديد": "st-new", "قيد المعالجة": "st-prog", "تم الرد": "st-replied", "تم الحل": "st-done", "مغلق": "st-closed" };
   function badge(s) { return el("span", { class: "badge " + (ST_CLASS[s] || "st-new"), text: s }); }
   function render() {
-    const c = (s) => items.filter((i) => i.status === s).length;
-    $("#s-all").textContent = items.length; $("#s-new").textContent = c("جديد"); $("#s-prog").textContent = c("قيد المعالجة"); $("#s-done").textContent = c("تم الحل"); $("#s-replied").textContent = c("تم الرد");
+    const live = items.filter((i) => !i.archived);
+    const c = (s) => live.filter((i) => i.status === s).length;
+    $("#s-all").textContent = live.length;
+    const waiting = live.filter((i) => i.status === "جديد" || i.unreadByAdmin).length;
+    $("#inqBadge").hidden = !waiting; $("#inqBadge").textContent = waiting; $("#s-new").textContent = c("جديد"); $("#s-prog").textContent = c("قيد المعالجة"); $("#s-done").textContent = c("تم الحل"); $("#s-replied").textContent = c("تم الرد");
     document.querySelectorAll(".stat").forEach((b) => b.classList.toggle("active", b.dataset.status === $("#fStatus").value));
     const list = $("#list"); list.textContent = "";
     const rows = filtered();
-    if (!rows.length) { list.append(el("div", { class: "card empty", text: items.length ? "لا توجد نتائج مطابقة للتصفية." : "لا توجد طلبات حتى الآن." })); return; }
+    if (!rows.length) { list.append(el("div", { class: "card empty", text: $("#fArchive").checked ? "لا توجد استفسارات مؤرشفة." : items.length ? "لا توجد نتائج مطابقة للتصفية." : "لا توجد طلبات حتى الآن." })); return; }
     rows.forEach((i) => {
       const lastStudent = (i.messages || []).filter((m) => m.from === "student").length;
-      const b = el("button", { class: "item" + (i.unreadByAdmin ? " is-unread" : ""), type: "button" },
+      const b = el("button", { class: "item" + (i.unreadByAdmin ? " is-unread" : "") + (i.archived ? " is-archived" : ""), type: "button" },
         el("span", { class: "t" }, i.name, " · ", el("span", { class: "mono", text: i.ticket }),
-          i.unreadByAdmin ? el("span", { class: "unread", text: lastStudent ? "ردّ جديد من الطالب" : "غير مقروء" }) : null),
+          i.unreadByAdmin ? el("span", { class: "unread", text: i.assignedTo === ME.id && !lastStudent ? "محوّل إليك" : lastStudent ? "ردّ جديد من الطالب" : "غير مقروء" }) : null,
+          i.assignedName ? el("span", { class: "tag-assigned", text: "↩ " + (i.assignedTo === ME.id ? "محوّل إليك" : i.assignedName) }) : null,
+          i.rating ? el("span", { class: "stars", title: "تقييم الطالب", text: " " + "★".repeat(i.rating.stars) }) : null),
         badge(i.status),
         el("span", { class: "meta" },
           el("span", {}, "الهوية: ", el("span", { class: "mono", text: i.studentId })),
@@ -386,10 +1186,16 @@
     f("الصف الدراسي", current.grade); f("الشعبة", current.section);
     f("نوع الاستفسار", current.type); f("وسيلة التواصل", current.contact, false, true);
     f("تاريخ الإرسال", fmtDate(current.createdAt)); f("آخر تحديث", fmtDate(current.updatedAt));
+    if (current.rating) f("تقييم الطالب", "★".repeat(current.rating.stars) + "☆".repeat(5 - current.rating.stars) + (current.rating.tags?.length ? " · " + current.rating.tags.join("، ") : "") + (current.rating.note ? "\n«" + current.rating.note + "»" : ""), true);
+    const sel = $("#mAssign"); sel.textContent = ""; sel.append(el("option", { value: "", text: "بدون تحويل" }));
+    staff.filter((x) => x.id !== ME.id || current.assignedTo === ME.id).forEach((x) => sel.append(el("option", { value: x.id, text: x.name + " — " + x.role })));
+    sel.value = current.assignedTo || ""; $("#mAssignNote").value = "";
+    $("#mAssignInfo").textContent = current.assignedName ? "محوّل حاليًا إلى " + current.assignedName + (current.assignedBy ? " بواسطة " + current.assignedBy : "") + (current.assignedAt ? " · " + fmtDate(current.assignedAt) : "") : "";
     const th = $("#mThread"); th.textContent = "";
     const bub = (from, text, at, label) => th.append(el("div", { class: "m-bubble " + from }, el("small", { text: label + " · " + fmtDate(at) }), el("p", { text })));
     bub("student", current.description, current.createdAt, "استفسار الطالب");
-    (current.messages || []).forEach((m) => bub(m.from, m.text, m.at, m.from === "admin" ? "ردّك" : "ردّ الطالب"));
+    (current.messages || []).forEach((m) => bub(m.from, m.text, m.at, m.from === "admin" ? (m.by ? "ردّ " + m.by : "ردّ المسؤول") : "ردّ الطالب"));
+    if ((current.log || []).length) th.append(el("div", { class: "log" }, el("b", { text: "سجل الإجراءات" }), ...current.log.slice(-8).map((l) => el("div", {}, el("span", { text: fmtDate(l.at) }), el("span", { text: l.by + " – " + l.text })))));
     $("#mStatus").value = current.status; $("#mNote").value = current.adminNote || ""; $("#mReply").value = "";
     $("#mStatus").dataset.touched = "";
     setTimeout(() => { th.scrollTop = th.scrollHeight; }, 30);
@@ -412,6 +1218,20 @@
       render(); closeModal(); toast(reply ? "تم إرسال الرد إلى الطالب." : "تم حفظ التغييرات.");
     } catch (ex) { toast(ex.message); } finally { busy(btn, false); }
   });
+  $("#mAssignBtn").addEventListener("click", async () => {
+    if (!current) return; const to = $("#mAssign").value;
+    if ((current.assignedTo || "") === to) { toast(to ? "الطلب محوّل لهذا المسؤول مسبقًا." : "الطلب غير محوّل."); return; }
+    const btn = $("#mAssignBtn"); busy(btn, true, "…");
+    try {
+      const d = await api({ action: "assign", key: current.key, to, note: $("#mAssignNote").value });
+      const idx = items.findIndex((i) => i.key === current.key); if (idx > -1) items[idx] = { ...d.item, archived: false };
+      const name = to ? (staff.find((x) => x.id === to) || {}).name : "";
+      if (!canSee(d.item)) { items.splice(idx, 1); closeModal(); render(); toast("تم التحويل إلى " + name + "."); return; }
+      render(); openItem(current.key); toast(to ? "تم التحويل إلى " + name + "." : "تم إلغاء التحويل.");
+    } catch (ex) { toast(ex.message); } finally { busy(btn, false); }
+  });
+  // هل ما زال الطلب ضمن صلاحيات المستخدم بعد تحويله؟
+  function canSee(i) { const p = ME.perms.inquiries; return ME.owner || p === "all" || (Array.isArray(p) && p.includes(i.type)) || i.assignedTo === ME.id; }
   // كتابة رد على طلب جديد تقترح الحالة «تم الرد» ما لم يغيّرها المسؤول يدويًا
   $("#mStatus").addEventListener("change", () => { $("#mStatus").dataset.touched = "1"; });
   $("#mReply").addEventListener("input", () => {
@@ -420,17 +1240,17 @@
   document.querySelectorAll("#quick button").forEach((b) => b.addEventListener("click", () => {
     const t = $("#mReply"); t.value = (t.value.trim() ? t.value.trim() + "\n" : "") + b.textContent; t.dispatchEvent(new Event("input")); t.focus();
   }));
+  async function doBackup() {
+    const d = await api({ action: "backup" });
+    const a = el("a", { href: URL.createObjectURL(new Blob([JSON.stringify(d.backup, null, 2)], { type: "application/json" })), download: "نسخة-احتياطية-" + new Date().toISOString().slice(0, 10) + ".json" });
+    document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  }
   $("#backupBtn").addEventListener("click", async () => {
     const btn = $("#backupBtn"); busy(btn, true, "جارٍ التجهيز…");
-    try {
-      const d = await api({ action: "backup" });
-      const a = el("a", { href: URL.createObjectURL(new Blob([JSON.stringify(d.backup, null, 2)], { type: "application/json" })), download: "نسخة-احتياطية-" + new Date().toISOString().slice(0, 10) + ".json" });
-      document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
-      toast("تم تنزيل النسخة الاحتياطية.");
-    } catch (ex) { toast(ex.message); } finally { busy(btn, false); }
+    try { await doBackup(); toast("تم تنزيل النسخة الاحتياطية."); } catch (ex) { toast(ex.message); } finally { busy(btn, false); }
   });
   $("#mDelete").addEventListener("click", async () => {
-    if (!current || !confirm("حذف الطلب " + current.ticket + " نهائيًا؟ لا يمكن التراجع.")) return;
+    if (!current || !(await ask("حذف الطلب " + current.ticket + " نهائيًا؟ لا يمكن التراجع."))) return;
     const btn = $("#mDelete"); busy(btn, true, "جارٍ الحذف…");
     try { await api({ action: "delete", key: current.key }); items = items.filter((i) => i.key !== current.key); render(); closeModal(); toast("تم حذف الطلب."); }
     catch (ex) { toast(ex.message); } finally { busy(btn, false); }
@@ -441,7 +1261,8 @@
     const rows = filtered(); if (!rows.length) { toast("لا توجد بيانات للتصدير."); return; }
     const cols = [["ticket","رقم الطلب"],["createdAt","التاريخ"],["status","الحالة"],["name","اسم الطالب"],["studentId","الهوية"],["grade","الصف"],["section","الشعبة"],["type","نوع الاستفسار"],["contact","وسيلة التواصل"],["description","الوصف"],["lastReply","آخر رد للمسؤول"],["adminNote","ملاحظات المسؤول"]];
     const esc = (v) => { let s = String(v ?? ""); if (/^[=+\-@]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; };
-    const csv = [cols.map((c) => esc(c[1])).join(","), ...rows.map((r) => cols.map(([k]) => esc(k === "createdAt" ? fmtDate(r[k]) : k === "studentId" ? "‎" + r[k] : k === "lastReply" ? ((r.messages || []).filter((m) => m.from === "admin").pop() || {}).text : r[k])).join(","))].join("\r\n");
+    const mask = (v) => settings.maskPhones ? String(v ?? "").replace(/(?:\+?966|0)?5\d{8}/g, (m) => "•".repeat(m.length - 3) + m.slice(-3)) : v;
+    const csv = [cols.map((c) => esc(c[1])).join(","), ...rows.map((r) => cols.map(([k]) => esc(k === "createdAt" ? fmtDate(r[k]) : k === "studentId" ? "‎" + r[k] : k === "lastReply" ? mask(((r.messages || []).filter((m) => m.from === "admin").pop() || {}).text) : ["contact", "description", "adminNote"].includes(k) ? mask(r[k]) : r[k])).join(","))].join("\r\n");
     const a = el("a", { href: URL.createObjectURL(new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" })), download: "طلبات-الدعم-" + new Date().toISOString().slice(0, 10) + ".csv" });
     document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
   });
@@ -460,7 +1281,7 @@
     } catch (ex) { box.textContent = ""; box.append(el("div", {}, el("small", { text: "خطأ" }), el("b", { text: ex.message }))); }
   }
   $("#stClear").addEventListener("click", async () => {
-    if (!confirm("حذف جميع بيانات الطلاب؟ لن يتمكن الطلاب من عرض بياناتهم حتى ترفع ملفًا جديدًا.")) return;
+    if (!(await ask("حذف جميع بيانات الطلاب؟ لن يتمكن الطلاب من عرض بياناتهم حتى ترفع ملفًا جديدًا."))) return;
     try { await api({ action: "students-clear" }); toast("تم حذف بيانات الطلاب."); loadStudentsInfo(); } catch (ex) { toast(ex.message); }
   });
 
@@ -739,5 +1560,9 @@
   if (token) showApp();
 })();
 </script>
+<script src="assets/admin-import.js"></script>
+<script src="assets/admin-plus.js"></script>
+<script src="assets/admin-more.js"></script>
+<script src="assets/admin-finals.js"></script>
 </body>
 </html>

@@ -1,4 +1,5 @@
-import { json, store, normalizeId, rateLimit, officialInfo } from "../lib/common.mjs";
+import { finalsFor } from "../lib/finals.mjs";
+import { json, store, normalizeId, rateLimit, officialInfo, getContent, content, todayRiyadh } from "../lib/common.mjs";
 
 // يعيد بيانات طالب واحد فقط عند إدخال رقم هويته. القائمة الكاملة لا تُرسل أبدًا للمتصفح.
 export default async (req, context) => {
@@ -31,7 +32,18 @@ export default async (req, context) => {
 
   const email = roles.email ? String(row[roles.email] ?? "").trim() : "";
 
-  return json({ ok: true, id, fields, email, official, updatedAt: data.updatedAt });
+  // الاستدعاءات الموجّهة لهذا الطالب فقط (سارية حتى تاريخ انتهائها)
+  const today = todayRiyadh();
+  let callsList = await getContent("calls", []);
+  if (b.action === "ack" && b.callId) {
+    const c = callsList.find((x) => x.id === b.callId && x.studentId === id);
+    if (c && !c.seenAt) { c.seenAt = new Date().toISOString(); await content().setJSON("calls", callsList); }
+  }
+  const calls = callsList.filter((c) => c.studentId === id && c.expires >= today)
+    .map(({ id: cid, text, place, when, from, createdAt, seenAt }) => ({ id: cid, text, place, when, from, createdAt, seen: !!seenAt }));
+
+  const finals = await finalsFor(id, official);
+  return json({ ok: true, id, fields, email, official, calls, finals, updatedAt: data.updatedAt });
 };
 
 export const config = { path: "/api/lookup" };
