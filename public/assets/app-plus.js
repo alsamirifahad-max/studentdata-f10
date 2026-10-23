@@ -398,7 +398,31 @@
   const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
   const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
   let deferred = null;
-  if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("sw.js").catch(() => {});
+  if ("serviceWorker" in navigator && location.protocol === "https:") {
+    navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }).then((reg) => {
+      // عند فتح التطبيق المثبت من جديد: تحقق من وجود نسخة أحدث
+      document.addEventListener("visibilitychange", () => { if (!document.hidden) reg.update().catch(() => {}); });
+    }).catch(() => {});
+  }
+  // التطبيق المثبت على الجوال قد يبقى مفتوحًا أيامًا: إذا نُشرت نسخة جديدة يُعاد تحميله تلقائيًا
+  let verChecked = 0;
+  async function checkVersion() {
+    if (Date.now() - verChecked < 60000) return; verChecked = Date.now();
+    try {
+      const r = await fetch("version.json?t=" + Date.now(), { cache: "no-store" });
+      const v = (await r.json()).v;
+      if (v && window.BSH_VER && v !== window.BSH_VER) {
+        const k = "bsh_reloaded_" + v;
+        if (sessionStorage.getItem(k)) return; // مرة واحدة لكل نسخة
+        sessionStorage.setItem(k, "1");
+        if ("caches" in window) { const ks = await caches.keys(); await Promise.all(ks.map((x) => caches.delete(x))); }
+        location.reload();
+      }
+    } catch {}
+  }
+  checkVersion();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) checkVersion(); });
+  window.addEventListener("pageshow", (e) => { if (e.persisted) { verChecked = 0; checkVersion(); } });
   window.addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); deferred = e; if (!standalone) $("#installBtn").hidden = false; });
   if (isIOS && !standalone) $("#installBtn").hidden = false;
   $("#installBtn").addEventListener("click", async () => {
