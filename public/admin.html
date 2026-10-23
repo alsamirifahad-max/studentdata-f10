@@ -210,6 +210,8 @@
   .periods-ed{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px}
   .periods-ed input{font-size:13.5px;margin-bottom:4px}
   .periods-ed div{background:var(--bg);border-radius:10px;padding:8px}
+  .periods-ed.off{opacity:.55;pointer-events:none}
+  .pg-seg button{font-size:13.5px}
   .periods-ed small{display:block;font-weight:700;font-size:12px;color:var(--ink-2);margin-bottom:4px}
   .periods-ed input{padding:6px 8px!important}
   .tt-wrap{overflow-x:auto}
@@ -485,9 +487,12 @@
     <section class="panel" id="panel-sched" role="tabpanel" aria-labelledby="tab-sched" hidden style="margin:0">
       <div class="ph"><div><h1>الجداول والاختبارات</h1><p class="sub">يرى الطالب جدول شعبته واختباراته القادمة في الصفحة الرئيسية.</p></div></div>
       <div class="pcard" style="margin-bottom:16px">
-        <div class="ph" style="margin:0 0 12px"><div><h2>أوقات الحصص</h2><p class="sub" style="margin:0">واحدة لكل الشعب</p></div>
+        <div class="ph" style="margin:0 0 12px"><div><h2>أوقات الحصص</h2><p class="sub" style="margin:0">لكل مجموعة صفوف أوقاتها؛ يرى كل طالب أوقات صفه.</p></div>
           <div class="ph-act"><label class="field" style="flex-direction:row;align-items:center;gap:8px">عدد الحصص <select id="pCount" style="width:auto"><option>5</option><option>6</option><option selected>7</option><option>8</option></select></label></div></div>
+        <div class="seg-a pg-seg" id="pGroup" role="tablist" style="margin-bottom:10px"><button type="button" class="on" data-g="g23">الثاني والثالث الثانوي</button><button type="button" data-g="g1">الأول الثانوي</button></div>
+        <label class="switch" id="pSameWrap" hidden style="margin-bottom:10px;font-size:14px"><input type="checkbox" id="pSame"> نفس أوقات الثاني والثالث الثانوي</label>
         <div id="periodsEd" class="periods-ed"></div>
+        <div class="row-actions" style="justify-content:space-between;margin-top:10px"><span class="sub" id="pInfo"></span><button class="btn sm" type="button" id="pSave">حفظ الأوقات</button></div>
       </div>
       <div class="pcard" style="margin-bottom:16px">
         <div class="ph" style="margin:0 0 12px"><div><h2>جدول الشعبة</h2><p class="sub" style="margin:0" id="ttInfo"></p></div>
@@ -510,6 +515,7 @@
         <div class="pcard">
           <h2>التوقيت الذكي</h2><p class="sub">أوقات بديلة تُطبَّق تلقائيًا في فترات تحددها، فيبقى «جدول اليوم» صحيحًا.</p>
           <div class="seg-a" role="tablist" style="margin-bottom:10px"><button type="button" class="on" data-mode="ramadan">توقيت رمضان</button><button type="button" data-mode="exams">توقيت الاختبارات</button></div>
+          <div class="seg-a pg-seg" id="mGroup" role="tablist" hidden style="margin-bottom:10px"><button type="button" class="on" data-g="g23">الثاني والثالث</button><button type="button" data-g="g1">الأول الثانوي</button></div>
           <div id="modeEd" class="periods-ed"></div>
           <h3 class="sub-h">فترات التطبيق</h3>
           <div id="rangeList"></div>

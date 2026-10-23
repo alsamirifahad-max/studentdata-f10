@@ -14,8 +14,14 @@ export default async (req) => {
     .slice(0, 30)
     .map(({ id, subject, kind, date, period, note }) => ({ id, subject, kind, date, period, note }));
   // التوقيت الذكي: أوقات رمضان أو الاختبارات حسب الفترات التي حددها المسؤول
-  const range = (tt.ranges || []).find((r) => today >= r.from && today <= r.to && tt.modes?.[r.mode]);
-  const periods = range ? tt.periods.map((p, i) => ({ ...p, ...(tt.modes[range.mode][i]?.start ? tt.modes[range.mode][i] : {}) })) : tt.periods || [];
+  const range = (tt.ranges || []).find((r) => today >= r.from && today <= r.to && (tt.modes?.[r.mode] || tt.modesG1?.[r.mode]));
+  // أوقات الحصص للصف الأول الثانوي قد تختلف عن الثاني والثالث (الشعب 1–8 للأول)
+  const g1 = grade === GRADES[0] || (!grade && +section < 10);
+  const useG1 = g1 && Array.isArray(tt.periodsG1) && tt.periodsG1.length;
+  const base = (useG1 ? tt.periodsG1 : tt.periods) || [];
+  const modes = useG1 && tt.modesG1 ? tt.modesG1 : tt.modes || {};
+  const alt = range && modes[range.mode];
+  const periods = alt ? base.map((p, i) => ({ ...p, ...(alt[i]?.start ? alt[i] : {}) })) : base;
   return new Response(JSON.stringify({ ok: true, section, grade, periods, timing: range ? { mode: range.mode, label: range.label || (range.mode === "ramadan" ? "توقيت رمضان" : "توقيت الاختبارات") } : null, grid: tt.sections?.[section] || null, exams, updatedAt: tt.updatedAt || null }), {
     headers: { "content-type": "application/json; charset=utf-8", "cache-control": "public, max-age=60" },
   });

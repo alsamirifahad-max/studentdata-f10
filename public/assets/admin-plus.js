@@ -400,19 +400,41 @@
   SUBJECTS.forEach((s) => $("#subjects").append(el("option", { value: s })));
   let tt = { periods: [], sections: {} };
   fillSections($("#ttSection")); fillSections($("#exSection"), "كل شعب الصف");
+  // مجموعتا أوقات: الثاني والثالث (الأساسية) والأول الثانوي (اختيارية)
+  let pGroup = "g23";
+  const isG1Sec = (sec) => +sec > 0 && +sec < 10;
+  const timesFor = (sec) => (isG1Sec(sec) && tt.periodsG1 && tt.periodsG1.length ? tt.periodsG1 : tt.periods);
+  function fitLen(list, n) { while (list.length < n) list.push({ start: DEF_TIMES[list.length] || "", end: "" }); list.length = n; return list; }
   function periodsRender() {
     const n = +$("#pCount").value; const box = $("#periodsEd"); box.textContent = "";
-    while (tt.periods.length < n) tt.periods.push({ start: DEF_TIMES[tt.periods.length] || "", end: "" });
-    tt.periods.length = n;
-    tt.periods.forEach((p, i) => {
+    fitLen(tt.periods, n); if (tt.periodsG1) fitLen(tt.periodsG1, n);
+    const g1 = pGroup === "g1", same = g1 && !tt.periodsG1;
+    $("#pSameWrap").hidden = !g1; $("#pSame").checked = same;
+    box.classList.toggle("off", same);
+    const list = g1 && tt.periodsG1 ? tt.periodsG1 : tt.periods;
+    list.forEach((p, i) => {
       const s = el("input", { type: "time", value: p.start }), e = el("input", { type: "time", value: p.end, title: "نهاية الحصة (اختياري)" });
       s.oninput = () => { p.start = s.value; ttGrid(); }; e.oninput = () => p.end = e.value;
       box.append(el("div", {}, el("small", { text: "الحصة " + (i + 1) }), s, e));
     });
+    $("#pInfo").textContent = tt.periodsG1 ? "للأول الثانوي أوقات خاصة." : "كل الصفوف بالأوقات نفسها.";
     const ex = $("#exPeriod"); ex.textContent = ""; ex.append(el("option", { value: "", text: "—" }));
     tt.periods.forEach((_, i) => ex.append(el("option", { value: String(i + 1), text: "الحصة " + (i + 1) })));
     ttGrid();
   }
+  document.querySelectorAll("#pGroup [data-g]").forEach((b) => b.addEventListener("click", () => {
+    pGroup = b.dataset.g; document.querySelectorAll("#pGroup [data-g]").forEach((x) => x.classList.toggle("on", x === b)); periodsRender();
+  }));
+  $("#pSame").addEventListener("change", () => {
+    tt.periodsG1 = $("#pSame").checked ? null : tt.periods.map((p) => ({ ...p }));
+    periodsRender();
+    if (!$("#pSame").checked) toast("عدّل أوقات الأول الثانوي ثم اضغط «حفظ الأوقات».");
+  });
+  $("#pSave").addEventListener("click", async () => {
+    const btn = $("#pSave"); busy(btn, true, "…");
+    try { const d = await api({ action: "tt-save", periods: tt.periods, periodsG1: tt.periodsG1 || null }); tt = d.timetable; tt.sections = tt.sections || {}; periodsRender(); toast("تم حفظ أوقات الحصص."); A.emitTT && A.emitTT(tt); }
+    catch (ex) { toast(ex.message); } finally { busy(btn, false); }
+  });
   let grid = [];
   function ttGrid() {
     const sec = $("#ttSection").value, n = tt.periods.length;
@@ -420,7 +442,8 @@
     grid = DAYS.map((_, d) => Array.from({ length: n }, (_, p) => (grid.sec === sec && grid[d]?.[p] != null ? grid[d][p] : src[d]?.[p] || "")));
     grid.sec = sec;
     const t = $("#ttGrid"); t.textContent = "";
-    t.append(el("tr", {}, el("th", {}), ...tt.periods.map((p, i) => el("th", {}, "الحصة " + (i + 1), el("small", { text: p.start || "" })))));
+    const tms = timesFor(sec);
+    t.append(el("tr", {}, el("th", {}), ...tt.periods.map((p, i) => el("th", {}, "الحصة " + (i + 1), el("small", { text: (tms[i] || p).start || "" })))));
     DAYS.forEach((d, di) => t.append(el("tr", {}, el("td", { class: "day", text: d }), ...grid[di].map((v, pi) => {
       const inp = el("input", { type: "text", value: v, list: "subjects", maxlength: "30", placeholder: " ", "aria-label": d + " الحصة " + (pi + 1) });
       inp.oninput = () => { grid[di][pi] = inp.value; };
@@ -445,7 +468,7 @@
   $("#ttClear").addEventListener("click", () => { grid = DAYS.map(() => tt.periods.map(() => "")); grid.sec = $("#ttSection").value; ttGrid(); });
   $("#ttSave").addEventListener("click", async () => {
     const btn = $("#ttSave"); busy(btn, true, "جارٍ الحفظ…");
-    try { const d = await api({ action: "tt-save", periods: tt.periods, section: $("#ttSection").value, grid }); tt = d.timetable; grid = []; ttGrid(); toast("تم حفظ جدول الشعبة " + $("#ttSection").value + "."); }
+    try { const d = await api({ action: "tt-save", periods: tt.periods, periodsG1: tt.periodsG1 || null, section: $("#ttSection").value, grid }); tt = d.timetable; grid = []; ttGrid(); toast("تم حفظ جدول الشعبة " + $("#ttSection").value + "."); }
     catch (ex) { toast(ex.message); } finally { busy(btn, false); }
   });
   $("#ttTemplate").addEventListener("click", () => {

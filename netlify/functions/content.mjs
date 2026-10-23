@@ -34,6 +34,7 @@ export default async () => {
     ok: true, faq, faqCats: FAQ_CATS,
     calendar: calendar ? { terms: calendar.terms, breaks: calendar.breaks } : null,
     periods: tt.periods || [],
+    periodsG1: tt.periodsG1 || null,
     sectionsWithTimetable: Object.keys(tt.sections || {}),
     events, honor, polls, videos,
     files: files.filter((f) => f.section !== "guide"),

@@ -269,6 +269,13 @@ export default async (req, context) => {
         if (periods.some((p) => !p.start)) return json({ error: "اكتب وقت بداية كل حصة بصيغة 07:00." }, 400);
         tt.periods = periods;
       }
+      // أوقات خاصة بالصف الأول الثانوي (null = نفس أوقات الثاني والثالث)
+      if (b.periodsG1 === null) { delete tt.periodsG1; delete tt.modesG1; }
+      else if (Array.isArray(b.periodsG1)) {
+        const g1 = b.periodsG1.slice(0, MAX_PERIODS).map((p) => ({ start: cleanTime(p?.start), end: cleanTime(p?.end) }));
+        if (g1.some((p) => !p.start)) return json({ error: "اكتب وقت بداية كل حصة للصف الأول الثانوي بصيغة 07:00." }, 400);
+        tt.periodsG1 = g1;
+      }
       const putSection = (sec, grid) => {
         if (!SECTIONS.includes(String(sec))) throw new Error("شعبة غير صالحة: " + sec);
         if (!Array.isArray(grid)) throw new Error("جدول غير صالح");
@@ -291,6 +298,14 @@ export default async (req, context) => {
           const ps = Array.isArray(b.modes[m]) ? b.modes[m].slice(0, MAX_PERIODS).map((p) => ({ start: cleanTime(p?.start), end: cleanTime(p?.end) })) : [];
           if (ps.some((p) => p.start)) tt.modes[m] = ps;
         }
+      }
+      if (b.modesG1 && typeof b.modesG1 === "object") {
+        tt.modesG1 = {};
+        for (const m of ["ramadan", "exams"]) {
+          const ps = Array.isArray(b.modesG1[m]) ? b.modesG1[m].slice(0, MAX_PERIODS).map((p) => ({ start: cleanTime(p?.start), end: cleanTime(p?.end) })) : [];
+          if (ps.some((p) => p.start)) tt.modesG1[m] = ps;
+        }
+        if (!Object.keys(tt.modesG1).length || !tt.periodsG1) delete tt.modesG1;
       }
       if (Array.isArray(b.ranges)) {
         const rs = b.ranges.slice(0, 20).map((r) => ({ mode: ["ramadan", "exams"].includes(r?.mode) ? r.mode : "", from: ISO_DAY.test(r?.from) ? r.from : "", to: ISO_DAY.test(r?.to) ? r.to : "", label: clean(r?.label, 40) }));

@@ -267,13 +267,18 @@
   // =====================================================================
   let tt = null, mode = "ramadan";
   const MODE_LBL = { ramadan: "توقيت رمضان", exams: "توقيت الاختبارات" };
+  let mGroup = "g23";
   function modeRender() {
     const box = $("#modeEd"); box.textContent = "";
-    const base = tt.periods || [];
+    const hasG1 = !!(tt.periodsG1 && tt.periodsG1.length);
+    $("#mGroup").hidden = !hasG1; if (!hasG1) mGroup = "g23";
+    const g1 = mGroup === "g1";
+    const base = (g1 ? tt.periodsG1 : tt.periods) || [];
     if (!base.length) { box.append(el("p", { class: "hint", text: "حدد أوقات الحصص الأساسية أولًا في الأعلى." })); return; }
-    tt.modes = tt.modes || {}; tt.modes[mode] = tt.modes[mode] || base.map(() => ({ start: "", end: "" }));
+    const key = g1 ? "modesG1" : "modes";
+    tt[key] = tt[key] || {}; const M = tt[key]; M[mode] = M[mode] || base.map(() => ({ start: "", end: "" }));
     base.forEach((p, i) => {
-      const cur = tt.modes[mode][i] = tt.modes[mode][i] || { start: "", end: "" };
+      const cur = M[mode][i] = M[mode][i] || { start: "", end: "" };
       const s = el("input", { type: "time", value: cur.start }); s.oninput = () => { cur.start = s.value; };
       box.append(el("div", {}, el("small", { text: "الحصة " + (i + 1) + " · الأساسي " + (p.start || "—") }), s));
     });
@@ -292,10 +297,12 @@
   }
   async function timingLoad() { try { tt = (await api({ action: "tt-get" })).timetable; modeRender(); rangeRender(); } catch (e) { toast(e.message); } }
   document.querySelectorAll("#panel-sched [data-mode]").forEach((b) => b.addEventListener("click", () => { mode = b.dataset.mode; document.querySelectorAll("#panel-sched [data-mode]").forEach((x) => x.classList.toggle("on", x === b)); modeRender(); }));
+  document.querySelectorAll("#mGroup [data-g]").forEach((b) => b.addEventListener("click", () => { mGroup = b.dataset.g; document.querySelectorAll("#mGroup [data-g]").forEach((x) => x.classList.toggle("on", x === b)); modeRender(); }));
+  A.emitTT = (t) => { if (tt) { tt.periods = t.periods; tt.periodsG1 = t.periodsG1; modeRender(); } };
   $("#rangeAdd").addEventListener("click", () => { tt.ranges = tt.ranges || []; tt.ranges.push({ mode, from: today(), to: addDays(today(), 7) }); rangeRender(); });
   $("#timingSave").addEventListener("click", async () => {
     $("#timingErr").textContent = ""; const b = $("#timingSave"); busy(b, true, "…");
-    try { const d = await api({ action: "tt-save", modes: tt.modes || {}, ranges: tt.ranges || [] }); tt = d.timetable; toast("تم حفظ التوقيت."); modeRender(); rangeRender(); }
+    try { const d = await api({ action: "tt-save", modes: tt.modes || {}, modesG1: tt.periodsG1 ? tt.modesG1 || {} : undefined, ranges: tt.ranges || [] }); tt = d.timetable; toast("تم حفظ التوقيت."); modeRender(); rangeRender(); }
     catch (ex) { $("#timingErr").textContent = ex.message; } finally { busy(b, false); }
   });
 
