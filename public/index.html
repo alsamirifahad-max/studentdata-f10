@@ -198,17 +198,11 @@
         <label class="ms-remember"><input type="checkbox" id="msRemember" checked> تذكّر شعبتي</label>
       </form>
     </div>
-    <form class="ms-id" id="msIdForm" hidden novalidate>
+    <div class="ms-id" id="msIdForm" hidden>
       <span class="ms-id-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>
-      <div class="ms-id-tx"><b>اعرض جدولك برقم هويتك</b><small>مرة واحدة فقط، وبعدها يظهر جدولك تلقائيًا كلما فتحت الدليل من هذا الجهاز.</small></div>
-      <div class="ms-id-f">
-        <label for="msId" class="sr">رقم الهوية</label>
-        <input type="text" id="msId" inputmode="numeric" autocomplete="off" maxlength="10" placeholder="رقم الهوية (10 أرقام)">
-        <button class="btn" type="submit" id="msIdBtn">عرض جدولي</button>
-      </div>
-      <div class="err" id="msIdErr" role="alert"></div>
-      <button class="link-btn ms-man" type="button" id="msManual">أو اختر الصف والشعبة يدويًا</button>
-    </form>
+      <div class="ms-id-tx"><b>يظهر جدولك هنا تلقائيًا</b><small>اكتب رقم هويتك في «بياناتي» أعلى الصفحة، ويظهر جدولك واختباراتك هنا مباشرة.</small></div>
+      <button class="btn" type="button" id="msToData">اكتب رقم هويتك</button>
+    </div>
     <div class="ms-grid" id="msGrid">
       <div class="card ms-card">
         <div class="ms-ch"><h3>جدول اليوم</h3><button class="link-btn" type="button" id="msWeekBtn" hidden>الجدول الأسبوعي ←</button></div>

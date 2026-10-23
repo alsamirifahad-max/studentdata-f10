@@ -160,3 +160,5 @@ main section,main [id]{scroll-margin-top:72px}
 .ms-man{grid-column:2/-1;justify-self:start;font-size:13px}
 .ms-chg{font-size:13px;margin-inline-start:8px}
 @media (max-width:760px){.ms-id{grid-template-columns:auto minmax(0,1fr)}.ms-id-f,.ms-id .err,.ms-man{grid-column:1/-1}}
+.ms-id > .btn{justify-self:end}
+@media (max-width:760px){.ms-id > .btn{grid-column:1/-1;justify-self:stretch}}
