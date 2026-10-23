@@ -174,10 +174,63 @@
     return null;
   }
   const timeOf = (t) => { const m = digits(t).match(/\b(\d{1,2})\s*[:.]\s*(\d{2})\b/); if (!m) return ""; let h = +m[1]; if (h >= 1 && h <= 5) h += 12; return String(h).padStart(2, "0") + ":" + m[2]; };
-  const SEC_RE = /(?:الشعب[هة]?|شعب[هة]|الفصل|فصل)\s*[:\-–]?\s*(\d{1,2})(?!\d)/;
+  const SEC_RE = /(?:الشعب[هة]?|شعب[هة]|الفصل|فصل|(?:^|\s)ش)\s*[:\-–]?\s*(\d{1,2})(?!\d)/;
+  // جداول مثل تصدير aSc Timetables: صفحة لكل شعبة («ش١»)، المادة قد تمتد على أكثر من سطر، واسم المعلم بخط أصغر تحتها
+  const SEC_ONLY = /^(?:ش|شعب[هة]|الشعب[هة]|فصل|الفصل)\s*[:\-–]?\s*(\d{1,2})$/;
+  const tidy = (t) => digits(t).replace(/([ء-ي])(\d)/g, "$1 $2").replace(/\s+/g, " ").trim().slice(0, 30);
+  function parseBands(b) {
+    if (!b.pdf) return null;
+    const rows = b.rows.filter((r) => r.y != null);
+    // سطر أرقام الحصص
+    const hi = rows.findIndex((r) => r.filter((c) => /^\s*[1-8]\s*$/.test(digits(c.t))).length >= 3 && !r.some((c) => dayOf(c.t) >= 0));
+    if (hi < 0) return null;
+    const head = rows[hi].filter((c) => /^\s*[1-8]\s*$/.test(digits(c.t))).map((c) => ({ p: +digits(c.t).trim(), cx: (c.l + c.r) / 2 }));
+    const colOf = (c) => { const x = (c.l + c.r) / 2; let best = null, d = Infinity; for (const h of head) { const dd = Math.abs(h.cx - x); if (dd < d) { d = dd; best = h; } } return best; };
+    const dayRows = rows.filter((r) => r.some((c) => dayOf(c.t) >= 0));
+    if (dayRows.length < 3) return null;
+    let sec = "";
+    for (const r of rows) for (const c of r) { const m = norm(c.t).match(SEC_ONLY) || norm(c.t).match(SEC_RE); if (m && !sec) sec = String(+m[1]); }
+    if (!sec) { const m = norm(b.title).match(SEC_RE); if (m) sec = String(+m[1]); }
+    const times = {};
+    for (const r of rows.slice(hi + 1, hi + 3)) for (const c of r) { const tt = digits(c.t).match(/(\d{1,2})\s*[:.]\s*(\d{2})\s*[-–—]\s*(\d{1,2})\s*[:.]\s*(\d{2})/); if (tt) { const h = colOf(c); const f = (H, M) => { H = +H; if (H >= 1 && H <= 5) H += 12; return String(H).padStart(2, "0") + ":" + M; }; if (h) times[h.p] = { start: f(tt[1], tt[2]), end: f(tt[3], tt[4]) }; } }
+    const dayH = dayRows.map((r) => r.h || 10).sort((a, x) => a - x)[Math.floor(dayRows.length / 2)];
+    const grid = [0, 1, 2, 3, 4].map(() => []);
+    const bands = dayRows.map((r) => ({ y: r.y, d: dayOf(r.find((c) => dayOf(c.t) >= 0).t), lines: [] }));
+    const yHead = rows[hi].y;
+    for (const r of rows) {
+      if (r.y >= yHead - 1) continue; // ما فوق سطر الحصص (العنوان والأوقات)
+      if (r.some((c) => /^\s*\d{1,2}\s*[:.]\s*\d{2}\s*[-–—]/.test(digits(c.t)))) continue;
+      let band = null, dist = Infinity;
+      for (const bd of bands) { const dd = Math.abs(bd.y - r.y); if (dd < dist) { dist = dd; band = bd; } }
+      if (!band || dist > dayH * 4) continue;
+      // اسم المعلم: سطر بخط أصغر بوضوح من خط المواد (يُتجاهل)
+      if ((r.h || dayH) < dayH * 0.65) continue;
+      band.lines.push(r);
+    }
+    for (const bd of bands) {
+      if (bd.d < 0) continue;
+      const cells = {};
+      bd.lines.sort((a, x) => x.y - a.y).forEach((r) => r.forEach((c) => { if (dayOf(c.t) >= 0) return; const h = colOf(c); if (!h) return; (cells[h.p] = cells[h.p] || []).push(c.t); }));
+      for (const [p, parts] of Object.entries(cells)) grid[bd.d][+p - 1] = tidy(parts.join(" "));
+    }
+    const filled = grid.flat().filter(Boolean).length;
+    if (!filled) return null;
+    return { sec, grid, times, maxP: Math.max(...head.map((h) => h.p)) };
+  }
   function parseTimetable(blocks) {
-    const sections = {}, times = {}, warn = new Set();
+    const sections = {}, times = {}, timesG1 = {}, warn = new Set();
     let maxP = 0;
+    // أولًا: جداول الصفحات (صفحة لكل شعبة) بأسطر متعددة للمادة
+    const rest = [];
+    for (const b of blocks) {
+      const r = parseBands(b);
+      if (!r) { rest.push(b); continue; }
+      if (!SECTIONS.includes(r.sec)) { warn.add(r.sec ? "الشعبة " + r.sec + " غير موجودة في قائمة الشعب" : "صفحة بلا رقم شعبة (" + b.title + ")"); continue; }
+      sections[r.sec] = r.grid; maxP = Math.max(maxP, r.maxP);
+      const tgt = +r.sec < 10 ? timesG1 : times; // أوقات الأول الثانوي (الشعب 1–8) قد تختلف
+      for (const [p, t] of Object.entries(r.times)) if (!tgt[p]) tgt[p] = t;
+    }
+    blocks = rest;
     for (const b of blocks) {
       let header = null, map = null, sec = (norm(b.title).match(SEC_RE) || [])[1] || "";
       for (const row of b.rows) {
@@ -216,7 +269,12 @@
     }
     Object.values(sections).forEach((g) => g.forEach((r) => { for (let i = 0; i < maxP; i++) r[i] = r[i] || ""; }));
     const periods = maxP ? Array.from({ length: maxP }, (_, i) => times[i + 1] || "") : [];
-    return { sections, periods, warnings: [...warn], count: Object.keys(sections).length };
+    const ends = periods.map((t) => (t && typeof t === "object" ? t.end : ""));
+    // صفحات الأول الثانوي فقط بأوقات: تُعتمد أساسًا إذا لم توجد أوقات لغيرها
+    if (!periods.some(Boolean) && Object.keys(timesG1).length) for (let i = 0; i < maxP; i++) { const t = timesG1[i + 1]; if (t) { periods[i] = t.start; ends[i] = t.end; } }
+    const g1 = maxP && Object.keys(timesG1).length ? Array.from({ length: maxP }, (_, i) => timesG1[i + 1] || null) : null;
+    const g1Differs = !!g1 && g1.some((t, i) => t && (t.start !== (periods[i] && typeof periods[i] === "object" ? periods[i].start : periods[i])));
+    return { sections, periods: periods.map((t) => (t && typeof t === "object" ? t.start : t)), ends, periodsG1: g1Differs ? g1.map((t) => ({ start: t ? t.start : "", end: t ? t.end : "" })) : null, warnings: [...warn], count: Object.keys(sections).length };
   }
 
   // =====================================================================

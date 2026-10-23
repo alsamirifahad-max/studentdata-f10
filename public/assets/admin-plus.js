@@ -496,8 +496,12 @@
       go.onclick = async () => {
         busy(go, true, "جارٍ الحفظ…");
         try {
-          const periods = Array.from({ length: Math.max(n, tt.periods.length) }, (_, i) => ({ start: r.periods[i] || tt.periods[i]?.start || DEF_TIMES[i] || "", end: tt.periods[i]?.end || "" }));
-          const d = await api({ action: "tt-save", periods, bulk: r.sections }); tt = d.timetable; grid = []; $("#pCount").value = String(Math.min(8, Math.max(5, tt.periods.length))); periodsRender(); box.textContent = ""; toast("تم استيراد جداول " + secs.length + " شعبة.");
+          const len = Math.max(n, tt.periods.length);
+          const periods = Array.from({ length: len }, (_, i) => ({ start: r.periods[i] || tt.periods[i]?.start || DEF_TIMES[i] || "", end: (r.ends && r.ends[i]) || tt.periods[i]?.end || "" }));
+          const body = { action: "tt-save", periods, bulk: r.sections };
+          // أوقات مختلفة للأول الثانوي في الملف ← تُحفظ له مستقلة
+          if (r.periodsG1 && r.periodsG1.every((p, i) => p.start || periods[i].start)) body.periodsG1 = Array.from({ length: len }, (_, i) => (r.periodsG1[i] && r.periodsG1[i].start ? r.periodsG1[i] : periods[i]));
+          const d = await api(body); tt = d.timetable; grid = []; $("#pCount").value = String(Math.min(8, Math.max(5, tt.periods.length))); periodsRender(); box.textContent = ""; toast("تم استيراد جداول " + secs.length + " شعبة.");
         } catch (ex) { $("#ttErr").textContent = ex.message; busy(go, false); }
       };
     } catch (ex) { box.textContent = ""; $("#ttErr").textContent = ex.message; } finally { e.target.value = ""; }
