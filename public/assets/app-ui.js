@@ -113,7 +113,7 @@
     const ev = T.content && (T.content.events || []).find((e) => dayDiff(e.deadline && dayDiff(e.deadline) >= 0 ? e.deadline : e.date) >= 0);
     if (ev && tiles.length < 4) { const dd = ev.deadline && dayDiff(ev.deadline) >= 0 ? ev.deadline : ev.date; const d = dayDiff(dd); tiles.push(tile("var(--s-events)", ICON.star, ev.deadline && dd === ev.deadline ? "آخر موعد" : ev.kind || "فعالية", ev.title, d === 0 ? "اليوم" : d === 1 ? "غدًا" : "بعد " + d + " يومًا", () => jump("events"))); }
     if (!T.my) {
-      const cta = tile("var(--s-today)", ICON.pin, "اجعلها صفحتك", "اختر صفك وشعبتك", "ليظهر هنا جدولك واختباراتك", () => { jump("myschedule"); setTimeout(() => $("#msGrade") && $("#msGrade").focus(), 400); });
+      const cta = tile("var(--s-today)", ICON.pin, "اجعلها صفحتك", "اعرض جدولك برقم هويتك", "مرة واحدة ويظهر جدولك تلقائيًا", () => { jump("myschedule"); setTimeout(() => { const i = $("#msId"); if (i && !i.closest("[hidden]")) i.focus({ preventScroll: true }); }, 450); });
       cta.classList.add("td-cta"); tiles.push(cta);
     }
     tiles.slice(0, 5).forEach((t) => box.append(t));
@@ -202,6 +202,47 @@
     const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
     $$("main > section, main > nav.apps").forEach((s) => { if (s.getBoundingClientRect().top > innerHeight) { s.classList.add("rv"); io.observe(s); } });
   }
+  // =====================================================================
+  // 6-ب) جدولي برقم الهوية: يُدخل مرة واحدة فيُحفظ الصف والشعبة على الجهاز (دون رقم الهوية)
+  // =====================================================================
+  let manual = false, changing = false;
+  const msIdForm = $("#msIdForm"), msPick = $("#msPick"), msGrid = $("#msGrid");
+  const chg = el("button", { class: "link-btn ms-chg", type: "button", text: "تغيير" });
+  chg.onclick = () => { changing = !changing; syncMs(); if (changing) $("#msGrade").focus(); };
+  $("#msSub") && $("#msSub").after(chg);
+  function syncMs() {
+    const my = BSH.getMy ? BSH.getMy() : null;
+    if (!msIdForm) return;
+    msIdForm.hidden = !!my || manual;
+    msPick.hidden = my ? !changing : !manual;
+    msGrid.hidden = !my;
+    chg.hidden = !my; chg.textContent = changing ? "تم" : "تغيير";
+    if (!my && !manual) $("#msSub").textContent = "جدولك اليومي واختباراتك القادمة في مكان واحد";
+  }
+  BSH.on("my", () => { changing = false; manual = false; syncMs(); });
+  $("#msManual") && $("#msManual").addEventListener("click", () => { manual = true; syncMs(); $("#msGrade").focus(); });
+  $("#msId") && $("#msId").addEventListener("input", (e) => { e.target.value = e.target.value.replace(/[٠-٩]/g, (d) => d.charCodeAt(0) - 0x0660).replace(/\D/g, "").slice(0, 10); });
+  msIdForm && msIdForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const id = $("#msId").value, err = $("#msIdErr"), btn = $("#msIdBtn"); err.textContent = "";
+    if (!/^\d{10}$/.test(id)) { err.textContent = "اكتب رقم الهوية كاملًا (10 أرقام)."; $("#msId").focus(); return; }
+    BSH.busy(btn, true, "…");
+    try {
+      const r = await fetch("/api/lookup", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id }) });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(d.error || "تعذر العثور على بياناتك.");
+      const o = d.official || {};
+      if (!o.grade || !o.section) throw new Error("لم أجد صفك أو شعبتك في ملف المدرسة. اخترهما يدويًا من الرابط أدناه.");
+      $("#msRemember").checked = true; try { localStorage.setItem("bsh_my_remember", "true"); } catch {}
+      $("#msId").value = "";
+      BSH.setMy(o.grade, o.section, "id");
+      BSH.toast("أهلًا " + (o.name || "").split(" ")[0] + "، هذا جدولك. سيظهر تلقائيًا في كل مرة.");
+    } catch (ex) { err.textContent = ex.message; } finally { BSH.busy(btn, false); }
+  });
+  syncMs();
+  // أيقونة «جدولي» تنقل مباشرة إلى إدخال الهوية إن لم يكن الجدول معروفًا
+  document.querySelectorAll('[data-jump="myschedule"], a[href="#myschedule"]').forEach((a) => a.addEventListener("click", () => { if (!BSH.getMy || !BSH.getMy()) setTimeout(() => $("#msId") && !msIdForm.hidden && $("#msId").focus({ preventScroll: true }), 450); }));
+
   const skel = (n = 3) => el("div", { class: "skel", "aria-hidden": "true" }, ...Array.from({ length: n }, () => el("i")));
   if (T.my && $("#msToday") && $("#msToday .ms-empty")) { $("#msToday").textContent = ""; $("#msToday").append(skel(4)); $("#msExams").textContent = ""; $("#msExams").append(skel(2)); }
   if (!T.my && $("#msToday .ms-empty")) {

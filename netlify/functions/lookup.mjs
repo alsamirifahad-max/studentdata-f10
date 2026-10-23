@@ -11,7 +11,7 @@ export default async (req, context) => {
   const id = normalizeId(b.id);
   if (!/^\d{10}$/.test(id)) return json({ error: "رقم الهوية يجب أن يكون 10 أرقام" }, 400);
 
-  if (!(await rateLimit(context, "lookup", 40, 10 * 60 * 1000))) {
+  if (!(await rateLimit(context, "lookup", 150, 10 * 60 * 1000))) {
     return json({ error: "محاولات كثيرة. حاول بعد قليل." }, 429);
   }
 

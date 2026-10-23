@@ -146,3 +146,17 @@ main section,main [id]{scroll-margin-top:72px}
   .apps .app-edit .ai svg{width:15px;height:15px}
   .apps:not(.editing) .app-edit .at::after{content:" اختصاراتك"}
 }
+
+/* ---------- جدولي برقم الهوية ---------- */
+.ms-id{display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,1.1fr);gap:8px 14px;align-items:center;padding:16px 18px;border-radius:18px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.ms-id-ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--s-sched) 14%,var(--card));color:var(--s-sched)}
+.ms-id-ic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ms-id-tx b{display:block;font-size:16px}
+.ms-id-tx small{display:block;color:var(--ink-2);font-size:13px;line-height:1.6}
+.ms-id-f{display:flex;gap:8px}
+.ms-id-f input{flex:1;min-width:0;letter-spacing:1px}
+.ms-id .err{grid-column:2/-1;margin:0}
+.ms-id .err:empty{display:none}
+.ms-man{grid-column:2/-1;justify-self:start;font-size:13px}
+.ms-chg{font-size:13px;margin-inline-start:8px}
+@media (max-width:760px){.ms-id{grid-template-columns:auto minmax(0,1fr)}.ms-id-f,.ms-id .err,.ms-man{grid-column:1/-1}}
