@@ -165,7 +165,7 @@ export default async (req, context) => {
     }
     case "status-get": {
       if (!me.owner && !me.perms.announcements) return DENY();
-      return json({ ok: true, manual: await getManual(), status: await publicStatus({ refreshIfOlderMin: 15 }) });
+      return json({ ok: true, manual: await getManual(), status: await publicStatus() });
     }
     case "status-save": {
       if (!me.owner && !me.perms.announcements) return DENY();

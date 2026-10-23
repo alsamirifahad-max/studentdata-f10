@@ -74,12 +74,11 @@
       const d = await (await fetch("/api/status")).json();
       platformStatus = d.items || [];
       const box = $("#pstat"); box.textContent = "";
-      const known = platformStatus.filter((x) => x.state !== "unknown");
+      const known = platformStatus.filter((x) => x.state === "up" || x.state === "down");
       box.hidden = !known.length;
       if (known.length) {
         box.append(el("span", { class: "ps-l", text: "حالة المنصات الآن:" }));
-        platformStatus.forEach((x) => { const [tx, cls] = ST[x.state] || ST.unknown; box.append(el("span", { class: "ps " + cls, title: x.note || "" }, el("i", { "aria-hidden": "true" }), x.name + " " + tx)); });
-        if (d.checkedAt) box.append(el("small", { text: "آخر فحص " + ago(d.checkedAt) }));
+        known.forEach((x) => { const [tx, cls] = ST[x.state] || ST.unknown; box.append(el("span", { class: "ps " + cls, title: x.note || "" }, el("i", { "aria-hidden": "true" }), x.name + " " + tx)); });
       }
       const down = platformStatus.filter((x) => x.state === "down");
       const ban = $("#pdown"); ban.textContent = ""; ban.hidden = !down.length;

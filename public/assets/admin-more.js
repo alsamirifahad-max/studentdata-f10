@@ -341,7 +341,7 @@
   // =====================================================================
   // حالة المنصات (يدويًا أو تلقائيًا) + عدد المشتركين في الإشعارات
   // =====================================================================
-  const ST_TX = { up: "تعمل", slow: "بطيئة", down: "متوقفة", unknown: "تعذّر الفحص" };
+  const ST_TX = { up: "تعمل", down: "متوقفة", none: "لا يوجد إعلان" };
   let stManual = {};
   async function stLoad() {
     try {
@@ -349,11 +349,11 @@
       const box = $("#stRows"); box.textContent = "";
       d.status.items.forEach((x) => {
         const m = stManual[x.id] = stManual[x.id] || { mode: "auto", note: "" };
-        const sel = el("select", { "aria-label": "حالة " + x.name }); [["auto", "تلقائي"], ["up", "تعمل"], ["down", "متوقفة"]].forEach(([v, t]) => sel.append(el("option", { value: v, text: t }))); sel.value = m.mode;
+        const sel = el("select", { "aria-label": "حالة " + x.name }); [["auto", "لا يوجد إعلان"], ["down", "متوقفة"], ["up", "تعمل"]].forEach(([v, t]) => sel.append(el("option", { value: v, text: t }))); sel.value = m.mode;
         const note = el("input", { type: "text", maxlength: "160", value: m.note || "", placeholder: "رسالة للطلاب، مثل: عطل عام من الوزارة" });
         const until = el("input", { type: "datetime-local", value: m.until ? m.until.slice(0, 16) : "", title: "ينتهي الإعلان اليدوي تلقائيًا في" });
         sel.onchange = () => { m.mode = sel.value; }; note.oninput = () => { m.note = note.value; }; until.oninput = () => { m.until = until.value ? new Date(until.value).toISOString() : null; };
-        box.append(el("div", { class: "st-row" }, el("div", {}, el("b", { text: x.name }), el("small", {}, el("span", { class: "dot-s " + x.state }), "الآن: " + ST_TX[x.state] + (x.source === "manual" ? " (يدوي)" : ""))), sel, note, until));
+        box.append(el("div", { class: "st-row" }, el("div", {}, el("b", { text: x.name }), el("small", {}, el("span", { class: "dot-s " + x.state }), "يراه الطلاب: " + (ST_TX[x.state] || ST_TX.none))), sel, note, until));
       });
       if (A.P.owner()) { try { const p = await api({ action: "push-stats" }); $("#pushStats").textContent = "🔔 " + p.total + " جهازًا مشتركًا في الإشعارات" + (p.total ? " (" + Object.entries(p.byGrade).map(([g, n]) => g.replace(" الثانوي", "") + ": " + n).join("، ") + ")" : ""); } catch {} }
     } catch (e) { $("#stErr").textContent = e.message; }
