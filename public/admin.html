@@ -1448,7 +1448,7 @@
     return i;
   }
   function guessEmail(cols, rows) {
-    const i = cols.findIndex((c) => /بريد|ايميل|إيميل|الإيميل|e-?mail|mail/i.test(c));
+    const i = cols.findIndex((c) => /بريد|ايميل|إيميل|الإيميل|e-?mail|mail|اسم المستخدم|username/i.test(c));
     if (i > -1) return i;
     let best = -1, bestN = 0;
     cols.forEach((c, k) => { const n = rows.filter((r) => /\S+@\S+\.\S+/.test(String(r[c] || ""))).length; if (n > bestN) { bestN = n; best = k; } });
@@ -1463,7 +1463,7 @@
       idIdx = best;
     }
     pv = { fileName, columns, rows, isPdf, names: [...columns], visible: columns.map((c) => !/^(م|مسلسل|التسلسل|#|ت)$/.test(c.trim())),
-      roles: { id: idIdx, name: guess(columns, rows, /اسم/), grade: guess(columns, rows, /الصف|صف|المرحلة/, /شعبة|فصل/), section: guess(columns, rows, /شعبة|الفصل|فصل/), email: guessEmail(columns, rows) } };
+      roles: { id: idIdx, name: guess(columns, rows, /اسم/, /مستخدم|ولي|الأب|الام|الأم/), grade: guess(columns, rows, /الصف|صف|المرحلة/, /شعبة|فصل/), section: guess(columns, rows, /شعبة|الفصل|فصل/), email: guessEmail(columns, rows) } };
     $("#rev").checked = false; $("#revWrap").style.display = isPdf ? "" : "none";
     renderPreview(); $("#preview").hidden = false; $("#preview").scrollIntoView({ behavior: "smooth" });
   }

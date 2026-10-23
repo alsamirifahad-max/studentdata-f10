@@ -211,8 +211,12 @@ export function officialInfo(data, row) {
   const cols = data.columns || [];
   const col = (re) => cols.find((c) => re.test(c));
   const gCol = r.grade || col(/صف|مرحل|المستوى/), sCol = r.section || col(/شعب|فصل/);
-  const grade = gCol ? matchGrade(row[gCol]) : "";
+  // الصف من عمود الصف، أو من عمود الفصل نفسه (مثل «ثاني ش 11»)
+  let grade = gCol ? matchGrade(row[gCol]) : "";
+  if (!grade && sCol) { const v = String(row[sCol] ?? ""); grade = /أول|اول|ثاني|ثالث|تاني|تالث/.test(v) ? matchGrade(v.replace(/\d+/g, "")) : ""; }
   let section = sCol ? smartSection(row[sCol], grade) : "";
+  // الصف من رقم الشعبة إن لم يُكتب (1–8 الأول، 11–18 الثاني، 21–28 الثالث)
+  if (!grade && section) grade = GRADES[+section < 10 ? 0 : +section < 20 ? 1 : 2];
   // الشعبة مكتوبة مع الصف في عمود واحد (مثل «الثاني الثانوي / 4»)
   if (!section && gCol && gCol !== sCol) { const m = String(row[gCol] ?? "").match(/(?:\/|-|–|شعب[هة]?|فصل)\s*([0-9٠-٩]{1,2})\s*$/); if (m) section = smartSection(m[1], grade); }
   return {
